@@ -1,0 +1,67 @@
+22/05/2023 9:20:08|Se excedio la cantidad maxima de solicitudes a realizar
+22/05/2023 9:22:35|Se excedio la cantidad maxima de solicitudes a realizar
+22/05/2023 9:23:59|Se excedio la cantidad maxima de solicitudes a realizar
+22/05/2023 9:25:35|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 8:51:24|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 8:51:27|IPs Autorizadas: ::1,::2
+23/05/2023 8:51:29|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 8:51:29|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 8:51:29|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 8:52:47|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 8:52:49|IPs Autorizadas: ::1,::2
+23/05/2023 8:52:50|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 8:52:50|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 8:52:51|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 8:54:26|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 8:56:35|Logueado exitosamente. Usuario: gesi
+23/05/2023 8:56:36|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductos' esperaba el parámetro '@ProductoIDs', que no se ha especificado.
+23/05/2023 8:58:13|Logueado exitosamente. Usuario: gesi
+23/05/2023 8:58:29|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductos' esperaba el parámetro '@ProductoIDs', que no se ha especificado.
+23/05/2023 9:09:37|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:09:41|IPs Autorizadas: ::1,::2
+23/05/2023 9:09:42|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 9:09:48|IPs Autorizadas: ::1,::2
+23/05/2023 9:09:52|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:09:52|Exitoso para el codigo 421CC
+23/05/2023 9:10:08|IPs Autorizadas: ::1,::2
+23/05/2023 9:10:08|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:10:08|Respuesta exitosa para la expresion ACIEND
+23/05/2023 9:13:14|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:13:19|IPs Autorizadas: ::1,::2
+23/05/2023 9:13:23|No esta autorizado a acceder al recurso. URL: https://localhost:7062/swagger/index.html
+23/05/2023 9:17:33|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:28:13|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:37:11|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:37:35|IPs Autorizadas: ::1,::2
+23/05/2023 9:37:59|IPs Autorizadas: ::1,::2
+23/05/2023 9:37:59|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:38:00|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+23/05/2023 9:38:09|IPs Autorizadas: ::1,::2
+23/05/2023 9:38:09|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:38:09|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+23/05/2023 9:38:16|IPs Autorizadas: ::1,::2
+23/05/2023 9:38:16|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:38:43|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:38:53|IPs Autorizadas: ::1,::2
+23/05/2023 9:38:56|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:40:02|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:40:35|IPs Autorizadas: ::1,::2
+23/05/2023 9:40:39|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:42:52|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 9:42:58|IPs Autorizadas: ::1,::2
+23/05/2023 9:43:02|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMGUyMTE3OGItM2NmZC00ZGRlLTkxZGItOWQ3M2E4NTRkYjdhIiwiaWF0IjoxNjg0ODQ1NDU5LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODQ4NDU0NTksImV4cCI6MTY4NDg1OTg1OSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.WS0vHtse8GVzvpe0YCjOrpZMHADM_051lqdtKxSdNLU
+23/05/2023 9:43:07|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+23/05/2023 9:43:21|IPs Autorizadas: ::1,::2
+23/05/2023 9:43:30|IPs Autorizadas: ::1,::2
+23/05/2023 9:43:30|Logueado exitosamente. Usuario: gesi
+23/05/2023 9:57:47|Se excedio la cantidad maxima de solicitudes a realizar
+23/05/2023 10:03:05|IPs Autorizadas: ::1,::2
+23/05/2023 10:03:29|IPs Autorizadas: ::1,::2
+23/05/2023 10:03:29|Logueado exitosamente. Usuario: gesi
+23/05/2023 10:03:29|Respuesta exitosa para la expresion ACIEND
+23/05/2023 10:03:41|IPs Autorizadas: ::1,::2
+23/05/2023 10:03:41|Logueado exitosamente. Usuario: gesi
+23/05/2023 10:03:41|Error interno de la aplicacion. Descripcion: @ProductoIDs no es un parámetro del procedimiento uspGetProductos.
+23/05/2023 10:04:50|IPs Autorizadas: ::1,::2
+23/05/2023 10:04:50|Logueado exitosamente. Usuario: gesi
+23/05/2023 10:04:50|Exitoso para el codigo 000342
