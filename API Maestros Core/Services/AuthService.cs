@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API_Maestros_Core.BLL;
+using GESI.CORE.DAL;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -86,6 +90,26 @@ namespace API_Maestros_Core.Services
                 base64EncodedBytes = System.Convert.FromBase64String(strUsuarioSinCaracteres);
                 strUsuarioSinCaracteres = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
                 */
+
+                //  GESI.CORE.DAL.DBHelper.
+                SqlConnection sql = GESI.CORE.DAL.DBHelper.DevolverConnectionStringCORE();
+
+
+                ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+                System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+                               
+               
+                SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+                GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+
+                //Logger.LoguearErrores("ConnectionString app.config :" + connectionString);
+
+
+                // SqlConnection sqlapi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+
+                Logger.LoguearErrores("ConnectionStringPaz: " + sqlapi.ConnectionString);
+
                 bool login = GESI.CORE.BLL.UsuariosMgr.Login(strUsuarioID, strPassword);
                 return login;
 
@@ -94,6 +118,7 @@ namespace API_Maestros_Core.Services
             {
                 throw ex;
             }
+
 
         }
     }

@@ -10,14 +10,49 @@
         /// </summary>
         /// <param name="strExpresionBusqueda"></param>
         /// <returns></returns>
-        public static List<GESI.ERP.Core.BO.cProducto> GetList(String strExpresionBusqueda)
+        public static List<GESI.ERP.Core.BO.cProducto> GetList(String strExpresionBusqueda,int pageNumber, int pageSize)
         {
             try
             {
                 GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
-                List<GESI.ERP.Core.BO.cProducto> lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda);
+                int[] marks = new int[] { 1, 3, 6};
+                List<GESI.ERP.Core.BO.cProducto> lstProductos = new List<GESI.ERP.Core.BO.cProducto>();
+                if (strExpresionBusqueda.Length <= 0)
+                {
+                    lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults();
+                    string commaSeparatedIds = string.Join(",", lstProductos.Select(p => p.ProductoID));
+                    List<string> splits = commaSeparatedIds.Split(',').ToList();
+                    List<string> nuevosplit = splits.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+                    int blockSize = pageSize;
+                    int blockIndex = pageNumber;
+
+                    string resultado = string.Join(",", nuevosplit);
+
+                    List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, marks, "S");
+
+                    lstProductos = lstProductosAux;
+                }
+                else
+                {
+                    lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda);
+                }
+
+               
+                 // Indexing starts from 0, so the second block has an index of 1
+
+             
+                // Now, the 'secondBlock' list contains the second block of 50 elements from 'lstProductosBusqueda'
+                //    commaSeparatedIds = "WLAC0034,CSC210";
+                /* String strCodigos = "";
+                 foreach(GESI.ERP.Core.BO.cProducto Prod in lstProductos)
+                 {
+                     strCodigos = strCodigos + Prod.ProductoID + ",";
+                 }
+                 strCodigos = strCodigos.Remove(strCodigos.Length - 1);*/
+                
 
                 return lstProductos;
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -25,7 +25,7 @@
       <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\GESI.ERP.Core\bin\Debug\GESI.CORE.BO.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.DAL">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\GESI.ERP.Core\bin\Debug\GESI.CORE.DAL.dll</HintPath>
+      <HintPath>..\..\..\GESI\Core\DAL\bin\Debug\GESI.CORE.DAL.dll</HintPath>
     </Reference>
     <Reference Include="GESI.ERP.Core">
       <HintPath>..\..\..\GESI.ERP.Core\GESI.ERP.Core\bin\Debug\GESI.ERP.Core.dll</HintPath>

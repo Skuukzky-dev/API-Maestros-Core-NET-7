@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,17 +16,32 @@ namespace API_Maestros_Core.Controllers
     [ApiController]
     public class CanalesDeVentaController : ControllerBase
     {
+        #region Variables
         public static GESI.CORE.BLL.SessionMgr _SessionMgr;
         public static List<GESI.CORE.BO.Verscom2k.HabilitacionesAPI> moHabilitacionesAPI;
         public static string mostrTipoAPI = "LEER_MAESTROS";
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
+        #endregion
+
         // GET: api/<CanalesDeVentaController>
+        /// <summary>
+        /// Devuelve la lista de canales de venta en un CanalesDeVenta/GetList
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetList")]
         [Authorize]
         [EnableCors("MyCorsPolicy")]
         public IActionResult Get()
         {
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+
             RespuestaConCanalesDeVenta oRespuesta = new RespuestaConCanalesDeVenta();
             try
             {
@@ -94,31 +111,6 @@ namespace API_Maestros_Core.Controllers
 
           
         }
-        /*
-        // GET api/<CanalesDeVentaController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<CanalesDeVentaController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CanalesDeVentaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CanalesDeVentaController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-        */
+       
     }
 }

@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using Error = API_Maestros_Core.Models.Error;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using System.Configuration;
+using System.Data.SqlClient;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,11 +20,13 @@ namespace API_Maestros_Core.Controllers
     [Authorize]
     public class ProductosController : ControllerBase
     {
+        #region Variables
         public static GESI.CORE.BLL.SessionMgr _SessionMgr;
         public static List<GESI.CORE.BO.Verscom2k.HabilitacionesAPI> moHabilitacionesAPI;
         public static string mostrTipoAPI = "LEER_MAESTROS";
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
+        #endregion
         // GET: api/<ProductosController>
         /// <summary>
         /// Devuelve la lista de Resultados de Busqueda de una Expresion
@@ -34,10 +38,18 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetList")]
         [EnableCors("MyCorsPolicy")]
         
-        public IActionResult Get(string id, int pageNumber = 1, int pageSize = 10)
+        public IActionResult Get(string id = "", int pageNumber = 1, int pageSize = 10)
         {
             HttpResponseMessage respuesta = new HttpResponseMessage();
             RespuestaConProductos oRespuesta = new RespuestaConProductos();
+
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             try
             {
                 if (!HabilitadoPorToken)
@@ -61,8 +73,7 @@ namespace API_Maestros_Core.Controllers
                     bool Habilitado = false;
                     if (id != null)
                     {
-                        if (id.Length > 0)
-                        {
+                       
                             foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                             {
                                 if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
@@ -78,14 +89,14 @@ namespace API_Maestros_Core.Controllers
                             if (Habilitado)
                             {
                                 ProductosMgr._SessionMgr = _SessionMgr;
-                                List<GESI.ERP.Core.BO.cProducto> lstProductos = ProductosMgr.GetList(id);
+                                List<GESI.ERP.Core.BO.cProducto> lstProductos = ProductosMgr.GetList(id,pageNumber,pageSize);
                                 Paginacion oPaginacion = new Paginacion();
                                 oPaginacion.totalElementos = lstProductos.Count;
                                 oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
                                 oPaginacion.paginaActual = pageNumber;
                                 oPaginacion.tamañoPagina = pageSize;
                                 oRespuesta.paginacion = oPaginacion;
-                                lstProductos = lstProductos.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                               // lstProductos = lstProductos.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
                                 respuesta.StatusCode = HttpStatusCode.OK;
                                 oRespuesta.error = new Error();
@@ -112,21 +123,7 @@ namespace API_Maestros_Core.Controllers
                                 this.StatusCode((int)HttpStatusCode.Unauthorized);
                                 return Unauthorized(oRespuesta);
                             }
-                        }
-                        else
-                        {
-                            respuesta.StatusCode = HttpStatusCode.BadRequest;
-                            // RespuestaConProductos oRespuesta = new RespuestaConProductos();
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = 400;
-                            oRespuesta.error.message = "No se encontro expresion a buscar";
-                            Logger.LoguearErrores("No se encontro expresion a buscar");
-                            oRespuesta.success = false;
-                            string json = JsonConvert.SerializeObject(oRespuesta);
-                            respuesta.Content = new StringContent(json);
-                            this.StatusCode((int)HttpStatusCode.NotFound);
-                            return NotFound(oRespuesta);
-                        }
+                        
                     }
                     else
                     {
@@ -174,6 +171,14 @@ namespace API_Maestros_Core.Controllers
         {
             HttpResponseMessage respuesta = new HttpResponseMessage();
             RespuestaConProductos oRespuesta = new RespuestaConProductos();
+
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             try
             {
                 if (!HabilitadoPorToken)

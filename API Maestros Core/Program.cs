@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -38,8 +40,6 @@ builder.Services.AddCors(options =>
            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("MiHeaderPersonalizado"); ;
        });
 });
-
-
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -107,6 +107,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 if (identity != null)
                 {
                     identity.AddClaim(new Claim("access_token", accessToken.RawData));
+                    ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                    fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+                    System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+
+                    SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+                    GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+
                     GESI.CORE.BO.Verscom2k.APILogin MiObjetoLogin = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.GetItem(accessToken.RawData);
 
                     if(MiObjetoLogin != null) // ESTA OK
@@ -138,7 +146,7 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
             new RateLimitRule
             {
                 Endpoint = "*",
-                Limit = 10,
+                Limit = 20,
                 Period = "1m",
                 
             }
