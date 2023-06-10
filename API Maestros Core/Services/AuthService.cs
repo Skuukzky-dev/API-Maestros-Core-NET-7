@@ -93,7 +93,7 @@ namespace API_Maestros_Core.Services
 
                 //  GESI.CORE.DAL.DBHelper.
                 SqlConnection sql = GESI.CORE.DAL.DBHelper.DevolverConnectionStringCORE();
-
+                
 
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";

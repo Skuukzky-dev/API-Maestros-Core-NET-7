@@ -1,0 +1,117 @@
+05/06/2023 13:08:45|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 13:10:01|No se encontro encabezado para la petición
+05/06/2023 13:10:12|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 13:10:16|No se encontro encabezado para la petición
+05/06/2023 14:34:21|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 14:35:44|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 14:35:57|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 14:52:42|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 14:55:38|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 14:56:18|No se encontro encabezado para la petición
+05/06/2023 15:09:19|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 15:09:30|No se encontro encabezado para la petición
+05/06/2023 15:42:44|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 15:43:07|No se encontro encabezado para la petición
+05/06/2023 16:15:06|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 16:15:49|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 16:15:57|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 16:16:51|No se encontro encabezado para la petición
+05/06/2023 16:17:00|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMTNlYmU3NGMtOTE0OC00ZGMyLWE3ZDEtODIyMGZlOWM1YTEzIiwiaWF0IjoxNjg1OTkyNTU3LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI1NTcsImV4cCI6MTY4NjAwNjk1NywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.YzCPOxopgJ23MnrPmd2mc-9ZHp1MCwaOjd38I16qf48
+05/06/2023 16:17:00|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+05/06/2023 16:17:08|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMTNlYmU3NGMtOTE0OC00ZGMyLWE3ZDEtODIyMGZlOWM1YTEzIiwiaWF0IjoxNjg1OTkyNTU3LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI1NTcsImV4cCI6MTY4NjAwNjk1NywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.YzCPOxopgJ23MnrPmd2mc-9ZHp1MCwaOjd38I16qf48
+05/06/2023 16:17:08|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+05/06/2023 16:17:15|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 16:17:24|Logueado exitosamente. Usuario: gesi
+05/06/2023 16:17:25|Error interno de la aplicacion. Descripcion: CanalDeVentaID
+05/06/2023 16:20:51|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 16:21:01|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiNmFhMGQ4ZjAtNDBjYy00ZGYwLWE1YmEtNjdkNjZmMjcwNzZkIiwiaWF0IjoxNjg1OTkyNjM1LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI2MzUsImV4cCI6MTY4NjAwNzAzNSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.JPYP8iTifMVHahX-LYfDc4Ifi2Q2GCjEPg_ZjE1IF_s
+05/06/2023 16:21:02|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+05/06/2023 16:21:14|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 16:21:25|Logueado exitosamente. Usuario: gesi
+05/06/2023 16:21:25|Error interno de la aplicacion. Descripcion: @ProductoIDs no es un parámetro del procedimiento uspGetProductos.
+05/06/2023 16:21:59|Logueado exitosamente. Usuario: gesi
+05/06/2023 16:22:00|Error interno de la aplicacion. Descripcion: CanalDeVentaID
+05/06/2023 16:58:39|Se excedio la cantidad maxima de solicitudes a realizar
+05/06/2023 17:00:23|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiZGM5Yjc2NTctYWJlYy00ODEzLWI2ZDItYTE0ZjJhZWRmM2I3IiwiaWF0IjoxNjg1OTkyODc0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI4NzQsImV4cCI6MTY4NjAwNzI3NCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.WlqvIXCVkTThL_VXrXA1kn7S2yMEECi_kemO2QQ1twM
+05/06/2023 17:00:24|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+05/06/2023 17:00:33|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+05/06/2023 17:00:49|Logueado exitosamente. Usuario: gesi
+05/06/2023 17:00:50|Exitoso para el codigo CS036
+06/06/2023 10:50:09|Se excedio la cantidad maxima de solicitudes a realizar
+06/06/2023 10:53:20|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+06/06/2023 10:53:35|Logueado exitosamente. Usuario: gesi
+06/06/2023 10:53:36|Exitoso para el codigo CS036
+06/06/2023 10:54:52|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiZjRlZmQ0ZGYtNzk2Ni00MjM3LTk3ZmMtNGU0MDNhMWU3ZGM3IiwiaWF0IjoxNjg2MDU5NjAxLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODYwNTk2MDEsImV4cCI6MTY4NjA3NDAwMSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.C9YSGwiV4PykHUGJigS3-enHOE2UZPRwfkfUODq9BaY
+06/06/2023 10:54:52|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+06/06/2023 10:54:59|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+06/06/2023 10:55:06|Logueado exitosamente. Usuario: gesi
+06/06/2023 10:55:06|Error interno de la aplicacion. Descripcion: Value cannot be null. (Parameter 'source')
+06/06/2023 10:55:23|Logueado exitosamente. Usuario: gesi
+06/06/2023 11:00:40|Se excedio la cantidad maxima de solicitudes a realizar
+06/06/2023 11:04:16|Se excedio la cantidad maxima de solicitudes a realizar
+06/06/2023 11:05:14|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+06/06/2023 11:05:28|Logueado exitosamente. Usuario: gesi
+06/06/2023 11:05:28|Exitoso para el codigo PETBLOCK
+06/06/2023 11:10:56|Se excedio la cantidad maxima de solicitudes a realizar
+06/06/2023 11:12:09|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+06/06/2023 11:12:32|No se encontro encabezado para la petición
+06/06/2023 11:12:40|Logueado exitosamente. Usuario: gesi
+06/06/2023 11:12:41|Error interno de la aplicacion. Descripcion: Error de conversión al convertir el valor varchar 'WLAC0034' al tipo de datos int.
+06/06/2023 11:12:58|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:32:27|Se excedio la cantidad maxima de solicitudes a realizar
+8/6/2023 11:32:51|No se encontro encabezado para la petición
+8/6/2023 11:34:05|No se encontro encabezado para la petición
+8/6/2023 11:34:18|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+8/6/2023 11:35:02|No se encontro encabezado para la petición
+8/6/2023 11:35:09|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:35:30|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+8/6/2023 11:35:43|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+8/6/2023 11:35:59|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:37:49|Se excedio la cantidad maxima de solicitudes a realizar
+8/6/2023 11:42:22|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:43:24|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:43:45|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:44:02|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:44:39|Se excedio la cantidad maxima de solicitudes a realizar
+8/6/2023 11:44:48|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:44:52|Exitoso para el codigo 71
+8/6/2023 11:45:00|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:47:49|Se excedio la cantidad maxima de solicitudes a realizar
+8/6/2023 11:47:55|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:48:06|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:48:26|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:48:57|Se excedio la cantidad maxima de solicitudes a realizar
+8/6/2023 11:49:03|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:49:10|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:56:03|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:56:26|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:56:51|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:57:06|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:57:06|Exitoso para el codigo 3
+8/6/2023 11:57:19|Logueado exitosamente. Usuario: gesi
+8/6/2023 11:57:31|Logueado exitosamente. Usuario: gesi
+8/6/2023 12:00:56|Se excedio la cantidad maxima de solicitudes a realizar
+8/6/2023 12:01:11|Logueado exitosamente. Usuario: gesi
+8/6/2023 12:37:12|Se excedio la cantidad maxima de solicitudes a realizar
+8/6/2023 12:37:23|Logueado exitosamente. Usuario: gesi
+8/6/2023 12:37:38|Logueado exitosamente. Usuario: gesi
+8/6/2023 12:37:51|Logueado exitosamente. Usuario: gesi
+8/6/2023 12:38:16|Logueado exitosamente. Usuario: gesi
+8/6/2023 12:38:21|Logueado exitosamente. Usuario: gesi
+8/6/2023 12:38:21|Exitoso para el codigo wlac0034
+08/06/2023 14:14:41|Se excedio la cantidad maxima de solicitudes a realizar
+08/06/2023 14:15:32|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+08/06/2023 14:15:59|Logueado exitosamente. Usuario: gesi
+08/06/2023 14:16:14|Logueado exitosamente. Usuario: gesi
+08/06/2023 14:16:14|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
+08/06/2023 14:16:33|Logueado exitosamente. Usuario: gesi
+08/06/2023 14:16:33|Respuesta exitosa para la expresion WHIS
+08/06/2023 14:16:48|Logueado exitosamente. Usuario: gesi
+08/06/2023 14:16:49|Exitoso para el codigo WLAC0034
+08/06/2023 14:21:22|Logueado exitosamente. Usuario: gesi
+10/06/2023 9:23:04|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 9:23:55|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+10/06/2023 9:24:09|Logueado exitosamente. Usuario: gesi
+10/06/2023 9:24:14|Logueado exitosamente. Usuario: gesi
+10/06/2023 9:24:39|Logueado exitosamente. Usuario: gesi
+10/06/2023 9:24:52|Logueado exitosamente. Usuario: gesi

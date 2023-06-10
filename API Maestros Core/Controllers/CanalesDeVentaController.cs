@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Drawing.Printing;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,7 +33,7 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetList")]
         [Authorize]
         [EnableCors("MyCorsPolicy")]
-        public IActionResult Get()
+        public IActionResult Get(int pageNumber = 1 ,int pageSize = 10)
         {
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -54,7 +55,7 @@ namespace API_Maestros_Core.Controllers
                 {
                     oRespuesta.success = false;
                     oRespuesta.error = new Error();
-                    oRespuesta.error.code = 401;
+                    oRespuesta.error.code = 4012;
                     oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
                     Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
                     this.StatusCode((int)HttpStatusCode.Unauthorized);
@@ -82,7 +83,16 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.success = true;
                         oRespuesta.error = new Error();
                         oRespuesta.CanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
-                        oRespuesta.CanalesDeVenta.AddRange(GESI.GESI.BLL.TablasGeneralesGESIMgr.CanalesDeVentaGetList());
+                        oRespuesta.paginacion = new Paginacion();
+                        List<GESI.GESI.BO.CanalDeVenta> lstCanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
+                        lstCanalesDeVenta = GESI.GESI.BLL.TablasGeneralesGESIMgr.CanalesDeVentaGetList();
+                        oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+                        // 
+                        oRespuesta.paginacion.totalElementos = lstCanalesDeVenta.Count;
+                        oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
+                        oRespuesta.paginacion.paginaActual = pageNumber;
+                        oRespuesta.paginacion.tamañoPagina = pageSize;
                         this.StatusCode((int)HttpStatusCode.OK);
                         return Ok(oRespuesta);
                     }
@@ -90,7 +100,7 @@ namespace API_Maestros_Core.Controllers
                     {
                         oRespuesta.success = false;
                         oRespuesta.error = new Error();
-                        oRespuesta.error.code = 401;
+                        oRespuesta.error.code = 4012;
                         oRespuesta.error.message = "No esta autorizado a acceder al recurso";
                         Logger.LoguearErrores("No esta autorizado a acceder al recurso");
                         this.StatusCode((int)HttpStatusCode.Unauthorized);
@@ -102,7 +112,7 @@ namespace API_Maestros_Core.Controllers
             {
                 oRespuesta.success = false;
                 oRespuesta.error = new Error();
-                oRespuesta.error.code = 500;
+                oRespuesta.error.code = 5001;
                 oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: "+ex.Message;
                 Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
                 this.StatusCode((int)HttpStatusCode.InternalServerError);

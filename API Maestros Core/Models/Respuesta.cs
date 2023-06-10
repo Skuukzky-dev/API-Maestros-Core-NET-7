@@ -1,4 +1,5 @@
-﻿using GESI.GESI.BO;
+﻿using GESI.ERP.Core.BO;
+using GESI.GESI.BO;
 
 namespace API_Maestros_Core.Models
 {
@@ -32,6 +33,17 @@ namespace API_Maestros_Core.Models
         private List<GESI.GESI.BO.CanalDeVenta> _CanalesDeVenta;
 
         public List<CanalDeVenta> CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
+
+        public Paginacion paginacion { get; set; } 
+    }
+
+    public class RespuestaConCategorias : Respuesta
+    {
+        private List<GESI.ERP.Core.BO.cCategoriaDeProducto> _CategoriasProductos;
+
+        public List<cCategoriaDeProducto> CategoriasProductos { get => _CategoriasProductos; set => _CategoriasProductos = value; }
+
+        public Paginacion paginacion { get; set; }
     }
 
 

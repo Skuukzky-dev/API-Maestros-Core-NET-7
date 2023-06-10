@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -78,6 +79,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 tok.error.code = 401;
                 tok.error.message = "Token invalido. Acceso denegado";
                 Logger.LoguearErrores("Token invalido. Acceso denegado");
+                
                 // we can write our own custom response content here
                 await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(tok));
             }
@@ -123,6 +125,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                         ProductosController.HabilitadoPorToken = true;
                         CanalesDeVentaController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         CanalesDeVentaController.HabilitadoPorToken = true;
+                        CategoriasController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                        CategoriasController.HabilitadoPorToken = true;
                         Logger.LoguearErrores("Logueado exitosamente. Usuario: "+MiObjetoLogin.UsuarioID);
                     }
                     else // NO LO ENCONTRO EN LA BASE
@@ -162,6 +166,7 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
 builder.Services.AddRateLimiting(builder.Configuration);
 
 var app = builder.Build();
+
 
 app.UseCors(x => x
             .AllowAnyOrigin()
@@ -211,7 +216,17 @@ app.Use(async (context, next) =>
         {
             if (splitIPs.Count == 0)
             {
-
+                if (!context.Request.Headers.ContainsKey("GrupoESI"))
+                {
+                    RespuestaToken oresp = new RespuestaToken();
+                    oresp.error = new ErrorToken();
+                    oresp.error.Code = 4015;
+                    oresp.error.Message = "No se encontro encabezado para la petición";
+                    Logger.LoguearErrores("No se encontro encabezado para la petición");
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
+                    return;
+                }
             }
             else
             {
@@ -223,12 +238,27 @@ app.Use(async (context, next) =>
                     oresp.error.Code = 4011;
                     oresp.error.Message = "No esta autorizado a acceder al recurso IP: " + ipAddress.ToString();
                     Logger.LoguearErrores("No esta autorizado a acceder al recurso IP: " + ipAddress.ToString());
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
                     return;
                 }
                 else
                 {
-                    Logger.LoguearErrores("IPs Autorizadas: " + IPConfig);
+                    if (!context.Request.Headers.ContainsKey("GrupoESI"))
+                    {
+                        RespuestaToken oresp = new RespuestaToken();
+                        oresp.error = new ErrorToken();
+                        oresp.error.Code = 4015;
+                        oresp.error.Message = "No se encontro encabezado para la petición";
+                        Logger.LoguearErrores("No se encontro encabezado para la petición");
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
+                        return;
+                    }
+                    else
+                    {
+                        Logger.LoguearErrores("IPs Autorizadas: " + IPConfig);
+                    }
                 }
             }
 
@@ -237,7 +267,17 @@ app.Use(async (context, next) =>
         {
             if (spliturl.Count == 0)
             {
-
+                if (!context.Request.Headers.ContainsKey("GrupoESI"))
+                {
+                    RespuestaToken oresp = new RespuestaToken();
+                    oresp.error = new ErrorToken();
+                    oresp.error.Code = 4015;
+                    oresp.error.Message = "No se encontro encabezado para la petición";
+                    Logger.LoguearErrores("No se encontro encabezado para la petición");
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
+                    return;
+                }
             }
             else
             {
@@ -251,12 +291,29 @@ app.Use(async (context, next) =>
                     oresp.error.Code = 4011;
                     oresp.error.Message = "No esta autorizado a acceder al recurso. URL: " + referrerUrl;
                     Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL: " + referrerUrl);
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
                     return;
                 }
                 else
                 {
-                    Logger.LoguearErrores("Dominios Autorizados: " + urlConfig);
+
+                    if (!context.Request.Headers.ContainsKey("GrupoESI"))
+                    {
+                        RespuestaToken oresp = new RespuestaToken();
+                        oresp.error = new ErrorToken();
+                        oresp.error.Code = 4015;
+                        oresp.error.Message = "No se encontro encabezado para la petición";
+                        Logger.LoguearErrores("No se encontro encabezado para la petición");
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
+                        return;
+                    }
+                    else
+                    {
+                        Logger.LoguearErrores("Dominios Autorizados: " + urlConfig);
+                    }
+                    
                 }
             }
         }
@@ -272,5 +329,6 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 app.MapControllers();
+
 
 app.Run();

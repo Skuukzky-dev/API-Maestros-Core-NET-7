@@ -23,7 +23,7 @@ namespace API_Maestros_Core.Controllers
 
         [HttpPost]
         [EnableCors("MyCorsPolicy")]
-        public RespuestaToken Token(UserLogin credenciales)
+        public IActionResult Token(UserLogin credenciales)
         {
             try
             {
@@ -55,18 +55,18 @@ namespace API_Maestros_Core.Controllers
 
                     message.Content = new StringContent(JsonConvert.SerializeObject(respuestaToken));
                     //Logger.LoguearErrores("Loggeado correctamente con usuario: " + credenciales.Username);
-                    return respuestaToken;
+                    return Ok(respuestaToken);
                 }
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
-                rspContenidoRespuesta.error.Code = 401;
+                rspContenidoRespuesta.error.Code = 4011;
                 rspContenidoRespuesta.error.Message = "Usuario y / o contraseña incorrectos";
 
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
               //  Logger.LoguearErrores("Usuario y / o contraseña incorrectos");
-                return rspContenidoRespuesta;
+                return Unauthorized(rspContenidoRespuesta);
             }
             catch (Exception ex)
             {
@@ -74,13 +74,13 @@ namespace API_Maestros_Core.Controllers
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
-                rspContenidoRespuesta.error.Code = 401;
+                rspContenidoRespuesta.error.Code = 5001;
                 rspContenidoRespuesta.error.Message = "error al devolver el token. Descripcion: " + ex.Message;
 
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
                 // Logger.LoguearErrores("Usuario y / o contraseña incorrectos");
-                return rspContenidoRespuesta;
+                return StatusCode(500, rspContenidoRespuesta);
             }
         }
     }

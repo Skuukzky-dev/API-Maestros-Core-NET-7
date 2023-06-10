@@ -40,20 +40,6 @@
                     lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda);
                 }
 
-               
-                 // Indexing starts from 0, so the second block has an index of 1
-
-             
-                // Now, the 'secondBlock' list contains the second block of 50 elements from 'lstProductosBusqueda'
-                //    commaSeparatedIds = "WLAC0034,CSC210";
-                /* String strCodigos = "";
-                 foreach(GESI.ERP.Core.BO.cProducto Prod in lstProductos)
-                 {
-                     strCodigos = strCodigos + Prod.ProductoID + ",";
-                 }
-                 strCodigos = strCodigos.Remove(strCodigos.Length - 1);*/
-                
-
                 return lstProductos;
 
             }
@@ -69,26 +55,32 @@
         /// <param name="ProductoID"></param>
         /// <param name="CanalesDeVenta"></param>
         /// <returns></returns>
-        public static GESI.ERP.Core.BO.cProducto GetItem(String ProductoID, String CanalesDeVenta,int CanalDeVentaID)
+        public static List<GESI.ERP.Core.BO.cProducto> GetItem(String ProductoID, String CanalesDeVenta,int CanalDeVentaID)
         {
             try
             {
                 GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
-
+                
 
                 string[] canales = CanalesDeVenta.Split(',');
                 int[] ints = Array.ConvertAll(canales, s => int.Parse(s));
-                GESI.ERP.Core.BO.cProducto oProduc = GESI.ERP.Core.BLL.ProductosManager.GetItem(ProductoID, ints);
 
+                List<GESI.ERP.Core.BO.cProducto> oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, ints, "S");
                 if(CanalDeVentaID > 0)
                 {
-                    List<GESI.ERP.Core.BO.cPrecioProducto> lstPrecioProducto = oProduc.Precios.Where(x => x.CanalDeVenta == CanalDeVentaID).ToList();
-                    if(lstPrecioProducto.Count > 0)
+                    if (oProduc.Count > 0)
                     {
-                        oProduc.Precios = new List<GESI.ERP.Core.BO.cPrecioProducto>();
-                        oProduc.Precios.AddRange(lstPrecioProducto);
+                        if (oProduc[0].Precios?.Count > 0)
+                        {
+                            List<GESI.ERP.Core.BO.cPrecioProducto> lstPrecioProducto = oProduc[0].Precios.Where(x => x.CanalDeVenta == CanalDeVentaID).ToList();
+                            if (lstPrecioProducto.Count > 0)
+                            {
+                                oProduc[0].Precios = new List<GESI.ERP.Core.BO.cPrecioProducto>();
+                                oProduc[0].Precios.AddRange(lstPrecioProducto);
+                            }
+                        }
                     }
                 }
 

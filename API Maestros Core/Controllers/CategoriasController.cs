@@ -1,15 +1,12 @@
 ﻿using API_Maestros_Core.BLL;
-using GESI.CORE.BLL;
-using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Net;
 using API_Maestros_Core.Models;
+using GESI.GESI.BO;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Error = API_Maestros_Core.Models.Error;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Drawing.Printing;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,8 +14,7 @@ namespace API_Maestros_Core.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class ProductosController : ControllerBase
+    public class CategoriasController : ControllerBase
     {
         #region Variables
         public static GESI.CORE.BLL.SessionMgr _SessionMgr;
@@ -27,22 +23,15 @@ namespace API_Maestros_Core.Controllers
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
         #endregion
-        // GET: api/<ProductosController>
+
+        // GET: api/<CategoriasController>
         /// <summary>
-        /// Devuelve la lista de Resultados de Busqueda de una Expresion
+        /// Devuelve la lista de categorias de Productos
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="pageNumber"></param>
-        /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet("GetList")]
-        [EnableCors("MyCorsPolicy")]
-        
-        public IActionResult Get(string id = "", int pageNumber = 1, int pageSize = 10)
+        public IActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            HttpResponseMessage respuesta = new HttpResponseMessage();
-            RespuestaConProductos oRespuesta = new RespuestaConProductos();
-
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -50,127 +39,94 @@ namespace API_Maestros_Core.Controllers
 
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+
+            RespuestaConCategorias oRespuesta = new RespuestaConCategorias();
             try
             {
+
+                //GESI.GESI.BO.ListaCanalesDeVenta lstCanales = new GESI.GESI.BO.ListaCanalesDeVenta();
+                moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
+                _SessionMgr = new GESI.CORE.BLL.SessionMgr();
+                bool Habilitado = false;
                 if (!HabilitadoPorToken)
                 {
-                    respuesta.StatusCode = HttpStatusCode.BadRequest;
-                    // RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                    oRespuesta.success = false;
                     oRespuesta.error = new Error();
                     oRespuesta.error.code = 4012;
                     oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");                   
-                    oRespuesta.success = false;
-                    string json = JsonConvert.SerializeObject(oRespuesta);
-                    respuesta.Content = new StringContent(json);
+                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
                     this.StatusCode((int)HttpStatusCode.Unauthorized);
                     return Unauthorized(oRespuesta);
+                    //return oRespuesta;
                 }
                 else
                 {
-                    moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                    _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                    bool Habilitado = false;
-                    if (id != null)
+
+                    foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                     {
+                        if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
+                        {
+                            _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
+                            _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                            _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
+                            _SessionMgr.EntidadID = 1;
+                            Habilitado = true;
+                        }
+                    }
+
+                    if (Habilitado)
+                    {
+                        Paginacion oPaginacion = new Paginacion();
+                        CategoriasMgr._SessionMgr = _SessionMgr;
+                        oRespuesta.success = true;
+                        oRespuesta.error = new Error();
+                        oRespuesta.CategoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
+                        List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategorias = CategoriasMgr.GetList();
+                        oRespuesta.CategoriasProductos.AddRange(CategoriasMgr.GetList());
+                        oPaginacion.totalElementos = oRespuesta.CategoriasProductos.Count;
                        
-                            foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                            {
-                                if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                                {
-                                    _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                    _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                    _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                    _SessionMgr.EntidadID = 1;
-                                    Habilitado = true;
-                                }
-                            }
+                        oRespuesta.CategoriasProductos = lstCategorias.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
-                            if (Habilitado)
-                            {
-                                ProductosMgr._SessionMgr = _SessionMgr;
-                                List<GESI.ERP.Core.BO.cProducto> lstProductos = ProductosMgr.GetList(id,pageNumber,pageSize);
-                                Paginacion oPaginacion = new Paginacion();
-                                oPaginacion.totalElementos = lstProductos.Count;
-                                oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
-                                oPaginacion.paginaActual = pageNumber;
-                                oPaginacion.tamañoPagina = pageSize;
-                                oRespuesta.paginacion = oPaginacion;
-                               // lstProductos = lstProductos.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                         // 
+                        oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
+                        oPaginacion.paginaActual = pageNumber;
+                        oPaginacion.tamañoPagina = pageSize;
+                        oRespuesta.paginacion = oPaginacion;
 
-                                respuesta.StatusCode = HttpStatusCode.OK;
-                                oRespuesta.error = new Error();
-                                oRespuesta.success = true;
-                                oRespuesta.Productos = lstProductos;
-                                string json = JsonConvert.SerializeObject(oRespuesta);
-                                respuesta.Content = new StringContent(json);
-                                Logger.LoguearErrores("Respuesta exitosa para la expresion "+id);
-                                this.StatusCode((int)HttpStatusCode.OK);
-                                return Ok(oRespuesta);
-                            }
-                            else
-                            {
-
-                                respuesta.StatusCode = HttpStatusCode.BadRequest;
-                                // RespuestaConProductos oRespuesta = new RespuestaConProductos();
-                                oRespuesta.error = new Error();
-                                oRespuesta.error.code = 4012;
-                                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
-                                oRespuesta.success = false;
-                                string json = JsonConvert.SerializeObject(oRespuesta);
-                                respuesta.Content = new StringContent(json);
-                                this.StatusCode((int)HttpStatusCode.Unauthorized);
-                                return Unauthorized(oRespuesta);
-                            }
-                        
+                        this.StatusCode((int)HttpStatusCode.OK);
+                        return Ok(oRespuesta);
                     }
                     else
                     {
-                        respuesta.StatusCode = HttpStatusCode.BadRequest;
-                        //RespuestaConProductos oRespuesta = new RespuestaConProductos();
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 2041;
-                        oRespuesta.error.message = "No se encontro expresion a buscar";
-                        Logger.LoguearErrores("No se encontro expresion a buscar");
                         oRespuesta.success = false;
-                        string json = JsonConvert.SerializeObject(oRespuesta);
-                        respuesta.Content = new StringContent(json);
-                        this.StatusCode((int)HttpStatusCode.NotFound);
-                        return StatusCode(204,oRespuesta);
+                        oRespuesta.error = new Error();
+                        oRespuesta.error.code = 4012;
+                        oRespuesta.error.message = "No esta autorizado a acceder al recurso";
+                        Logger.LoguearErrores("No esta autorizado a acceder al recurso");
+                        this.StatusCode((int)HttpStatusCode.Unauthorized);
+                        return Unauthorized(oRespuesta);
                     }
                 }
             }
             catch (Exception ex)
             {
-                respuesta.StatusCode = HttpStatusCode.BadRequest;
-               // RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                oRespuesta.success = false;
                 oRespuesta.error = new Error();
                 oRespuesta.error.code = 5001;
-                oRespuesta.error.message = "error interno de la aplicacion. Descripcion: " + ex.Message;
+                oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
                 Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
-                oRespuesta.success = false;
-                string json = JsonConvert.SerializeObject(oRespuesta);
-                respuesta.Content = new StringContent(json);
                 this.StatusCode((int)HttpStatusCode.InternalServerError);
-                return StatusCode(500,oRespuesta);
+                return Unauthorized(oRespuesta);
             }
-         
+
         }
 
-        // GET api/<ProductosController>/5
-        /// <summary>
-        /// Devuelve un producto con sus precios e imagenes
-        /// </summary>
-        /// <param name="ProductoID"></param>
-        /// <param name="CanalDeVentaID"></param>
-        /// <returns></returns>
-        [HttpGet("GetItem/{ProductoID}")]
-        [EnableCors("MyCorsPolicy")]
-        public IActionResult Get(string ProductoID,int CanalDeVentaID = 0)
+        // GET api/<CategoriasController>/5
+        [HttpGet("GetItem/{CategoriaID}")]
+        public IActionResult Get(String CategoriaID)
         {
             HttpResponseMessage respuesta = new HttpResponseMessage();
-            RespuestaConProductos oRespuesta = new RespuestaConProductos();
+            RespuestaConCategorias oRespuesta = new RespuestaConCategorias();
 
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -201,9 +157,9 @@ namespace API_Maestros_Core.Controllers
                     string strCanalesDeVenta = null;
                     _SessionMgr = new GESI.CORE.BLL.SessionMgr();
                     bool Habilitado = false;
-                    if (ProductoID != null)
+                    if (CategoriaID != null)
                     {
-                        if (ProductoID.Length > 0)
+                        if (CategoriaID.Length > 0)
                         {
                             foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                             {
@@ -221,9 +177,8 @@ namespace API_Maestros_Core.Controllers
                             if (Habilitado)
                             {
 
-                                ProductosMgr._SessionMgr = _SessionMgr;
-                                List<GESI.ERP.Core.BO.cProducto> lstProductos = ProductosMgr.GetItem(ProductoID, strCanalesDeVenta,CanalDeVentaID);
-
+                                CategoriasMgr._SessionMgr = _SessionMgr;
+                                
                                 Paginacion oPaginacion = new Paginacion();
                                 oPaginacion.totalElementos = 1;
                                 oPaginacion.totalPaginas = 1;
@@ -234,11 +189,11 @@ namespace API_Maestros_Core.Controllers
                                 respuesta.StatusCode = HttpStatusCode.OK;
                                 oRespuesta.error = new Error();
                                 oRespuesta.success = true;
-                                oRespuesta.Productos = new List<GESI.ERP.Core.BO.cProducto>();
-                                oRespuesta.Productos.AddRange(lstProductos);
+                                oRespuesta.CategoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
+                                oRespuesta.CategoriasProductos.AddRange(CategoriasMgr.GetItem(CategoriaID));
                                 string json = JsonConvert.SerializeObject(oRespuesta);
                                 respuesta.Content = new StringContent(json);
-                                Logger.LoguearErrores("Exitoso para el codigo "+ProductoID);
+                                Logger.LoguearErrores("Exitoso para el codigo " + CategoriaID);
                                 this.StatusCode((int)HttpStatusCode.OK);
                                 return Ok(oRespuesta);
                             }
@@ -302,24 +257,23 @@ namespace API_Maestros_Core.Controllers
                 this.StatusCode((int)HttpStatusCode.InternalServerError);
                 return StatusCode(500, oRespuesta);
             }
-           
         }
 
-        // POST api/<ProductosController>
-     /*   [HttpPost]
+     /*   // POST api/<CategoriasController>
+        [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<ProductosController>/5
-        [HttpPut("{ProductoID}")]
-        public void Put(int ProductoID, [FromBody] string value)
+        // PUT api/<CategoriasController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ProductosController>/5
-        [HttpDelete("{ProductoID}")]
-        public void Delete(int ProductoID)
+        // DELETE api/<CategoriasController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
         {
         }*/
     }
