@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing.Printing;
@@ -33,6 +34,7 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetList")]
         [Authorize]
         [EnableCors("MyCorsPolicy")]
+        [SwaggerOperation(Tags = new[] {"Canales de Venta"})]
         public IActionResult Get(int pageNumber = 1 ,int pageSize = 10)
         {
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();

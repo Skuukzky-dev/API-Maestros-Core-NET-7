@@ -1,4 +1,8 @@
-﻿namespace API_Maestros_Core.BLL
+﻿using API_Maestros_Core.Controllers;
+using GESI.GESI.BO;
+using Newtonsoft.Json;
+
+namespace API_Maestros_Core.BLL
 {
     public class ProductosMgr
     {
@@ -10,7 +14,7 @@
         /// </summary>
         /// <param name="strExpresionBusqueda"></param>
         /// <returns></returns>
-        public static List<GESI.ERP.Core.BO.cProducto> GetList(String strExpresionBusqueda,int pageNumber, int pageSize)
+        public static List<HijoProductos> GetList(String strExpresionBusqueda,int pageNumber, int pageSize)
         {
             try
             {
@@ -40,7 +44,15 @@
                     lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda);
                 }
 
-                return lstProductos;
+                List<HijoProductos> lstHijos = new List<HijoProductos>();
+                foreach(GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                {
+                    lstHijos.Add(new HijoProductos(oPrd));
+                }
+
+               
+
+                return lstHijos;
 
             }
             catch (Exception ex)
@@ -55,7 +67,7 @@
         /// <param name="ProductoID"></param>
         /// <param name="CanalesDeVenta"></param>
         /// <returns></returns>
-        public static List<GESI.ERP.Core.BO.cProducto> GetItem(String ProductoID, String CanalesDeVenta,int CanalDeVentaID)
+        public static List<HijoProductos> GetItem(String ProductoID, String CanalesDeVenta,int CanalDeVentaID)
         {
             try
             {
@@ -66,7 +78,7 @@
 
                 string[] canales = CanalesDeVenta.Split(',');
                 int[] ints = Array.ConvertAll(canales, s => int.Parse(s));
-
+                List<HijoProductos> lstHijos = new List<HijoProductos>();
                 List<GESI.ERP.Core.BO.cProducto> oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, ints, "S");
                 if(CanalDeVentaID > 0)
                 {
@@ -84,7 +96,15 @@
                     }
                 }
 
-                return oProduc;
+                if(oProduc?.Count > 0)
+                {
+                    foreach (GESI.ERP.Core.BO.cProducto oPrd in oProduc)
+                    {
+                        lstHijos.Add(new HijoProductos(oPrd));
+                    }
+                }
+
+                return lstHijos;
 
             }
             catch (Exception ex)
@@ -93,5 +113,8 @@
             }
         }
 
+
     }
+
+    
 }

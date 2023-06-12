@@ -23,7 +23,11 @@ builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => options.CustomSchemaIds(type => type.FullName));
+
+builder.Services.AddSwaggerGen(options => { options.CustomSchemaIds(type => type.FullName);
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "API Maestros Grupo ESI" });options.EnableAnnotations(); });
+
+
 builder.Services.AddAuthorization(options =>
         options.DefaultPolicy =
         new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build()
@@ -165,6 +169,8 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
 
 builder.Services.AddRateLimiting(builder.Configuration);
 
+
+
 var app = builder.Build();
 
 
@@ -186,7 +192,10 @@ app.UseSwaggerUI(c =>
 {
     c.DefaultModelsExpandDepth(-1); // Disable swagger schemas at bottom
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+    
 });
+
+
 
 
 app.Use(async (context, next) =>

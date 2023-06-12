@@ -1,4 +1,5 @@
-﻿using GESI.ERP.Core.BO;
+﻿using API_Maestros_Core.Controllers;
+using GESI.ERP.Core.BO;
 using GESI.GESI.BO;
 
 namespace API_Maestros_Core.Models
@@ -24,6 +25,15 @@ namespace API_Maestros_Core.Models
     {
         private List<GESI.ERP.Core.BO.cProducto> _Productos;
         public List<GESI.ERP.Core.BO.cProducto> Productos { get => _Productos; set => _Productos = value; }
+
+        public Paginacion paginacion { get; set; }
+    }
+
+
+    public class RespuestaConProductosHijos : Respuesta
+    {
+        private List<HijoProductos> _Productos;
+        public List<HijoProductos> Productos { get => _Productos; set => _Productos = value; }
 
         public Paginacion paginacion { get; set; }
     }

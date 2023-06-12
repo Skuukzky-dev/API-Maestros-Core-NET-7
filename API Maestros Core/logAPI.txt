@@ -115,3 +115,95 @@
 10/06/2023 9:24:14|Logueado exitosamente. Usuario: gesi
 10/06/2023 9:24:39|Logueado exitosamente. Usuario: gesi
 10/06/2023 9:24:52|Logueado exitosamente. Usuario: gesi
+10/06/2023 9:28:42|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 9:45:20|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 9:48:23|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 10:56:35|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 10:57:24|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+10/06/2023 10:57:44|Logueado exitosamente. Usuario: gesi
+10/06/2023 10:57:44|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
+10/06/2023 10:58:11|Logueado exitosamente. Usuario: gesi
+10/06/2023 10:58:12|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:03:05|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:03:05|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:03:17|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:03:28|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:03:29|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:04:50|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:06:36|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:06:49|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:06:52|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:09:43|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:10:12|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:10:26|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:10:30|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:30:02|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:30:16|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:30:29|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:30:56|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:34:06|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:34:17|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:34:19|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:46:04|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:46:13|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:46:16|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:48:26|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:48:34|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:48:36|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:48:52|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:48:52|Respuesta exitosa para la expresion ACIEND
+10/06/2023 11:49:01|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 11:49:35|Logueado exitosamente. Usuario: gesi
+10/06/2023 11:49:37|Respuesta exitosa para la expresion ACIEND
+10/06/2023 17:43:57|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 17:44:13|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+10/06/2023 17:44:56|Logueado exitosamente. Usuario: gesi
+10/06/2023 17:44:59|Respuesta exitosa para la expresion ACIEND
+10/06/2023 17:45:36|Logueado exitosamente. Usuario: gesi
+10/06/2023 17:46:27|Se excedio la cantidad maxima de solicitudes a realizar
+10/06/2023 17:46:36|Logueado exitosamente. Usuario: gesi
+10/06/2023 17:46:46|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:25:18|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:28:49|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+12/06/2023 8:29:03|Logueado exitosamente. Usuario: gesi
+12/06/2023 8:29:05|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:30:15|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:30:27|Logueado exitosamente. Usuario: gesi
+12/06/2023 8:30:27|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:33:40|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:33:51|Logueado exitosamente. Usuario: gesi
+12/06/2023 8:33:52|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:37:12|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:37:29|Logueado exitosamente. Usuario: gesi
+12/06/2023 8:37:29|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:39:27|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:39:45|Logueado exitosamente. Usuario: gesi
+12/06/2023 8:39:46|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:48:57|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:54:08|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:54:57|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:55:16|Logueado exitosamente. Usuario: gesi
+12/06/2023 8:55:16|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:56:00|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 8:56:07|Logueado exitosamente. Usuario: gesi
+12/06/2023 8:56:08|Respuesta exitosa para la expresion ACIEND
+12/06/2023 8:57:13|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 9:00:40|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 9:03:19|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 9:03:34|Logueado exitosamente. Usuario: gesi
+12/06/2023 9:03:34|Respuesta exitosa para la expresion ACIEND
+12/06/2023 9:03:38|Logueado exitosamente. Usuario: gesi
+12/06/2023 9:03:38|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
+12/06/2023 9:06:56|Logueado exitosamente. Usuario: gesi
+12/06/2023 9:06:57|Respuesta exitosa para la expresion 
+12/06/2023 9:20:12|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 9:21:09|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+12/06/2023 9:21:24|Logueado exitosamente. Usuario: gesi
+12/06/2023 9:21:24|Exitoso para el codigo PETBLOCK
+12/06/2023 9:21:31|Logueado exitosamente. Usuario: gesi
+12/06/2023 9:21:32|Exitoso para el codigo WLAC0034
+12/06/2023 9:21:51|Logueado exitosamente. Usuario: gesi
+12/06/2023 9:22:50|Se excedio la cantidad maxima de solicitudes a realizar
+12/06/2023 9:22:59|Logueado exitosamente. Usuario: gesi
+12/06/2023 9:23:02|Exitoso para el codigo WLAC0034
+12/06/2023 9:25:14|Se excedio la cantidad maxima de solicitudes a realizar
