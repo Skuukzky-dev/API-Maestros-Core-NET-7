@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,6 +24,7 @@ namespace API_Maestros_Core.Controllers
 
         [HttpPost]
         [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaToken))]
         public IActionResult Token(UserLogin credenciales)
         {
             try

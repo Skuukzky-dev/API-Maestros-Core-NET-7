@@ -32,10 +32,11 @@ namespace API_Maestros_Core.Models
 
     public class RespuestaConProductosHijos : Respuesta
     {
-        private List<HijoProductos> _Productos;
-        public List<HijoProductos> Productos { get => _Productos; set => _Productos = value; }
+        private List<HijoProductos> _productos;
+    
 
         public Paginacion paginacion { get; set; }
+        public List<HijoProductos> productos { get => _productos; set => _productos = value; }
     }
 
     public class RespuestaConCanalesDeVenta : Respuesta

@@ -80,7 +80,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 RespuestaConToken tok = new RespuestaConToken();
                 tok.success = false;
                 tok.error = new Error();
-                tok.error.code = 401;
+                tok.error.code = 4012;
                 tok.error.message = "Token invalido. Acceso denegado";
                 Logger.LoguearErrores("Token invalido. Acceso denegado");
                 
@@ -93,7 +93,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 RespuestaConToken tok = new RespuestaConToken();
                 tok.success = false;
                 tok.error = new Error();
-                tok.error.code = 401;
+                tok.error.code = 4012;
                 tok.error.message = "No se encontro el Token en el Request";
                 Logger.LoguearErrores("No se encontro el Token en el Request");
                 // we can write our own custom response content here

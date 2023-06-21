@@ -1,6 +1,8 @@
 ﻿using API_Maestros_Core.Controllers;
 using GESI.GESI.BO;
 using Newtonsoft.Json;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace API_Maestros_Core.BLL
 {
@@ -18,6 +20,14 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+                ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+                System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+                SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+                GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+                GESI.ERP.Core.BLL.cBASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
+
+
                 GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
@@ -71,6 +81,13 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+                ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+                System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+                SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+                GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+                GESI.ERP.Core.BLL.cBASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
+
                 GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;

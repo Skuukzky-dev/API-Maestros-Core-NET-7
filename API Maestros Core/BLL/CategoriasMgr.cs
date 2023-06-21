@@ -20,8 +20,7 @@ namespace API_Maestros_Core.BLL
                 GESI.ERP.Core.BLL.CategoriasManager.SessionManager = _SessionMgr;
 
                 List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategoriasProducto = GESI.ERP.Core.BLL.CategoriasManager.GetList();
-               // lstCategoriasProducto = lstCategoriasProducto.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
+            
                 return lstCategoriasProducto;
 
             }

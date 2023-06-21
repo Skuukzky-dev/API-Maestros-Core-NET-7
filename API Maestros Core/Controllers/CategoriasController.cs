@@ -1,8 +1,10 @@
 ﻿using API_Maestros_Core.BLL;
 using API_Maestros_Core.Models;
 using GESI.GESI.BO;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing.Printing;
@@ -30,8 +32,14 @@ namespace API_Maestros_Core.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetList")]
-        public IActionResult Get(int pageNumber = 1, int pageSize = 10)
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult Get([FromBody]ResponseCategoriasGetList oResponse = null)
         {
+
+            if (oResponse == null)
+                oResponse = new ResponseCategoriasGetList();
+
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -39,93 +47,112 @@ namespace API_Maestros_Core.Controllers
 
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
-
             RespuestaConCategorias oRespuesta = new RespuestaConCategorias();
-            try
+
+            if (!ModelState.IsValid)
+            {
+                oRespuesta.success = false;
+                oRespuesta.error = new Error();
+                oRespuesta.error.code = 4151;
+                oRespuesta.error.message = "Modelo no válido";
+                Logger.LoguearErrores("Modelo no válido");
+                this.StatusCode((int)HttpStatusCode.Unauthorized);
+                return StatusCode(415, oRespuesta);
+            }
+            else
             {
 
-                moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                bool Habilitado = false;
-                if (!HabilitadoPorToken)
-                {
-                    oRespuesta.success = false;
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4012;
-                    oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
-                    this.StatusCode((int)HttpStatusCode.Unauthorized);
-                    return Unauthorized(oRespuesta);
-                    //return oRespuesta;
-                }
-                else
+                try
                 {
 
-                    foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                    {
-                        if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                        {
-                            _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                            _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                            _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                            _SessionMgr.EntidadID = 1;
-                            Habilitado = true;
-                        }
-                    }
-
-                    if (Habilitado)
-                    {
-                        Paginacion oPaginacion = new Paginacion();
-                        CategoriasMgr._SessionMgr = _SessionMgr;
-                        oRespuesta.success = true;
-                        oRespuesta.error = new Error();
-                        oRespuesta.CategoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
-                        List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategorias = CategoriasMgr.GetList();
-                        oRespuesta.CategoriasProductos.AddRange(CategoriasMgr.GetList());
-                        oPaginacion.totalElementos = oRespuesta.CategoriasProductos.Count;
-                       
-                        oRespuesta.CategoriasProductos = lstCategorias.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-                         // 
-                        oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
-                        oPaginacion.paginaActual = pageNumber;
-                        oPaginacion.tamañoPagina = pageSize;
-                        oRespuesta.paginacion = oPaginacion;
-
-                        this.StatusCode((int)HttpStatusCode.OK);
-                        return Ok(oRespuesta);
-                    }
-                    else
+                    moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
+                    _SessionMgr = new GESI.CORE.BLL.SessionMgr();
+                    bool Habilitado = false;
+                    if (!HabilitadoPorToken)
                     {
                         oRespuesta.success = false;
                         oRespuesta.error = new Error();
                         oRespuesta.error.code = 4012;
-                        oRespuesta.error.message = "No esta autorizado a acceder al recurso";
-                        Logger.LoguearErrores("No esta autorizado a acceder al recurso");
+                        oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
                         this.StatusCode((int)HttpStatusCode.Unauthorized);
                         return Unauthorized(oRespuesta);
+                        //return oRespuesta;
+                    }
+                    else
+                    {
+
+                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
+                        {
+                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
+                            {
+                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
+                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
+                                _SessionMgr.EntidadID = 1;
+                                Habilitado = true;
+                            }
+                        }
+
+                        if (Habilitado)
+                        {
+                            Paginacion oPaginacion = new Paginacion();
+                            CategoriasMgr._SessionMgr = _SessionMgr;
+                            oRespuesta.success = true;
+                            oRespuesta.error = new Error();
+                            oRespuesta.CategoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
+                            List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategorias = CategoriasMgr.GetList();
+                            oRespuesta.CategoriasProductos.AddRange(CategoriasMgr.GetList());
+                            oPaginacion.totalElementos = oRespuesta.CategoriasProductos.Count;
+
+                            oRespuesta.CategoriasProductos = lstCategorias.Skip((oResponse.pageNumber - 1) * oResponse.pageSize).Take(oResponse.pageSize).ToList();
+
+                            // 
+                            oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / oResponse.pageSize);
+                            oPaginacion.paginaActual = oResponse.pageNumber;
+                            oPaginacion.tamañoPagina = oResponse.pageSize;
+                            oRespuesta.paginacion = oPaginacion;
+
+                            this.StatusCode((int)HttpStatusCode.OK);
+                            return Ok(oRespuesta);
+                        }
+                        else
+                        {
+                            oRespuesta.success = false;
+                            oRespuesta.error = new Error();
+                            oRespuesta.error.code = 4012;
+                            oRespuesta.error.message = "No esta autorizado a acceder al recurso";
+                            Logger.LoguearErrores("No esta autorizado a acceder al recurso");
+                            this.StatusCode((int)HttpStatusCode.Unauthorized);
+                            return Unauthorized(oRespuesta);
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                oRespuesta.success = false;
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 5001;
-                oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
-                this.StatusCode((int)HttpStatusCode.InternalServerError);
-                return Unauthorized(oRespuesta);
+                catch (Exception ex)
+                {
+                    oRespuesta.success = false;
+                    oRespuesta.error = new Error();
+                    oRespuesta.error.code = 5001;
+                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
+                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                    this.StatusCode((int)HttpStatusCode.InternalServerError);
+                    return Unauthorized(oRespuesta);
+                }
             }
 
         }
 
         // GET api/<CategoriasController>/5
-        [HttpGet("GetItem/{CategoriaID}")]
-        public IActionResult Get(String CategoriaID)
+        [HttpGet("GetItem")]
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult Get([FromBody] ResponseCategoriasGetItem oRequestRecibido = null)
         {
             HttpResponseMessage respuesta = new HttpResponseMessage();
             RespuestaConCategorias oRespuesta = new RespuestaConCategorias();
+
+            if (oRequestRecibido == null)
+                oRequestRecibido = new ResponseCategoriasGetItem();
 
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -134,89 +161,123 @@ namespace API_Maestros_Core.Controllers
 
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
-            try
+
+            if (!ModelState.IsValid)
             {
-                if (!HabilitadoPorToken)
+                respuesta.StatusCode = HttpStatusCode.BadRequest;
+                // RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                oRespuesta.error = new Error();
+                oRespuesta.error.code = 4151;
+                oRespuesta.error.message = "Modelo no valido";
+                Logger.LoguearErrores("Modelo no valido");
+                oRespuesta.success = false;
+                string json = JsonConvert.SerializeObject(oRespuesta);
+                respuesta.Content = new StringContent(json);
+                this.StatusCode((int)HttpStatusCode.BadRequest);
+                return StatusCode(415, oRespuesta);
+                //return Unauthorized(oRespuesta);
+            }
+            else
+            {
+
+                try
                 {
-                    respuesta.StatusCode = HttpStatusCode.BadRequest;
-                    // RespuestaConProductos oRespuesta = new RespuestaConProductos();
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4012;
-                    oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
-                    oRespuesta.success = false;
-                    string json = JsonConvert.SerializeObject(oRespuesta);
-                    respuesta.Content = new StringContent(json);
-                    this.StatusCode((int)HttpStatusCode.BadRequest);
-                    return Unauthorized(oRespuesta);
-                }
-                else
-                {
-                    moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                    string strCanalesDeVenta = null;
-                    _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                    bool Habilitado = false;
-                    if (CategoriaID != null)
+                    if (!HabilitadoPorToken)
                     {
-                        if (CategoriaID.Length > 0)
+                        respuesta.StatusCode = HttpStatusCode.BadRequest;
+                        // RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                        oRespuesta.error = new Error();
+                        oRespuesta.error.code = 4012;
+                        oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                        oRespuesta.success = false;
+                        string json = JsonConvert.SerializeObject(oRespuesta);
+                        respuesta.Content = new StringContent(json);
+                        this.StatusCode((int)HttpStatusCode.BadRequest);
+                        return Unauthorized(oRespuesta);
+                    }
+                    else
+                    {
+                        moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
+                        string strCanalesDeVenta = null;
+                        _SessionMgr = new GESI.CORE.BLL.SessionMgr();
+                        bool Habilitado = false;
+                        if (oRequestRecibido.CategoriaID != null)
                         {
-                            foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
+                            if (oRequestRecibido.CategoriaID.Length > 0)
                             {
-                                if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
+                                foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                                 {
-                                    _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                    _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                    _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                    _SessionMgr.EntidadID = 1;
-                                    strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
-                                    Habilitado = true;
+                                    if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
+                                    {
+                                        _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
+                                        _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                                        _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
+                                        _SessionMgr.EntidadID = 1;
+                                        strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
+                                        Habilitado = true;
+                                    }
                                 }
-                            }
 
-                            if (Habilitado)
-                            {
+                                if (Habilitado)
+                                {
 
-                                CategoriasMgr._SessionMgr = _SessionMgr;
-                                
-                                Paginacion oPaginacion = new Paginacion();
-                                oPaginacion.totalElementos = 1;
-                                oPaginacion.totalPaginas = 1;
-                                oPaginacion.paginaActual = 1;
-                                oPaginacion.tamañoPagina = 1;
-                                oRespuesta.paginacion = oPaginacion;
+                                    CategoriasMgr._SessionMgr = _SessionMgr;
 
-                                respuesta.StatusCode = HttpStatusCode.OK;
-                                oRespuesta.error = new Error();
-                                oRespuesta.success = true;
-                                oRespuesta.CategoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
-                                oRespuesta.CategoriasProductos.AddRange(CategoriasMgr.GetItem(CategoriaID));
-                                string json = JsonConvert.SerializeObject(oRespuesta);
-                                respuesta.Content = new StringContent(json);
-                                Logger.LoguearErrores("Exitoso para el codigo " + CategoriaID);
-                                this.StatusCode((int)HttpStatusCode.OK);
-                                return Ok(oRespuesta);
+                                    Paginacion oPaginacion = new Paginacion();
+                                    oPaginacion.totalElementos = 1;
+                                    oPaginacion.totalPaginas = 1;
+                                    oPaginacion.paginaActual = 1;
+                                    oPaginacion.tamañoPagina = 1;
+                                    oRespuesta.paginacion = oPaginacion;
+
+                                    respuesta.StatusCode = HttpStatusCode.OK;
+                                    oRespuesta.error = new Error();
+                                    oRespuesta.success = true;
+                                    oRespuesta.CategoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
+                                    oRespuesta.CategoriasProductos.AddRange(CategoriasMgr.GetItem(oRequestRecibido.CategoriaID));
+                                    string json = JsonConvert.SerializeObject(oRespuesta);
+                                    respuesta.Content = new StringContent(json);
+                                    Logger.LoguearErrores("Exitoso para el codigo " + oRequestRecibido.CategoriaID);
+                                    this.StatusCode((int)HttpStatusCode.OK);
+                                    return Ok(oRespuesta);
+                                }
+                                else
+                                {
+                                    respuesta.StatusCode = HttpStatusCode.BadRequest;
+                                    // RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                                    oRespuesta.error = new Error();
+                                    oRespuesta.error.code = 4012;
+                                    oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                                    oRespuesta.success = false;
+                                    string json = JsonConvert.SerializeObject(oRespuesta);
+                                    respuesta.Content = new StringContent(json);
+                                    this.StatusCode((int)HttpStatusCode.BadRequest);
+                                    return Unauthorized(oRespuesta);
+                                }
                             }
                             else
                             {
                                 respuesta.StatusCode = HttpStatusCode.BadRequest;
-                                // RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                                //    RespuestaConProductos oRespuesta = new RespuestaConProductos();
                                 oRespuesta.error = new Error();
-                                oRespuesta.error.code = 4012;
-                                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                                oRespuesta.error.code = 2041;
+                                oRespuesta.error.message = "No se encontro expresion a buscar";
+                                Logger.LoguearErrores("No se encontro expresion a buscar");
                                 oRespuesta.success = false;
                                 string json = JsonConvert.SerializeObject(oRespuesta);
                                 respuesta.Content = new StringContent(json);
-                                this.StatusCode((int)HttpStatusCode.BadRequest);
-                                return Unauthorized(oRespuesta);
+                                this.StatusCode((int)HttpStatusCode.NotFound);
+                                return StatusCode(204, oRespuesta);
                             }
                         }
                         else
                         {
                             respuesta.StatusCode = HttpStatusCode.BadRequest;
-                            //    RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                            //RespuestaConProductos oRespuesta = new RespuestaConProductos();
                             oRespuesta.error = new Error();
-                            oRespuesta.error.code = 2041;
+                            oRespuesta.error.code = 4041;
                             oRespuesta.error.message = "No se encontro expresion a buscar";
                             Logger.LoguearErrores("No se encontro expresion a buscar");
                             oRespuesta.success = false;
@@ -226,38 +287,69 @@ namespace API_Maestros_Core.Controllers
                             return StatusCode(204, oRespuesta);
                         }
                     }
-                    else
-                    {
-                        respuesta.StatusCode = HttpStatusCode.BadRequest;
-                        //RespuestaConProductos oRespuesta = new RespuestaConProductos();
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4041;
-                        oRespuesta.error.message = "No se encontro expresion a buscar";
-                        Logger.LoguearErrores("No se encontro expresion a buscar");
-                        oRespuesta.success = false;
-                        string json = JsonConvert.SerializeObject(oRespuesta);
-                        respuesta.Content = new StringContent(json);
-                        this.StatusCode((int)HttpStatusCode.NotFound);
-                        return StatusCode(204, oRespuesta);
-                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                respuesta.StatusCode = HttpStatusCode.BadRequest;
-                //RespuestaConProductos oRespuesta = new RespuestaConProductos();
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 5001;
-                oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
-                oRespuesta.success = false;
-                string json = JsonConvert.SerializeObject(oRespuesta);
-                respuesta.Content = new StringContent(json);
-                this.StatusCode((int)HttpStatusCode.InternalServerError);
-                return StatusCode(500, oRespuesta);
+                catch (Exception ex)
+                {
+                    respuesta.StatusCode = HttpStatusCode.BadRequest;
+                    //RespuestaConProductos oRespuesta = new RespuestaConProductos();
+                    oRespuesta.error = new Error();
+                    oRespuesta.error.code = 5001;
+                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
+                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                    oRespuesta.success = false;
+                    string json = JsonConvert.SerializeObject(oRespuesta);
+                    respuesta.Content = new StringContent(json);
+                    this.StatusCode((int)HttpStatusCode.InternalServerError);
+                    return StatusCode(500, oRespuesta);
+                }
             }
         }
 
+
+
      
     }
+
+    public class ResponseCategoriasGetItem
+    {
+        private String _CategoriaID;
+
+        public String CategoriaID
+        {
+            get { return _CategoriaID; }
+            set { _CategoriaID = value; }            
+        }
+
+        public ResponseCategoriasGetItem()
+        {
+            _CategoriaID = "";
+        }
+
+    }
+
+    public class ResponseCategoriasGetList
+    {
+        private int _pageNumber;
+        private int _pageSize;
+
+        public int pageNumber
+        {
+            get { return _pageNumber; }
+            set { _pageNumber = value; }
+        }
+
+        public int pageSize
+        {
+            get { return _pageSize; }
+            set { _pageSize = value; }
+        }
+
+        public ResponseCategoriasGetList(int pageNumber = 1, int pageSize = 10)
+        {
+            _pageNumber = pageNumber;
+            _pageSize = pageSize;
+        }
+    }
+        
+
 }

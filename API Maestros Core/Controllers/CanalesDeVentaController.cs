@@ -35,6 +35,7 @@ namespace API_Maestros_Core.Controllers
         [Authorize]
         [EnableCors("MyCorsPolicy")]
         [SwaggerOperation(Tags = new[] {"Canales de Venta"})]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCanalesDeVenta))]
         public IActionResult Get(int pageNumber = 1 ,int pageSize = 10)
         {
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
