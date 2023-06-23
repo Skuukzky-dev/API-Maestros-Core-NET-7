@@ -36,12 +36,14 @@ namespace API_Maestros_Core.Controllers
         [EnableCors("MyCorsPolicy")]
         [SwaggerOperation(Tags = new[] {"Canales de Venta"})]
         [SwaggerResponse(200, "OK", typeof(RespuestaConCanalesDeVenta))]
-        public IActionResult Get(int pageNumber = 1 ,int pageSize = 10)
+        public IActionResult Get([FromBody] ResponseGetList oRequest = null)
         {
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
+            if (oRequest == null)
+                oRequest = new ResponseGetList();
 
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
@@ -89,13 +91,13 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.paginacion = new Paginacion();
                         List<GESI.GESI.BO.CanalDeVenta> lstCanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
                         lstCanalesDeVenta = GESI.GESI.BLL.TablasGeneralesGESIMgr.CanalesDeVentaGetList();
-                        oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                        oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((oRequest.pageNumber - 1) * oRequest.pageSize).Take(oRequest.pageSize).ToList();
 
                         // 
                         oRespuesta.paginacion.totalElementos = lstCanalesDeVenta.Count;
-                        oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
-                        oRespuesta.paginacion.paginaActual = pageNumber;
-                        oRespuesta.paginacion.tamañoPagina = pageSize;
+                        oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / oRequest.pageSize);
+                        oRespuesta.paginacion.paginaActual = oRequest.pageNumber;
+                        oRespuesta.paginacion.tamañoPagina = oRequest.pageSize;
                         this.StatusCode((int)HttpStatusCode.OK);
                         return Ok(oRespuesta);
                     }

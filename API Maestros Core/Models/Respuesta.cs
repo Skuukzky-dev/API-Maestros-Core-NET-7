@@ -21,12 +21,13 @@ namespace API_Maestros_Core.Models
         public string token { get => _token; set => _token = value; }
     }
 
-    public class RespuestaConProductos : Respuesta
+    public class RespuestaProductosGetItem : Respuesta
     {
-        private List<GESI.ERP.Core.BO.cProducto> _Productos;
-        public List<GESI.ERP.Core.BO.cProducto> Productos { get => _Productos; set => _Productos = value; }
+        private HijoProductos _productos;
+
 
         public Paginacion paginacion { get; set; }
+        public HijoProductos producto { get => _productos; set => _productos = value; }
     }
 
 
@@ -37,6 +38,14 @@ namespace API_Maestros_Core.Models
 
         public Paginacion paginacion { get; set; }
         public List<HijoProductos> productos { get => _productos; set => _productos = value; }
+    }
+
+    public class RespuestaProductosGetResult : Respuesta
+    {
+        public Paginacion paginacion { get; set; }
+        public List<ResultProducts> productos { get => _productos; set => _productos = value; }
+
+        private List<ResultProducts> _productos;
     }
 
     public class RespuestaConCanalesDeVenta : Respuesta

@@ -34,11 +34,11 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetList")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
-        public IActionResult Get([FromBody]ResponseCategoriasGetList oResponse = null)
+        public IActionResult Get([FromBody]ResponseGetList oResponse = null)
         {
 
             if (oResponse == null)
-                oResponse = new ResponseCategoriasGetList();
+                oResponse = new ResponseGetList();
 
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -103,10 +103,10 @@ namespace API_Maestros_Core.Controllers
                             oRespuesta.CategoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
                             List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategorias = CategoriasMgr.GetList();
                             oRespuesta.CategoriasProductos.AddRange(CategoriasMgr.GetList());
-                            oPaginacion.totalElementos = oRespuesta.CategoriasProductos.Count;
+                           
 
                             oRespuesta.CategoriasProductos = lstCategorias.Skip((oResponse.pageNumber - 1) * oResponse.pageSize).Take(oResponse.pageSize).ToList();
-
+                            oPaginacion.totalElementos = oRespuesta.CategoriasProductos.Count;
                             // 
                             oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / oResponse.pageSize);
                             oPaginacion.paginaActual = oResponse.pageNumber;
@@ -327,29 +327,7 @@ namespace API_Maestros_Core.Controllers
 
     }
 
-    public class ResponseCategoriasGetList
-    {
-        private int _pageNumber;
-        private int _pageSize;
-
-        public int pageNumber
-        {
-            get { return _pageNumber; }
-            set { _pageNumber = value; }
-        }
-
-        public int pageSize
-        {
-            get { return _pageSize; }
-            set { _pageSize = value; }
-        }
-
-        public ResponseCategoriasGetList(int pageNumber = 1, int pageSize = 10)
-        {
-            _pageNumber = pageNumber;
-            _pageSize = pageSize;
-        }
-    }
+   
         
 
 }
