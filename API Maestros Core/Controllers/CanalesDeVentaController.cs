@@ -63,13 +63,11 @@ namespace API_Maestros_Core.Controllers
                     oRespuesta.error.code = 4012;
                     oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
                     Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
-                    this.StatusCode((int)HttpStatusCode.Unauthorized);
                     return Unauthorized(oRespuesta);
-                    //return oRespuesta;
                 }
                 else
                 {
-
+                    #region SessionManager
                     foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                     {
                         if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
@@ -81,6 +79,7 @@ namespace API_Maestros_Core.Controllers
                             Habilitado = true;
                         }
                     }
+                    #endregion
 
                     if (Habilitado)
                     {
@@ -92,13 +91,10 @@ namespace API_Maestros_Core.Controllers
                         List<GESI.GESI.BO.CanalDeVenta> lstCanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
                         lstCanalesDeVenta = GESI.GESI.BLL.TablasGeneralesGESIMgr.CanalesDeVentaGetList();
                         oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((oRequest.pageNumber - 1) * oRequest.pageSize).Take(oRequest.pageSize).ToList();
-
-                        // 
                         oRespuesta.paginacion.totalElementos = lstCanalesDeVenta.Count;
                         oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / oRequest.pageSize);
                         oRespuesta.paginacion.paginaActual = oRequest.pageNumber;
                         oRespuesta.paginacion.tamañoPagina = oRequest.pageSize;
-                        this.StatusCode((int)HttpStatusCode.OK);
                         return Ok(oRespuesta);
                     }
                     else
@@ -108,7 +104,6 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.error.code = 4012;
                         oRespuesta.error.message = "No esta autorizado a acceder al recurso";
                         Logger.LoguearErrores("No esta autorizado a acceder al recurso");
-                        this.StatusCode((int)HttpStatusCode.Unauthorized);
                         return Unauthorized(oRespuesta);
                     }
                 }
@@ -120,7 +115,6 @@ namespace API_Maestros_Core.Controllers
                 oRespuesta.error.code = 5001;
                 oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: "+ex.Message;
                 Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
-                this.StatusCode((int)HttpStatusCode.InternalServerError);
                 return Unauthorized(oRespuesta);
             }
 

@@ -217,7 +217,7 @@ app.Use(async (context, next) =>
         splitIPs = IPConfig.Split(',').ToList();
 
     var referrerUrl = context.Request.Headers["Referer"].ToString();
-
+    
 
     if (referrerUrl != null)
     {

@@ -61,11 +61,19 @@ namespace API_Maestros_Core.Models
     {
         private List<GESI.ERP.Core.BO.cCategoriaDeProducto> _CategoriasProductos;
 
-        public List<cCategoriaDeProducto> CategoriasProductos { get => _CategoriasProductos; set => _CategoriasProductos = value; }
+        public List<cCategoriaDeProducto> categoriasProductos { get => _CategoriasProductos; set => _CategoriasProductos = value; }
 
         public Paginacion paginacion { get; set; }
     }
 
+    public class RespuestaCategoriasGetItem : Respuesta
+    {
+        private GESI.ERP.Core.BO.cCategoriaDeProducto _CategoriasProductos;
+
+        public cCategoriaDeProducto categoriaProducto { get => _CategoriasProductos; set => _CategoriasProductos = value; }
+
+        public Paginacion paginacion { get; set; }
+    }
 
     public class Paginacion
     {

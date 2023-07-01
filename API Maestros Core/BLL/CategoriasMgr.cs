@@ -37,7 +37,7 @@ namespace API_Maestros_Core.BLL
         /// </summary>
         /// <param name="CategoriaID"></param>
         /// <returns></returns>
-        public static List<GESI.ERP.Core.BO.cCategoriaDeProducto> GetItem(String CategoriaID)
+        public static GESI.ERP.Core.BO.cCategoriaDeProducto GetItem(String CategoriaID)
         {
             try
             {
@@ -48,7 +48,14 @@ namespace API_Maestros_Core.BLL
 
                 List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategoriasProducto = GESI.ERP.Core.BLL.CategoriasManager.GetList(CategoriaID);
 
-                return lstCategoriasProducto;
+                if(lstCategoriasProducto?.Count > 0)
+                { 
+                return lstCategoriasProducto[0];
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch(Exception ex)
             {

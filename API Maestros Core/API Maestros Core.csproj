@@ -23,7 +23,7 @@
       <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\GESI.ERP.Core\bin\Debug\GESI.CORE.BLL.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.BO">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\GESI.ERP.Core\bin\Debug\GESI.CORE.BO.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI\Core\BO\bin\Debug\GESI.CORE.BO.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.DAL">
       <HintPath>..\..\..\GESI\Core\DAL\bin\Debug\GESI.CORE.DAL.dll</HintPath>

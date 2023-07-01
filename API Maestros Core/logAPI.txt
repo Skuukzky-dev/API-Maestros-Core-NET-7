@@ -1,574 +1,74 @@
-05/06/2023 13:08:45|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 13:10:01|No se encontro encabezado para la petición
-05/06/2023 13:10:12|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 13:10:16|No se encontro encabezado para la petición
-05/06/2023 14:34:21|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 14:35:44|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 14:35:57|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 14:52:42|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 14:55:38|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 14:56:18|No se encontro encabezado para la petición
-05/06/2023 15:09:19|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 15:09:30|No se encontro encabezado para la petición
-05/06/2023 15:42:44|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 15:43:07|No se encontro encabezado para la petición
-05/06/2023 16:15:06|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 16:15:49|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 16:15:57|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 16:16:51|No se encontro encabezado para la petición
-05/06/2023 16:17:00|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMTNlYmU3NGMtOTE0OC00ZGMyLWE3ZDEtODIyMGZlOWM1YTEzIiwiaWF0IjoxNjg1OTkyNTU3LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI1NTcsImV4cCI6MTY4NjAwNjk1NywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.YzCPOxopgJ23MnrPmd2mc-9ZHp1MCwaOjd38I16qf48
-05/06/2023 16:17:00|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-05/06/2023 16:17:08|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMTNlYmU3NGMtOTE0OC00ZGMyLWE3ZDEtODIyMGZlOWM1YTEzIiwiaWF0IjoxNjg1OTkyNTU3LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI1NTcsImV4cCI6MTY4NjAwNjk1NywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.YzCPOxopgJ23MnrPmd2mc-9ZHp1MCwaOjd38I16qf48
-05/06/2023 16:17:08|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-05/06/2023 16:17:15|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 16:17:24|Logueado exitosamente. Usuario: gesi
-05/06/2023 16:17:25|Error interno de la aplicacion. Descripcion: CanalDeVentaID
-05/06/2023 16:20:51|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 16:21:01|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiNmFhMGQ4ZjAtNDBjYy00ZGYwLWE1YmEtNjdkNjZmMjcwNzZkIiwiaWF0IjoxNjg1OTkyNjM1LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI2MzUsImV4cCI6MTY4NjAwNzAzNSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.JPYP8iTifMVHahX-LYfDc4Ifi2Q2GCjEPg_ZjE1IF_s
-05/06/2023 16:21:02|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-05/06/2023 16:21:14|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 16:21:25|Logueado exitosamente. Usuario: gesi
-05/06/2023 16:21:25|Error interno de la aplicacion. Descripcion: @ProductoIDs no es un parámetro del procedimiento uspGetProductos.
-05/06/2023 16:21:59|Logueado exitosamente. Usuario: gesi
-05/06/2023 16:22:00|Error interno de la aplicacion. Descripcion: CanalDeVentaID
-05/06/2023 16:58:39|Se excedio la cantidad maxima de solicitudes a realizar
-05/06/2023 17:00:23|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiZGM5Yjc2NTctYWJlYy00ODEzLWI2ZDItYTE0ZjJhZWRmM2I3IiwiaWF0IjoxNjg1OTkyODc0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODU5OTI4NzQsImV4cCI6MTY4NjAwNzI3NCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.WlqvIXCVkTThL_VXrXA1kn7S2yMEECi_kemO2QQ1twM
-05/06/2023 17:00:24|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-05/06/2023 17:00:33|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-05/06/2023 17:00:49|Logueado exitosamente. Usuario: gesi
-05/06/2023 17:00:50|Exitoso para el codigo CS036
-06/06/2023 10:50:09|Se excedio la cantidad maxima de solicitudes a realizar
-06/06/2023 10:53:20|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-06/06/2023 10:53:35|Logueado exitosamente. Usuario: gesi
-06/06/2023 10:53:36|Exitoso para el codigo CS036
-06/06/2023 10:54:52|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiZjRlZmQ0ZGYtNzk2Ni00MjM3LTk3ZmMtNGU0MDNhMWU3ZGM3IiwiaWF0IjoxNjg2MDU5NjAxLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODYwNTk2MDEsImV4cCI6MTY4NjA3NDAwMSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.C9YSGwiV4PykHUGJigS3-enHOE2UZPRwfkfUODq9BaY
-06/06/2023 10:54:52|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-06/06/2023 10:54:59|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-06/06/2023 10:55:06|Logueado exitosamente. Usuario: gesi
-06/06/2023 10:55:06|Error interno de la aplicacion. Descripcion: Value cannot be null. (Parameter 'source')
-06/06/2023 10:55:23|Logueado exitosamente. Usuario: gesi
-06/06/2023 11:00:40|Se excedio la cantidad maxima de solicitudes a realizar
-06/06/2023 11:04:16|Se excedio la cantidad maxima de solicitudes a realizar
-06/06/2023 11:05:14|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-06/06/2023 11:05:28|Logueado exitosamente. Usuario: gesi
-06/06/2023 11:05:28|Exitoso para el codigo PETBLOCK
-06/06/2023 11:10:56|Se excedio la cantidad maxima de solicitudes a realizar
-06/06/2023 11:12:09|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-06/06/2023 11:12:32|No se encontro encabezado para la petición
-06/06/2023 11:12:40|Logueado exitosamente. Usuario: gesi
-06/06/2023 11:12:41|Error interno de la aplicacion. Descripcion: Error de conversión al convertir el valor varchar 'WLAC0034' al tipo de datos int.
-06/06/2023 11:12:58|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:32:27|Se excedio la cantidad maxima de solicitudes a realizar
-8/6/2023 11:32:51|No se encontro encabezado para la petición
-8/6/2023 11:34:05|No se encontro encabezado para la petición
-8/6/2023 11:34:18|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-8/6/2023 11:35:02|No se encontro encabezado para la petición
-8/6/2023 11:35:09|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:35:30|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-8/6/2023 11:35:43|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-8/6/2023 11:35:59|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:37:49|Se excedio la cantidad maxima de solicitudes a realizar
-8/6/2023 11:42:22|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:43:24|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:43:45|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:44:02|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:44:39|Se excedio la cantidad maxima de solicitudes a realizar
-8/6/2023 11:44:48|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:44:52|Exitoso para el codigo 71
-8/6/2023 11:45:00|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:47:49|Se excedio la cantidad maxima de solicitudes a realizar
-8/6/2023 11:47:55|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:48:06|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:48:26|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:48:57|Se excedio la cantidad maxima de solicitudes a realizar
-8/6/2023 11:49:03|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:49:10|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:56:03|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:56:26|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:56:51|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:57:06|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:57:06|Exitoso para el codigo 3
-8/6/2023 11:57:19|Logueado exitosamente. Usuario: gesi
-8/6/2023 11:57:31|Logueado exitosamente. Usuario: gesi
-8/6/2023 12:00:56|Se excedio la cantidad maxima de solicitudes a realizar
-8/6/2023 12:01:11|Logueado exitosamente. Usuario: gesi
-8/6/2023 12:37:12|Se excedio la cantidad maxima de solicitudes a realizar
-8/6/2023 12:37:23|Logueado exitosamente. Usuario: gesi
-8/6/2023 12:37:38|Logueado exitosamente. Usuario: gesi
-8/6/2023 12:37:51|Logueado exitosamente. Usuario: gesi
-8/6/2023 12:38:16|Logueado exitosamente. Usuario: gesi
-8/6/2023 12:38:21|Logueado exitosamente. Usuario: gesi
-8/6/2023 12:38:21|Exitoso para el codigo wlac0034
-08/06/2023 14:14:41|Se excedio la cantidad maxima de solicitudes a realizar
-08/06/2023 14:15:32|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-08/06/2023 14:15:59|Logueado exitosamente. Usuario: gesi
-08/06/2023 14:16:14|Logueado exitosamente. Usuario: gesi
-08/06/2023 14:16:14|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
-08/06/2023 14:16:33|Logueado exitosamente. Usuario: gesi
-08/06/2023 14:16:33|Respuesta exitosa para la expresion WHIS
-08/06/2023 14:16:48|Logueado exitosamente. Usuario: gesi
-08/06/2023 14:16:49|Exitoso para el codigo WLAC0034
-08/06/2023 14:21:22|Logueado exitosamente. Usuario: gesi
-10/06/2023 9:23:04|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 9:23:55|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-10/06/2023 9:24:09|Logueado exitosamente. Usuario: gesi
-10/06/2023 9:24:14|Logueado exitosamente. Usuario: gesi
-10/06/2023 9:24:39|Logueado exitosamente. Usuario: gesi
-10/06/2023 9:24:52|Logueado exitosamente. Usuario: gesi
-10/06/2023 9:28:42|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 9:45:20|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 9:48:23|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 10:56:35|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 10:57:24|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-10/06/2023 10:57:44|Logueado exitosamente. Usuario: gesi
-10/06/2023 10:57:44|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
-10/06/2023 10:58:11|Logueado exitosamente. Usuario: gesi
-10/06/2023 10:58:12|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:03:05|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:03:05|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:03:17|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:03:28|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:03:29|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:04:50|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:06:36|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:06:49|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:06:52|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:09:43|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:10:12|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:10:26|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:10:30|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:30:02|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:30:16|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:30:29|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:30:56|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:34:06|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:34:17|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:34:19|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:46:04|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:46:13|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:46:16|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:48:26|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:48:34|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:48:36|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:48:52|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:48:52|Respuesta exitosa para la expresion ACIEND
-10/06/2023 11:49:01|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 11:49:35|Logueado exitosamente. Usuario: gesi
-10/06/2023 11:49:37|Respuesta exitosa para la expresion ACIEND
-10/06/2023 17:43:57|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 17:44:13|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-10/06/2023 17:44:56|Logueado exitosamente. Usuario: gesi
-10/06/2023 17:44:59|Respuesta exitosa para la expresion ACIEND
-10/06/2023 17:45:36|Logueado exitosamente. Usuario: gesi
-10/06/2023 17:46:27|Se excedio la cantidad maxima de solicitudes a realizar
-10/06/2023 17:46:36|Logueado exitosamente. Usuario: gesi
-10/06/2023 17:46:46|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:25:18|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:28:49|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-12/06/2023 8:29:03|Logueado exitosamente. Usuario: gesi
-12/06/2023 8:29:05|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:30:15|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:30:27|Logueado exitosamente. Usuario: gesi
-12/06/2023 8:30:27|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:33:40|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:33:51|Logueado exitosamente. Usuario: gesi
-12/06/2023 8:33:52|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:37:12|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:37:29|Logueado exitosamente. Usuario: gesi
-12/06/2023 8:37:29|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:39:27|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:39:45|Logueado exitosamente. Usuario: gesi
-12/06/2023 8:39:46|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:48:57|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:54:08|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:54:57|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:55:16|Logueado exitosamente. Usuario: gesi
-12/06/2023 8:55:16|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:56:00|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 8:56:07|Logueado exitosamente. Usuario: gesi
-12/06/2023 8:56:08|Respuesta exitosa para la expresion ACIEND
-12/06/2023 8:57:13|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:00:40|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:03:19|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:03:34|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:03:34|Respuesta exitosa para la expresion ACIEND
-12/06/2023 9:03:38|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:03:38|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
-12/06/2023 9:06:56|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:06:57|Respuesta exitosa para la expresion 
-12/06/2023 9:20:12|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:21:09|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-12/06/2023 9:21:24|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:21:24|Exitoso para el codigo PETBLOCK
-12/06/2023 9:21:31|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:21:32|Exitoso para el codigo WLAC0034
-12/06/2023 9:21:51|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:22:50|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:22:59|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:23:02|Exitoso para el codigo WLAC0034
-12/06/2023 9:25:14|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:31:21|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:32:45|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-12/06/2023 9:32:58|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:32:58|Exitoso para el codigo 010381
-12/06/2023 9:33:07|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:33:33|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:33:45|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:40:20|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 9:40:31|Logueado exitosamente. Usuario: gesi
-12/06/2023 9:40:31|Exitoso para el codigo 010381
-12/06/2023 10:01:08|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 10:01:22|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
-12/06/2023 10:04:00|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 10:04:17|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
-12/06/2023 10:05:56|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
-12/06/2023 10:06:07|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
-12/06/2023 10:09:05|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
-12/06/2023 10:09:32|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:09:32|Error interno de la aplicacion. Descripcion: No se encontró el procedimiento almacenado 'uspGESI_HabilitacionesAPIGet'.
-12/06/2023 10:10:58|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:10:58|Error interno de la aplicacion. Descripcion: No se encontró el procedimiento almacenado 'uspGetProductosXExpresionDeBusqueda'.
-12/06/2023 10:12:49|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:12:49|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGetProductosXExpresionDeBusqueda', base de datos 'cli_Ricart', esquema 'dbo'.
-12/06/2023 10:13:36|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:13:36|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
-12/06/2023 10:14:28|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:14:28|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
-12/06/2023 10:15:17|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:15:19|Error interno de la aplicacion. Descripcion: No se encontró el procedimiento almacenado 'uspGetProductos'.
-12/06/2023 10:16:33|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:16:34|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGetProductos', base de datos 'cli_Ricart', esquema 'dbo'.
-12/06/2023 10:16:46|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:16:47|Error interno de la aplicacion. Descripcion: @ProductoIDs no es un parámetro del procedimiento uspGetProductos.
-12/06/2023 10:17:26|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:17:27|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGESI_ConfiguracionBaseGetItem', base de datos 'cli_Ricart', esquema 'dbo'.
-12/06/2023 10:18:17|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:18:17|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
-12/06/2023 10:18:42|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:18:42|Respuesta exitosa para la expresion ANTON
-12/06/2023 10:19:02|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:19:02|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
-12/06/2023 10:19:18|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:19:19|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
-12/06/2023 10:42:18|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 10:43:10|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:43:11|Respuesta exitosa para la expresion 
-12/06/2023 10:44:06|Logueado exitosamente. Usuario: gesi
-12/06/2023 10:44:07|Exitoso para el codigo 000024
-12/06/2023 16:05:40|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 16:06:49|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
-12/06/2023 16:07:08|Token invalido. Acceso denegado
-12/06/2023 16:07:12|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
-12/06/2023 16:07:20|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:07:20|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:07:20|Error interno de la aplicacion. Descripcion: Method not found: 'System.String System.AppDomainSetup.get_ConfigurationFile()'.
-12/06/2023 16:14:02|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 16:14:38|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:14:38|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:14:38|Error interno de la aplicacion. Descripcion: Method not found: 'System.String System.AppDomainSetup.get_ConfigurationFile()'.
-12/06/2023 16:14:43|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:14:43|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:14:43|Error interno de la aplicacion. Descripcion: Method not found: 'System.String System.AppDomainSetup.get_ConfigurationFile()'.
-12/06/2023 16:20:15|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 16:20:24|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:20:25|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:20:25|Respuesta exitosa para la expresion cat
-12/06/2023 16:22:14|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMzJjMDg4NTUtNGE4ZC00MWQ5LWFjZmQtYjZkOTkzNzQwMWM1IiwiaWF0IjoxNjg2NTk2ODMyLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODY1OTY4MzIsImV4cCI6MTY4NjYxMTIzMiwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.QmQIAKAJEbUuFv-QNoXWg_kSFNsms9v_Zx7yBOFz7PA
-12/06/2023 16:22:14|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:22:14|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-12/06/2023 16:22:21|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-12/06/2023 16:22:26|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-12/06/2023 16:22:36|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:22:36|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:22:36|Respuesta exitosa para la expresion cat
-12/06/2023 16:30:53|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 16:31:04|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:31:04|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:31:05|Error interno de la aplicacion. Descripcion: Method not found: 'System.String System.AppDomainSetup.get_ConfigurationFile()'.
-12/06/2023 16:37:20|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 16:49:26|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 16:49:37|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:49:37|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:49:38|Respuesta exitosa para la expresion cat
-12/06/2023 16:50:53|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 16:51:04|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:51:04|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:51:04|Error interno de la aplicacion. Descripcion: Invalid value for key 'attachdbfilename'.
-12/06/2023 16:51:58|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:51:58|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:51:58|Error interno de la aplicacion. Descripcion: Invalid value for key 'attachdbfilename'.
-12/06/2023 16:52:05|Logueado exitosamente. Usuario: gesi
-12/06/2023 16:52:06|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 16:52:06|Error interno de la aplicacion. Descripcion: Invalid value for key 'attachdbfilename'.
-12/06/2023 19:08:08|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 19:09:11|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-12/06/2023 19:09:27|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:09:28|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 19:09:28|Respuesta exitosa para la expresion cat
-12/06/2023 19:09:49|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:09:49|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 19:09:49|Respuesta exitosa para la expresion cat
-12/06/2023 19:14:07|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:14:07|Exitoso para el codigo 010285
-12/06/2023 19:14:13|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:14:13|Exitoso para el codigo 418cc
-12/06/2023 19:14:48|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:14:48|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-12/06/2023 19:14:48|Respuesta exitosa para la expresion 
-12/06/2023 19:15:07|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:15:07|Exitoso para el codigo 418cc
-12/06/2023 19:15:34|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 19:15:49|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:15:50|Exitoso para el codigo WLAC0034
-12/06/2023 19:16:26|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:18:38|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 19:18:50|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:22:31|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 19:22:43|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:22:52|Exitoso para el codigo WLAC0034
-12/06/2023 19:23:03|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:23:03|Exitoso para el codigo WLAC0034
-12/06/2023 19:23:07|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:23:07|Exitoso para el codigo WLAC0034
-12/06/2023 19:23:25|Se excedio la cantidad maxima de solicitudes a realizar
-12/06/2023 19:23:35|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:23:55|Exitoso para el codigo WLAC0034
-12/06/2023 19:24:01|Logueado exitosamente. Usuario: gesi
-12/06/2023 19:24:03|Exitoso para el codigo wlac0034
-12/06/2023 19:25:58|Token invalido. Acceso denegado
-12/06/2023 19:26:40|Logueado exitosamente. Usuario: gesi
-13/06/2023 9:22:20|Se excedio la cantidad maxima de solicitudes a realizar
-13/06/2023 9:23:41|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-13/06/2023 9:23:59|Logueado exitosamente. Usuario: gesi
-13/06/2023 9:25:14|Exitoso para el codigo wlac0034
-13/06/2023 9:25:43|Logueado exitosamente. Usuario: gesi
-13/06/2023 9:26:02|Se excedio la cantidad maxima de solicitudes a realizar
-13/06/2023 9:26:14|Logueado exitosamente. Usuario: gesi
-13/06/2023 9:26:16|Exitoso para el codigo wlac0034
-13/06/2023 9:27:56|Logueado exitosamente. Usuario: gesi
-13/06/2023 9:27:56|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-13/06/2023 9:28:00|Respuesta exitosa para la expresion 
-13/06/2023 9:28:41|Se excedio la cantidad maxima de solicitudes a realizar
-13/06/2023 9:29:11|Logueado exitosamente. Usuario: gesi
-13/06/2023 9:29:11|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-13/06/2023 9:29:14|Respuesta exitosa para la expresion 
-15/06/2023 9:55:00|Se excedio la cantidad maxima de solicitudes a realizar
-15/06/2023 9:56:44|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-15/06/2023 9:57:14|Logueado exitosamente. Usuario: gesi
-15/06/2023 9:57:14|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-15/06/2023 9:57:20|Respuesta exitosa para la expresion 
-15/06/2023 10:12:53|Se excedio la cantidad maxima de solicitudes a realizar
-15/06/2023 10:14:45|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 15:33:24|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 15:34:33|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-16/06/2023 15:34:53|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:35:46|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:36:04|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:36:31|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 15:36:40|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:37:47|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 15:37:55|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:38:30|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 15:38:44|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:39:05|Exitoso para el codigo 010381
-16/06/2023 15:55:18|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 15:56:07|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:56:43|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 15:56:56|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:57:19|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:58:47|Logueado exitosamente. Usuario: gesi
-16/06/2023 15:59:09|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-16/06/2023 15:59:09|Respuesta exitosa para la expresion 
-16/06/2023 15:59:59|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 16:00:10|Logueado exitosamente. Usuario: gesi
-16/06/2023 16:00:37|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-16/06/2023 16:00:38|Respuesta exitosa para la expresion 
-16/06/2023 16:01:10|Logueado exitosamente. Usuario: gesi
-16/06/2023 16:01:15|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-16/06/2023 16:01:24|Respuesta exitosa para la expresion 
-16/06/2023 16:01:47|Logueado exitosamente. Usuario: gesi
-16/06/2023 16:02:12|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 16:02:58|Logueado exitosamente. Usuario: gesi
-16/06/2023 16:02:58|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-16/06/2023 16:03:44|Se excedio la cantidad maxima de solicitudes a realizar
-16/06/2023 16:03:56|Logueado exitosamente. Usuario: gesi
-16/06/2023 16:03:56|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-16/06/2023 16:04:01|Respuesta exitosa para la expresion 
-17/06/2023 10:07:11|Se excedio la cantidad maxima de solicitudes a realizar
-17/06/2023 10:08:09|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-17/06/2023 10:08:28|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:08:37|Exitoso para el codigo 010381
-17/06/2023 10:08:55|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:09:32|Se excedio la cantidad maxima de solicitudes a realizar
-17/06/2023 10:10:08|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:13:28|Se excedio la cantidad maxima de solicitudes a realizar
-17/06/2023 10:13:38|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:13:58|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:14:00|No se encontro el productoID de la solicitud
-17/06/2023 10:14:26|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:19:20|Se excedio la cantidad maxima de solicitudes a realizar
-17/06/2023 10:19:29|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:21:34|Se excedio la cantidad maxima de solicitudes a realizar
-17/06/2023 10:21:43|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:21:46|No se encontro el productoID de la solicitud
-17/06/2023 10:21:54|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:22:00|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:22:02|No se encontro el productoID de la solicitud
-17/06/2023 10:22:23|Logueado exitosamente. Usuario: gesi
-17/06/2023 10:22:23|Exitoso para el codigo dd
-17/06/2023 10:22:46|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:00:11|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 11:49:05|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 11:51:21|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-21/06/2023 11:52:17|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-21/06/2023 11:52:31|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:52:42|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:53:10|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:53:37|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 11:53:48|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:54:15|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 11:54:28|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:54:41|No se encontro expresion a buscar
-21/06/2023 11:55:01|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:55:02|No se encontro expresion a buscar
-21/06/2023 11:55:07|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:55:21|No se encontro expresion a buscar
-21/06/2023 11:56:27|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 11:56:47|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:56:51|No se encontro expresion a buscar
-21/06/2023 11:57:52|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 11:58:01|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:58:26|Exitoso para el codigo 0
-21/06/2023 11:58:31|Logueado exitosamente. Usuario: gesi
-21/06/2023 11:58:36|Exitoso para el codigo 10
-21/06/2023 12:07:29|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 12:08:02|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:08:20|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:08:34|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:08:43|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:08:54|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:09:17|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:09:55|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:14:09|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 12:14:19|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:15:38|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 12:16:11|Se excedio la cantidad maxima de solicitudes a realizar
-21/06/2023 12:16:33|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:16:37|Exitoso para el codigo dd
-21/06/2023 12:16:51|Logueado exitosamente. Usuario: gesi
-21/06/2023 12:16:51|Exitoso para el codigo WLAC0034
-22/06/2023 15:10:22|Se excedio la cantidad maxima de solicitudes a realizar
-22/06/2023 15:24:09|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-22/06/2023 15:24:25|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:24:25|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:24:42|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:24:42|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:25:01|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:25:01|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:26:53|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:26:53|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:27:04|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:27:12|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:27:12|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:40:14|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:40:14|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:40:19|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:40:47|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:40:47|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:42:04|Se excedio la cantidad maxima de solicitudes a realizar
-22/06/2023 15:42:16|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:42:16|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:42:33|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:42:33|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:42:52|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:42:52|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:48:47|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:48:47|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-22/06/2023 15:49:15|Logueado exitosamente. Usuario: gesi
-22/06/2023 15:49:15|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 9:47:48|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 9:48:43|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-23/06/2023 9:49:53|Logueado exitosamente. Usuario: gesi
-23/06/2023 9:49:53|No se encontro expresion a buscar
-23/06/2023 9:50:13|Logueado exitosamente. Usuario: gesi
-23/06/2023 9:50:13|Respuesta exitosa para la expresion whisk
-23/06/2023 9:51:33|Logueado exitosamente. Usuario: gesi
-23/06/2023 9:51:33|Respuesta exitosa para la expresion whisk
-23/06/2023 9:51:48|Logueado exitosamente. Usuario: gesi
-23/06/2023 9:51:48|Respuesta exitosa para la expresion whisk
-23/06/2023 9:52:26|Logueado exitosamente. Usuario: gesi
-23/06/2023 9:52:26|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 9:52:58|Logueado exitosamente. Usuario: gesi
-23/06/2023 9:52:58|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 9:53:20|Logueado exitosamente. Usuario: gesi
-23/06/2023 9:53:20|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:01:50|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 10:02:00|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:02:01|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:02:44|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:02:44|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:04:39|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 10:04:57|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:04:57|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:05:01|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:05:02|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:05:09|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:05:23|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:05:23|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:16:11|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 10:16:41|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-23/06/2023 10:16:56|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:16:56|Exitoso para el codigo WLAC0034
-23/06/2023 10:17:20|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:17:20|Exitoso para el codigo WLAC0034aa
-23/06/2023 10:37:16|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 10:37:26|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiOGU0M2U4N2MtMjg1My00MTNmLWJiZTktYTlkNzg2YzA3NDQ2IiwiaWF0IjoxNjg3NTI2MjAxLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODc1MjYyMDEsImV4cCI6MTY4NzU0MDYwMSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.svc8J0EO-f6iE4zVx-NfhHJTVoJkO-R5HDMyukdslmI
-23/06/2023 10:37:26|No esta autorizado a acceder al servicio. No se encontro el token del usuario
-23/06/2023 10:37:37|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-23/06/2023 10:37:47|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:37:47|Exitoso para el codigo WLAC0034aa
-23/06/2023 10:38:48|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:38:48|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:38:59|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:39:03|Respuesta exitosa para la expresion whisk
-23/06/2023 10:39:15|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:39:15|Respuesta exitosa para la expresion whisk
-23/06/2023 10:48:07|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 10:48:18|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:48:18|Exitoso para el codigo WLAC0034aa
-23/06/2023 10:48:23|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:48:23|Exitoso para el codigo WLAC0034
-23/06/2023 10:48:50|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:48:50|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:49:04|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:49:04|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:49:19|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:49:19|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:49:37|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:49:37|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:49:50|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:49:50|BD: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True; Archivo: \\SERVIDOR2008\Esi-Docs\Desarrollo\VersCom.Net\GESI.ERP.API.CORE.Lectura Maestros CORE 7\API Maestros Core\API Maestros Core\app.config
-23/06/2023 10:50:10|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:50:10|Respuesta exitosa para la expresion whisk
-23/06/2023 10:50:25|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:50:25|Respuesta exitosa para la expresion adulto
-23/06/2023 10:50:45|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:50:45|Respuesta exitosa para la expresion adulto
-23/06/2023 10:51:00|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:51:00|Respuesta exitosa para la expresion RAZA
-23/06/2023 10:51:10|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:51:10|Respuesta exitosa para la expresion Raza Gato Pescado
-23/06/2023 10:51:34|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:51:34|Respuesta exitosa para la expresion Raza Gato Pescado
-23/06/2023 10:52:05|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:52:26|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:52:43|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:53:08|Logueado exitosamente. Usuario: gesi
-23/06/2023 10:53:08|Exitoso para el codigo WLAC0034erwgregerhge
-23/06/2023 10:58:49|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 10:59:01|Logueado exitosamente. Usuario: gesi
-23/06/2023 11:42:57|Se excedio la cantidad maxima de solicitudes a realizar
-23/06/2023 11:43:11|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
-23/06/2023 11:43:24|Logueado exitosamente. Usuario: gesi
-23/06/2023 11:43:32|Logueado exitosamente. Usuario: gesi
-23/06/2023 11:43:32|Exitoso para el codigo WLAC0034
+24/06/2023 10:01:40|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 11:05:53|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 11:06:49|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+24/06/2023 11:07:02|Logueado exitosamente. Usuario: gesi
+24/06/2023 11:11:52|Exitoso para el codigo WLAC0034
+24/06/2023 11:18:20|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 11:19:47|Logueado exitosamente. Usuario: gesi
+24/06/2023 11:19:50|Exitoso para el codigo WLAC0034
+24/06/2023 11:20:04|Logueado exitosamente. Usuario: gesi
+24/06/2023 11:20:04|Exitoso para el codigo WLAC0034
+24/06/2023 11:20:13|Logueado exitosamente. Usuario: gesi
+24/06/2023 11:20:21|Logueado exitosamente. Usuario: gesi
+24/06/2023 11:20:21|Exitoso para el codigo WLAC0034
+24/06/2023 11:20:33|Logueado exitosamente. Usuario: gesi
+24/06/2023 11:37:26|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 11:50:52|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 11:51:08|Logueado exitosamente. Usuario: gesi
+24/06/2023 11:51:09|Exitoso para el codigo WLAC0034
+24/06/2023 12:13:50|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 12:13:55|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:13:56|Exitoso para el codigo WLAC0034
+24/06/2023 12:14:05|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:06|Exitoso para el codigo WLAC0034
+24/06/2023 12:14:11|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:11|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+24/06/2023 12:14:18|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:19|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+24/06/2023 12:14:23|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:23|Exitoso para el codigo WLAC0034
+24/06/2023 12:14:38|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:38|Exitoso para el codigo WLAC0034
+24/06/2023 12:14:47|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:51|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:52|Exitoso para el codigo WLAC0034
+24/06/2023 12:14:59|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:14:59|Exitoso para el codigo WLAC0034
+24/06/2023 12:15:09|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:15:09|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+24/06/2023 12:15:14|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:15:15|Exitoso para el codigo WLAC0034
+24/06/2023 12:16:01|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:16:01|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+24/06/2023 12:25:45|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 12:27:02|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:27:17|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:27:17|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+24/06/2023 12:27:21|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:27:51|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:27:51|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+24/06/2023 12:28:09|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:33:13|Se excedio la cantidad maxima de solicitudes a realizar
+24/06/2023 12:34:02|Logueado exitosamente. Usuario: gesi
+24/06/2023 12:34:02|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+27/06/2023 8:47:13|Se excedio la cantidad maxima de solicitudes a realizar
+27/06/2023 8:48:15|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+27/06/2023 8:49:33|Logueado exitosamente. Usuario: gesi
+27/06/2023 8:49:57|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:09:48|Se excedio la cantidad maxima de solicitudes a realizar
+01/07/2023 11:24:20|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+01/07/2023 11:24:34|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:24:34|Error interno de la aplicacion. Descripcion: No se encontró el procedimiento almacenado 'uspGetCategoriasDeProducto'.
+01/07/2023 11:26:12|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:26:12|Error interno de la aplicacion. Descripcion: El nombre de objeto 'dbo.CategoriasDeProducto' no es válido.
+01/07/2023 11:26:40|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:31:40|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:32:01|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:32:13|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:32:23|Exitoso para el codigo 1
+01/07/2023 11:38:29|Se excedio la cantidad maxima de solicitudes a realizar
+01/07/2023 11:39:36|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:39:39|Exitoso para el codigo 1
+01/07/2023 11:40:26|Se excedio la cantidad maxima de solicitudes a realizar
+01/07/2023 11:40:38|Logueado exitosamente. Usuario: gesi
+01/07/2023 11:40:38|Exitoso para el codigo 1
