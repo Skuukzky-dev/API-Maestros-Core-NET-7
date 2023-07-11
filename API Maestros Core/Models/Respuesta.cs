@@ -7,72 +7,71 @@ namespace API_Maestros_Core.Models
     public class Respuesta
     {
         private bool _success;
-        private Error _error;
+        private Error? _error;
 
 
         public bool success { get => _success; set => _success = value; }
-        public Error error { get => _error; set => _error = value; }
-
+        public Error? error { get => _error; set => _error = value; }
     }
 
     public class RespuestaConToken : Respuesta
     {
-        private String _token;
-        public string token { get => _token; set => _token = value; }
+        private String? _token;
+        public string? token { get => _token; set => _token = value; }
     }
 
     public class RespuestaProductosGetItem : Respuesta
     {
-        private HijoProductos _productos;
+        private HijoProductos? _productos;
 
 
-        public Paginacion paginacion { get; set; }
-        public HijoProductos producto { get => _productos; set => _productos = value; }
+        public Paginacion? paginacion { get; set; }
+        public HijoProductos? producto { get => _productos; set => _productos = value; }
     }
 
 
     public class RespuestaConProductosHijos : Respuesta
     {
-        private List<HijoProductos> _productos;
+        private List<HijoProductos>? _productos;
     
 
-        public Paginacion paginacion { get; set; }
-        public List<HijoProductos> productos { get => _productos; set => _productos = value; }
+        public Paginacion? paginacion { get; set; }
+        public List<HijoProductos>? productos { get => _productos; set => _productos = value; }
     }
 
     public class RespuestaProductosGetResult : Respuesta
     {
-        public Paginacion paginacion { get; set; }
-        public List<ResultProducts> productos { get => _productos; set => _productos = value; }
+        public Paginacion? paginacion { get; set; }
+        public List<ResultProducts>? productos { get => _productos; set => _productos = value; }
 
-        private List<ResultProducts> _productos;
+        private List<ResultProducts>? _productos;
     }
 
     public class RespuestaConCanalesDeVenta : Respuesta
     {
-        private List<GESI.GESI.BO.CanalDeVenta> _CanalesDeVenta;
+        private List<GESI.GESI.BO.CanalDeVenta>? _CanalesDeVenta;
 
-        public List<CanalDeVenta> CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
+        public List<CanalDeVenta>? CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
 
-        public Paginacion paginacion { get; set; } 
+        public Paginacion? paginacion { get; set; } 
     }
 
     public class RespuestaConCategorias : Respuesta
     {
-        private List<GESI.ERP.Core.BO.cCategoriaDeProducto> _CategoriasProductos;
+        private List<GESI.ERP.Core.BO.cCategoriaDeProducto>? _CategoriasProductos;
 
-        public List<cCategoriaDeProducto> categoriasProductos { get => _CategoriasProductos; set => _CategoriasProductos = value; }
+        public List<cCategoriaDeProducto>? categoriasProductos { get => _CategoriasProductos; set => _CategoriasProductos = value; }
 
-        public Paginacion paginacion { get; set; }
+        public Paginacion? paginacion { get; set; }
     }
 
     public class RespuestaCategoriasGetItem : Respuesta
     {
-        private GESI.ERP.Core.BO.cCategoriaDeProducto _CategoriasProductos;
+        private GESI.ERP.Core.BO.cCategoriaDeProducto? _CategoriasProductos;
 
-        public cCategoriaDeProducto categoriaProducto { get => _CategoriasProductos; set => _CategoriasProductos = value; }
+        public cCategoriaDeProducto? categoriaProducto { get => _CategoriasProductos; set => _CategoriasProductos = value; }
 
-        public Paginacion paginacion { get; set; }
+        public Paginacion? paginacion { get; set; }
     }
 
     public class Paginacion
@@ -91,9 +90,9 @@ namespace API_Maestros_Core.Models
     public class Error
     {
         private int _code;
-        private String _message;
+        private string? _message;
 
         public int code { get => _code; set => _code = value; }
-        public string message { get => _message; set => _message = value; }
+        public string? message { get => _message; set => _message = value; }
     }
 }

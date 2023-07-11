@@ -46,11 +46,9 @@ namespace API_Maestros_Core.Controllers
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaConProductosHijos))]
 
-        public IActionResult Get([FromBody] ResponseGetList oRequest = null)
+        public IActionResult Get( int pageNumber = 1, int pageSize = 10, string costos = "N")
         {
-            if (oRequest == null)
-                oRequest = new ResponseGetList();            
-
+            
             RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -95,18 +93,44 @@ namespace API_Maestros_Core.Controllers
 
                             if (Habilitado)
                             {
-                                List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
-                                int[] intCanales = new int[canalesaux.Count];
-                                for (int i = 0; i < canalesaux.Count; i++)
-                                {           
-                                    int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
+                                int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);
+
+                                if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
+                                {
+                                    if(pageSize > 100)
+                                    { pageSize = 100; } 
+
+                                    List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
+                                    int[] intCanales = new int[canalesaux.Count];
+                                    for (int i = 0; i < canalesaux.Count; i++)
+                                    {
+                                        int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
+                                    }
+
+                                    ProductosMgr._SessionMgr = _SessionMgr;
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, intCanales, costos, strCostoUsuario);
+
+                                    return Ok(oRespuesta);
+                                }
+                                else
+                                {
+                                        if (TamanoPagina > 100)
+                                            TamanoPagina = 100;
+
+                                    List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
+                                    int[] intCanales = new int[canalesaux.Count];
+                                    for (int i = 0; i < canalesaux.Count; i++)
+                                    {
+                                        int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
+                                    }
+
+                                    ProductosMgr._SessionMgr = _SessionMgr;
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, intCanales, costos, strCostoUsuario);
+
+                                    return Ok(oRespuesta);
+
                                 }
                                 
-                                ProductosMgr._SessionMgr = _SessionMgr;
-                                oRespuesta = ProductosMgr.GetList(oRequest.pageNumber, oRequest.pageSize,intCanales,oRequest.costos,strCostoUsuario);
-                       
-                                return Ok(oRespuesta);
-              
                             }
                             else
                             {
@@ -153,7 +177,7 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetItem")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaConProductosHijos))]
-        public IActionResult Get([FromBody] ResponseGetItem oRequest = null)
+        public IActionResult Get(string productoID = "",int canalDeVentaID = 0,string costos = "N")
         {
             RespuestaProductosGetItem oRespuesta = new RespuestaProductosGetItem();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
@@ -172,7 +196,7 @@ namespace API_Maestros_Core.Controllers
             }
             else
             {
-                if (oRequest == null)
+                if (productoID == null)
                 {
 
                     oRespuesta.error = new Error();
@@ -184,7 +208,7 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    if (!(oRequest?.ProductoID.Length > 0))
+                    if (!(productoID.Length > 0))
                     {
                         oRespuesta.error = new Error();
                         oRespuesta.error.code = 4017;
@@ -217,9 +241,9 @@ namespace API_Maestros_Core.Controllers
                                 string strCanalesDeVenta = null;
                                 _SessionMgr = new GESI.CORE.BLL.SessionMgr();
                                 bool Habilitado = false;
-                                if (oRequest.ProductoID != null)
+                                if (productoID != null)
                                 {
-                                    if (oRequest.ProductoID.Length > 0)
+                                    if (productoID.Length > 0)
                                     {
                                         #region SessionManager
                                         foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
@@ -241,9 +265,18 @@ namespace API_Maestros_Core.Controllers
                                         {
 
                                             ProductosMgr._SessionMgr = _SessionMgr;
-                                            HijoProductos lstProductos = ProductosMgr.GetItem(oRequest.ProductoID, strCanalesDeVenta, oRequest.CanalDeVentaID,oRequest.costos,costoUsuario);
+                                            oRespuesta = ProductosMgr.GetItem(productoID, strCanalesDeVenta,canalDeVentaID,costos,costoUsuario);
 
-                                            Paginacion oPaginacion = new Paginacion();
+                                            if(oRespuesta.producto?.ProductoID?.Length > 0)
+                                            {
+                                                return Ok(oRespuesta);
+                                            }
+                                            else
+                                            {
+                                                return StatusCode(204, oRespuesta);
+                                            }
+                                          /* 
+                                           * Paginacion oPaginacion = new Paginacion();
                                            
                                             oPaginacion.totalPaginas = 1;
                                             oPaginacion.paginaActual = 1;
@@ -263,7 +296,7 @@ namespace API_Maestros_Core.Controllers
                                                 {
                                                     oPaginacion.totalElementos = 0;
                                                 }
-                                                Logger.LoguearErrores("Exitoso para el codigo " + oRequest.ProductoID);
+                                                Logger.LoguearErrores("Exitoso para el codigo " + productoID);
                                                 oRespuesta.paginacion = oPaginacion;
                                                 return Ok(oRespuesta);
                                             }
@@ -275,7 +308,7 @@ namespace API_Maestros_Core.Controllers
                                                 oRespuesta.error.message = "No se encontro el producto buscado";
                                                 oRespuesta.paginacion = oPaginacion;
                                                 return StatusCode(204,oRespuesta);
-                                            }
+                                            }*/
 
                                         }
                                         else
@@ -338,13 +371,13 @@ namespace API_Maestros_Core.Controllers
         /// </summary>
         /// <param name="oRequest"></param>
         /// <returns></returns>
-        [HttpGet("GetSearchResult")]
+        [HttpGet("GetSearchResult/{expresion}")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaProductosGetResult))]
-        public IActionResult Get([FromBody] ResponseGetResult oRequest = null)
+        public IActionResult Get(string expresion = "",int pageNumber = 1 , int pageSize = 10,string costos = "N")
         {
             #region ConnectionStrings
-            RespuestaProductosGetResult oRespuesta = new RespuestaProductosGetResult();
+            RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -370,7 +403,9 @@ namespace API_Maestros_Core.Controllers
                     moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
                     _SessionMgr = new GESI.CORE.BLL.SessionMgr();
                     bool Habilitado = false;
-                    if (oRequest?.expresion?.Length > 0)
+                    string strCanalesDeVenta = "";
+                    string strCostoUsuario = "N";
+                    if (expresion?.Length > 0)
                     {
                         #region SessionManager
                         foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
@@ -381,51 +416,44 @@ namespace API_Maestros_Core.Controllers
                                 _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
                                 _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
                                 _SessionMgr.EntidadID = 1;
+                                strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
+                                strCostoUsuario = oHabilitacionAPI.CostosDeProveedor;
                                 Habilitado = true;
                             }
                         }
                         #endregion
-
+                        List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
+                        int[] intCanales = new int[canalesaux.Count];
+                        for (int i = 0; i < canalesaux.Count; i++)
+                        {
+                            int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
+                        }
                         if (Habilitado)
                         {
-                            ProductosMgr._SessionMgr = _SessionMgr;
-                            List<HijoProductos> lstProductos = ProductosMgr.GetList(oRequest.expresion);
-                            List<ResultProducts> lstProductosAux = new List<ResultProducts>();
-                            #region Pasaje
+                            int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);
+
                             
-                            if(lstProductos?.Count > 0)
+                            if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
                             {
-                                foreach(HijoProductos oHijo in lstProductos)
-                                {
-                                    ResultProducts oResultProducto = new ResultProducts();
-                                    oResultProducto.descripcion = oHijo.Descripcion;
-                                    oResultProducto.productoID = oHijo.ProductoID;
-                                    oResultProducto.alicuotaIVA = oHijo.AlicuotaIVA;
-                                    oResultProducto.unidad2XUnidad1 = oHijo.Unidad2XUnidad1;
-                                    oResultProducto.descripcionextendida = oHijo.DescripcionExtendida;
-                                    oResultProducto.unidad2XUnidad1Confirmar = oHijo.Unidad2XUnidad1Confirmar;
-                                    lstProductosAux.Add(oResultProducto);
-                                }
+                                if (pageSize > 100)
+                                { pageSize = 100; }
 
+                                ProductosMgr._SessionMgr = _SessionMgr;
+                                oRespuesta = ProductosMgr.GetList(expresion,intCanales,costos, strCostoUsuario,pageNumber,pageSize);
+                                Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion);
+                                return Ok(oRespuesta);
                             }
+                            else
+                            {
+                                if (TamanoPagina > 100) // Si el tamaño de la variable configuracion es mayor a 100. Toma los 100
+                                    TamanoPagina = 100;
 
-                            #endregion
-
-
-                            Paginacion oPaginacion = new Paginacion();
-                            oPaginacion.totalElementos = lstProductos.Count;
-                            oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / oRequest.pageSize);
-                            oPaginacion.paginaActual = oRequest.pageNumber;
-                            oPaginacion.tamañoPagina = oRequest.pageSize;
-                            oRespuesta.paginacion = oPaginacion;
-                            oRespuesta.error = new Error();
-                            oRespuesta.success = true;
-                            oRespuesta.productos = lstProductosAux.Skip((oRequest.pageNumber - 1) * oRequest.pageSize).Take(oRequest.pageSize).ToList();
-
-                            Logger.LoguearErrores("Respuesta exitosa para la expresion " + oRequest.expresion);
-
-                            
-                            return Ok(oRespuesta);
+                                ProductosMgr._SessionMgr = _SessionMgr;
+                                ProductosMgr._SessionMgr = _SessionMgr;
+                                oRespuesta = ProductosMgr.GetList(expresion, intCanales, costos, strCostoUsuario, pageNumber, TamanoPagina);                             
+                                Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion);
+                                return Ok(oRespuesta);
+                            }
 
                         }
                         else
@@ -606,7 +634,7 @@ namespace API_Maestros_Core.Controllers
         public int alicuotaIVA { get => _alicuotaIVA; set => _alicuotaIVA = value; }
         public decimal unidad2XUnidad1 { get => _unidad2XUnidad1; set => _unidad2XUnidad1 = value; }
         public bool unidad2XUnidad1Confirmar { get => _unidad2XUnidad1Confirmar; set => _unidad2XUnidad1Confirmar = value; }
-        public string descripcionextendida { get => _descripcionextendida; set => _descripcionextendida = value; }
+        public string descripcionExtendida { get => _descripcionextendida; set => _descripcionextendida = value; }
     }
 
 }

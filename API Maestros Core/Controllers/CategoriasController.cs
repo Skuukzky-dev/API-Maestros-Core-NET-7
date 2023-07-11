@@ -34,12 +34,10 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetList")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
-        public IActionResult Get([FromBody]ResponseGetList oResponse = null)
+        public IActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
 
-            if (oResponse == null)
-                oResponse = new ResponseGetList();
-
+       
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -103,12 +101,12 @@ namespace API_Maestros_Core.Controllers
                             oRespuesta.categoriasProductos.AddRange(CategoriasMgr.GetList());
                            
 
-                            oRespuesta.categoriasProductos = lstCategorias.Skip((oResponse.pageNumber - 1) * oResponse.pageSize).Take(oResponse.pageSize).ToList();
+                            oRespuesta.categoriasProductos = lstCategorias.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                             oPaginacion.totalElementos = oRespuesta.categoriasProductos.Count;
               
-                            oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / oResponse.pageSize);
-                            oPaginacion.paginaActual = oResponse.pageNumber;
-                            oPaginacion.tamañoPagina = oResponse.pageSize;
+                            oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
+                            oPaginacion.paginaActual = pageNumber;
+                            oPaginacion.tamañoPagina = pageSize;
                             oRespuesta.paginacion = oPaginacion;
                             return Ok(oRespuesta);
                         }
@@ -137,16 +135,14 @@ namespace API_Maestros_Core.Controllers
         }
 
         // GET api/<CategoriasController>/5
-        [HttpGet("GetItem")]
+        [HttpGet("GetItem/{categoriaID}")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
-        public IActionResult Get([FromBody] ResponseCategoriasGetItem oRequestRecibido = null)
+        public IActionResult Get(string categoriaID)
         {
             RespuestaCategoriasGetItem oRespuesta = new RespuestaCategoriasGetItem();
 
-            if (oRequestRecibido == null)
-                oRequestRecibido = new ResponseCategoriasGetItem();
-
+ 
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -186,9 +182,9 @@ namespace API_Maestros_Core.Controllers
                         string strCanalesDeVenta = null;
                         _SessionMgr = new GESI.CORE.BLL.SessionMgr();
                         bool Habilitado = false;
-                        if (oRequestRecibido.CategoriaID != null)
+                        if (categoriaID != null)
                         {
-                            if (oRequestRecibido.CategoriaID.Length > 0)
+                            if (categoriaID.Length > 0)
                             {
                                 foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                                 {
@@ -217,8 +213,8 @@ namespace API_Maestros_Core.Controllers
                                     oRespuesta.error = new Error();
                                     oRespuesta.success = true;
                                     oRespuesta.categoriaProducto = new GESI.ERP.Core.BO.cCategoriaDeProducto();
-                                    oRespuesta.categoriaProducto = CategoriasMgr.GetItem(oRequestRecibido.CategoriaID);
-                                    Logger.LoguearErrores("Exitoso para el codigo " + oRequestRecibido.CategoriaID);
+                                    oRespuesta.categoriaProducto = CategoriasMgr.GetItem(categoriaID);
+                                    Logger.LoguearErrores("Exitoso para el codigo " + categoriaID);
                                     return Ok(oRespuesta);
                                 }
                                 else
@@ -235,8 +231,8 @@ namespace API_Maestros_Core.Controllers
                             {
                                 oRespuesta.error = new Error();
                                 oRespuesta.error.code = 2041;
-                                oRespuesta.error.message = "No se encontro expresion a buscar";
-                                Logger.LoguearErrores("No se encontro expresion a buscar");
+                                oRespuesta.error.message = "No se encontro categoria a buscar";
+                                Logger.LoguearErrores("No se encontro categoria a buscar");
                                 oRespuesta.success = false;
                                 return StatusCode(204, oRespuesta);
                             }
@@ -245,8 +241,8 @@ namespace API_Maestros_Core.Controllers
                         {
                             oRespuesta.error = new Error();
                             oRespuesta.error.code = 4041;
-                            oRespuesta.error.message = "No se encontro expresion a buscar";
-                            Logger.LoguearErrores("No se encontro expresion a buscar");
+                            oRespuesta.error.message = "No se encontro categoria a buscar";
+                            Logger.LoguearErrores("No se encontro categoria a buscar");
                             oRespuesta.success = false;
                             return StatusCode(204, oRespuesta);
                         }

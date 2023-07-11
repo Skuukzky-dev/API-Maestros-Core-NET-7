@@ -72,3 +72,254 @@
 01/07/2023 11:40:26|Se excedio la cantidad maxima de solicitudes a realizar
 01/07/2023 11:40:38|Logueado exitosamente. Usuario: gesi
 01/07/2023 11:40:38|Exitoso para el codigo 1
+03/07/2023 14:14:21|Se excedio la cantidad maxima de solicitudes a realizar
+03/07/2023 14:15:19|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+03/07/2023 14:15:38|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:15:50|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:15:50|Exitoso para el codigo WLAC0034
+03/07/2023 14:16:28|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:16:33|Exitoso para el codigo WLAC0034
+03/07/2023 14:16:48|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:16:50|Exitoso para el codigo WLAC0034
+03/07/2023 14:17:11|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:17:14|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+03/07/2023 14:17:46|Se excedio la cantidad maxima de solicitudes a realizar
+03/07/2023 14:19:56|Se excedio la cantidad maxima de solicitudes a realizar
+03/07/2023 14:20:06|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiY2E0YzkyZGItZGMzZi00ZjliLTgyMGYtNjRiNTI4ZTJkMmZkIiwiaWF0IjoxNjg4NDA0NTE5LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg0MDQ1MTksImV4cCI6MTY4ODQxODkxOSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.DhsozGClVXP-wA7_cdlTLcv4ACA7DPKEfCA5WCauqk0
+03/07/2023 14:20:12|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+03/07/2023 14:20:19|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiY2E0YzkyZGItZGMzZi00ZjliLTgyMGYtNjRiNTI4ZTJkMmZkIiwiaWF0IjoxNjg4NDA0NTE5LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg0MDQ1MTksImV4cCI6MTY4ODQxODkxOSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.DhsozGClVXP-wA7_cdlTLcv4ACA7DPKEfCA5WCauqk0
+03/07/2023 14:20:53|Se excedio la cantidad maxima de solicitudes a realizar
+03/07/2023 14:21:00|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiY2E0YzkyZGItZGMzZi00ZjliLTgyMGYtNjRiNTI4ZTJkMmZkIiwiaWF0IjoxNjg4NDA0NTE5LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg0MDQ1MTksImV4cCI6MTY4ODQxODkxOSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.DhsozGClVXP-wA7_cdlTLcv4ACA7DPKEfCA5WCauqk0
+03/07/2023 14:21:37|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiY2E0YzkyZGItZGMzZi00ZjliLTgyMGYtNjRiNTI4ZTJkMmZkIiwiaWF0IjoxNjg4NDA0NTE5LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg0MDQ1MTksImV4cCI6MTY4ODQxODkxOSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.DhsozGClVXP-wA7_cdlTLcv4ACA7DPKEfCA5WCauqk0
+03/07/2023 14:21:40|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+03/07/2023 14:21:50|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+03/07/2023 14:21:58|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:22:00|Exitoso para el codigo WLAC0034
+03/07/2023 14:22:08|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiNDhmMDY0MGUtNDkyNy00NjgxLWIzOGMtZDhmNTIyMTA3N2U1IiwiaWF0IjoxNjg4NDA0OTEwLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg0MDQ5MTAsImV4cCI6MTY4ODQxOTMxMCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.nUtlGgQ2Ti8QQi7G7JdyH0HlfWsGQA8fhs7tEyccaT0
+03/07/2023 14:22:09|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+03/07/2023 14:22:14|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiNDhmMDY0MGUtNDkyNy00NjgxLWIzOGMtZDhmNTIyMTA3N2U1IiwiaWF0IjoxNjg4NDA0OTEwLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg0MDQ5MTAsImV4cCI6MTY4ODQxOTMxMCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.nUtlGgQ2Ti8QQi7G7JdyH0HlfWsGQA8fhs7tEyccaT0
+03/07/2023 14:22:25|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+03/07/2023 14:24:43|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiNDhmMDY0MGUtNDkyNy00NjgxLWIzOGMtZDhmNTIyMTA3N2U1IiwiaWF0IjoxNjg4NDA0OTEwLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg0MDQ5MTAsImV4cCI6MTY4ODQxOTMxMCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.nUtlGgQ2Ti8QQi7G7JdyH0HlfWsGQA8fhs7tEyccaT0
+03/07/2023 14:24:44|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+03/07/2023 14:24:47|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+03/07/2023 14:26:30|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:26:32|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+03/07/2023 14:26:37|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:26:39|Exitoso para el codigo WLAC0034
+03/07/2023 14:27:25|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:27:27|Exitoso para el codigo WLAC0034
+03/07/2023 14:27:39|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:27:41|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+03/07/2023 14:28:10|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:28:11|Exitoso para el codigo WLAC0034
+03/07/2023 14:28:18|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:28:20|Exitoso para el codigo WLAC0034
+03/07/2023 14:28:39|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:28:39|Exitoso para el codigo WLAC0034
+03/07/2023 14:29:31|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:29:31|Error al solicitar GetList. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
+03/07/2023 14:29:31|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
+03/07/2023 14:29:55|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:32:05|Se excedio la cantidad maxima de solicitudes a realizar
+03/07/2023 14:32:21|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:33:25|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:33:56|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:37:34|Se excedio la cantidad maxima de solicitudes a realizar
+03/07/2023 14:38:26|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:38:27|Respuesta exitosa para la expresion raza
+03/07/2023 14:38:38|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:38:38|Respuesta exitosa para la expresion raza
+03/07/2023 14:38:48|Logueado exitosamente. Usuario: gesi
+03/07/2023 14:38:48|Respuesta exitosa para la expresion raza
+03/07/2023 22:10:17|Se excedio la cantidad maxima de solicitudes a realizar
+03/07/2023 22:10:59|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+03/07/2023 22:11:36|Logueado exitosamente. Usuario: gesi
+03/07/2023 22:11:36|Exitoso para el codigo WLAC0034
+03/07/2023 22:12:13|Logueado exitosamente. Usuario: gesi
+03/07/2023 22:12:13|Exitoso para el codigo RPA+7C150
+03/07/2023 22:12:39|Logueado exitosamente. Usuario: gesi
+03/07/2023 22:12:39|Exitoso para el codigo RPA+7C150
+07/07/2023 8:35:06|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 8:35:29|No se encontro encabezado para la petición
+07/07/2023 8:36:32|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+07/07/2023 8:54:24|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 8:54:31|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_M5;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+07/07/2023 8:54:58|Logueado exitosamente. Usuario: gesi
+07/07/2023 8:57:17|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 8:57:27|Logueado exitosamente. Usuario: gesi
+07/07/2023 8:57:27|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+07/07/2023 8:57:32|Logueado exitosamente. Usuario: gesi
+07/07/2023 8:57:33|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+07/07/2023 8:57:48|Logueado exitosamente. Usuario: gesi
+07/07/2023 8:57:48|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+07/07/2023 8:59:19|Logueado exitosamente. Usuario: gesi
+07/07/2023 8:59:19|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+07/07/2023 8:59:35|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:00:07|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 9:00:55|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:01:05|Error al solicitar GetList. Descripcion: No se encontró el procedimiento almacenado 'uspGetProductosXExpresionDeBusqueda'.
+07/07/2023 9:07:29|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 9:07:41|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Urbania;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+07/07/2023 9:07:50|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Urbania;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+07/07/2023 9:08:22|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:08:28|Error interno de la aplicacion. Descripcion: CostosDeProveedores
+07/07/2023 9:09:07|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:11:08|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:11:08|Respuesta exitosa para la expresion espej
+07/07/2023 9:11:46|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:11:56|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:12:35|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:12:41|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:12:46|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:13:00|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:13:00|Respuesta exitosa para la expresion espej
+07/07/2023 9:13:21|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:15:00|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:16:27|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:16:46|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:18:54|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 9:19:24|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:20:07|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:20:59|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:21:46|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 9:22:13|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:28:26|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 9:30:53|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:30:55|Error interno de la aplicacion. Descripcion: No se encontró el procedimiento almacenado 'uspGESI_CanalesDeVentaGetList'.
+07/07/2023 9:33:13|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 9:33:40|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+07/07/2023 9:33:52|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:33:56|Error interno de la aplicacion. Descripcion: CostosDeProveedores
+07/07/2023 9:34:20|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:34:38|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiODkxY2Y0OTQtMDJmZi00ZDBkLTkwMjMtZTNlZjRlMjYzNzY2IiwiaWF0IjoxNjg4NzMxNjcwLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg3MzE2NzAsImV4cCI6MTY4ODc0NjA3MCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.9cjLtWmy6EPyU50qHQI1bNgoBwco_7Nzc664kmWZcYc
+07/07/2023 9:34:40|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+07/07/2023 9:35:01|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:35:03|Exitoso para el codigo 000038
+07/07/2023 9:35:31|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiODkxY2Y0OTQtMDJmZi00ZDBkLTkwMjMtZTNlZjRlMjYzNzY2IiwiaWF0IjoxNjg4NzMxNjcwLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg3MzE2NzAsImV4cCI6MTY4ODc0NjA3MCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.9cjLtWmy6EPyU50qHQI1bNgoBwco_7Nzc664kmWZcYc
+07/07/2023 9:35:31|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+07/07/2023 9:35:43|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:35:43|Respuesta exitosa para la expresion antoni
+07/07/2023 9:37:12|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:37:13|Respuesta GetList Canales de venta OK
+07/07/2023 9:41:45|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:41:48|Permiso denegado sobre costoSolicitado. Descripcion: Permiso denegado en la solicitud de costos
+07/07/2023 9:42:28|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:42:45|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:42:58|Logueado exitosamente. Usuario: gesi
+07/07/2023 9:43:09|Logueado exitosamente. Usuario: gesi
+07/07/2023 10:41:06|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 10:41:21|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+07/07/2023 10:41:34|Logueado exitosamente. Usuario: gesi
+07/07/2023 10:41:35|Respuesta GetList Canales de venta OK
+07/07/2023 15:07:30|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 15:08:19|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+07/07/2023 15:08:39|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:09:03|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:11:34|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 15:11:44|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:12:02|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:12:21|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:13:32|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:14:12|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 15:14:22|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:15:03|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 15:15:35|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:16:44|Se excedio la cantidad maxima de solicitudes a realizar
+07/07/2023 15:16:55|Logueado exitosamente. Usuario: gesi
+07/07/2023 15:17:17|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:18:45|Se excedio la cantidad maxima de solicitudes a realizar
+08/07/2023 11:18:55|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Ricart;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+08/07/2023 11:34:34|Se excedio la cantidad maxima de solicitudes a realizar
+08/07/2023 11:34:46|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_Desarrollo_API;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+08/07/2023 11:35:05|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:35:05|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+08/07/2023 11:35:16|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:35:16|Error interno de la aplicacion. Descripcion: Data is Null. This method or property cannot be called on Null values.
+08/07/2023 11:39:01|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:39:24|Se excedio la cantidad maxima de solicitudes a realizar
+08/07/2023 11:40:52|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:40:54|Error al solicitar GetList. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
+08/07/2023 11:40:54|Error interno de la aplicacion. Descripcion: El procedimiento o la función 'uspGetProductosXExpresionDeBusqueda' esperaba el parámetro '@ExpresionDeBusqueda', que no se ha especificado.
+08/07/2023 11:41:43|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:41:47|Error al solicitar GetList. Descripcion: No se encontró el procedimiento almacenado 'uspGetProductos'.
+08/07/2023 11:41:47|Error interno de la aplicacion. Descripcion: No se encontró el procedimiento almacenado 'uspGetProductos'.
+08/07/2023 11:42:50|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:42:57|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:43:04|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:43:14|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:43:52|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:43:55|Exitoso para el codigo 008030
+08/07/2023 11:44:10|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:44:10|Exitoso para el codigo 008030
+08/07/2023 11:44:40|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:44:40|Respuesta exitosa para la expresion antoni
+08/07/2023 11:44:45|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:44:45|Respuesta exitosa para la expresion CARGADOR
+08/07/2023 11:44:56|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:44:56|Respuesta exitosa para la expresion CARGADOR&pageSize=120
+08/07/2023 11:45:19|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:45:32|Respuesta exitosa para la expresion CARGADOR&pageSize=120
+08/07/2023 11:45:37|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:45:44|Respuesta exitosa para la expresion CARGADOR
+08/07/2023 11:46:01|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:46:15|Respuesta exitosa para la expresion CARGADOR&pageSize=120
+08/07/2023 11:46:20|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:46:23|Respuesta exitosa para la expresion CARGADOR
+08/07/2023 11:46:45|Logueado exitosamente. Usuario: gesi
+08/07/2023 11:46:47|Respuesta exitosa para la expresion cargador samsung S
+08/07/2023 11:47:10|Logueado exitosamente. Usuario: gesi
+08/07/2023 12:16:30|Se excedio la cantidad maxima de solicitudes a realizar
+08/07/2023 12:16:39|Logueado exitosamente. Usuario: gesi
+08/07/2023 12:16:44|Respuesta exitosa para la expresion cargador samsung S
+08/07/2023 12:16:59|Logueado exitosamente. Usuario: gesi
+08/07/2023 12:18:36|Se excedio la cantidad maxima de solicitudes a realizar
+08/07/2023 12:18:51|Logueado exitosamente. Usuario: gesi
+08/07/2023 12:25:55|Se excedio la cantidad maxima de solicitudes a realizar
+08/07/2023 12:26:23|Logueado exitosamente. Usuario: gesi
+08/07/2023 12:26:45|Logueado exitosamente. Usuario: gesi
+10/07/2023 10:43:34|Se excedio la cantidad maxima de solicitudes a realizar
+10/07/2023 10:45:14|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_Desarrollo_API;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+10/07/2023 10:52:05|Token invalido. Acceso denegado
+10/07/2023 10:52:16|Logueado exitosamente. Usuario: gesi
+10/07/2023 10:52:22|Respuesta exitosa para la expresion cargador samsung S
+10/07/2023 10:53:02|Logueado exitosamente. Usuario: gesi
+10/07/2023 10:53:02|Respuesta exitosa para la expresion cargador samsung S
+10/07/2023 10:53:56|Logueado exitosamente. Usuario: gesi
+10/07/2023 10:53:57|Respuesta exitosa para la expresion cargador samsung S
+10/07/2023 10:54:10|Logueado exitosamente. Usuario: gesi
+10/07/2023 10:58:40|Se excedio la cantidad maxima de solicitudes a realizar
+10/07/2023 11:10:28|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMmJhYjQ5YWYtNjA4MS00ZTFlLTg1ZmUtNmE4MTRiMjMyMGFmIiwiaWF0IjoxNjg4OTk2NzE0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg5OTY3MTQsImV4cCI6MTY4OTAxMTExNCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.ys9Y7iAZ-nwnQMBffj8bQsjLk8cyNCH_7s57l7LbFxg
+10/07/2023 11:10:28|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+10/07/2023 11:10:33|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_Desarrollo_API;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+10/07/2023 11:10:42|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:10:45|Respuesta exitosa para la expresion cargador samsung S
+10/07/2023 11:12:18|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:12:22|Respuesta exitosa para la expresion cargador samsung S
+10/07/2023 11:12:41|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:12:41|Respuesta exitosa para la expresion cargador samsung S
+10/07/2023 11:14:18|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMDgxMmNiOWYtOGYxMC00ZTY5LWE4YTQtY2E4OTIxY2ZkNjBmIiwiaWF0IjoxNjg4OTk4MjMzLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg5OTgyMzMsImV4cCI6MTY4OTAxMjYzMywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.sYkjCWdMQXcfE-Dy4t8p_Iaowx9PO3N0i3zNtx9s3I0
+10/07/2023 11:14:18|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+10/07/2023 11:14:24|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_Desarrollo_API;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+10/07/2023 11:14:33|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:14:44|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:16:13|Se excedio la cantidad maxima de solicitudes a realizar
+10/07/2023 11:16:43|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:18:13|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:19:26|Se excedio la cantidad maxima de solicitudes a realizar
+10/07/2023 11:19:46|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:20:45|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:21:38|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiYTgxZTM1ZTItODZjOC00ODAzLWE2YjAtZjI3ODY5OWFlODNkIiwiaWF0IjoxNjg4OTk4NDY0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2ODg5OTg0NjQsImV4cCI6MTY4OTAxMjg2NCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0._DAWhQrEFyhjbtEAOQdgTS6stGVRMFeLd-urb8ttPIw
+10/07/2023 11:21:38|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+10/07/2023 11:21:44|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_Desarrollo_API;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+10/07/2023 11:21:53|Logueado exitosamente. Usuario: gesi
+10/07/2023 11:22:44|Se excedio la cantidad maxima de solicitudes a realizar
+10/07/2023 11:23:21|Logueado exitosamente. Usuario: gesi
+11/07/2023 9:59:17|Se excedio la cantidad maxima de solicitudes a realizar
+11/07/2023 10:04:46|Se excedio la cantidad maxima de solicitudes a realizar
+11/07/2023 10:15:51|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_Desarrollo_API;User ID=sa;Password=010110jr;MultipleActiveResultSets=True;
+11/07/2023 10:16:07|Logueado exitosamente. Usuario: gesi
+11/07/2023 10:16:16|Logueado exitosamente. Usuario: gesi
+11/07/2023 10:17:12|Logueado exitosamente. Usuario: gesi
+11/07/2023 10:17:22|Logueado exitosamente. Usuario: gesi
+11/07/2023 10:17:29|Logueado exitosamente. Usuario: gesi
+11/07/2023 10:17:47|Logueado exitosamente. Usuario: gesi

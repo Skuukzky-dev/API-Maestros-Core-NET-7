@@ -1,23 +1,25 @@
 ﻿using API_Maestros_Core.Controllers;
 using API_Maestros_Core.Models;
+using GESI.CORE.BO.Verscom2k;
 using GESI.GESI.BO;
 using Newtonsoft.Json;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Drawing.Printing;
 
 namespace API_Maestros_Core.BLL
 {
     public class ProductosMgr
     {
 
-        public static GESI.CORE.BLL.SessionMgr _SessionMgr;
+        public static GESI.CORE.BLL.SessionMgr? _SessionMgr;
 
         /// <summary>
         /// Devuelve una lista de resultados de Busqueda
         /// </summary>
         /// <param name="strExpresionBusqueda"></param>
         /// <returns></returns>
-        public static List<HijoProductos> GetList(String strExpresionBusqueda) 
+        public static RespuestaConProductosHijos GetList(String strExpresionBusqueda, int[] CanalesDeVenta, string costoSolicitado, string costoUsuario,int pageNumber,int pageSize)  // Usa GetSearchResults
         {
             try
             {
@@ -30,34 +32,62 @@ namespace API_Maestros_Core.BLL
                 GESI.ERP.Core.BLL.cBASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
                 #endregion
 
+                #region Variables
                 GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
-               
-                List<GESI.ERP.Core.BO.cProducto> lstProductos = new List<GESI.ERP.Core.BO.cProducto>();
-                lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda);
-                
+                RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
+                oRespuesta.error = new Error();
                 List<HijoProductos> lstHijos = new List<HijoProductos>();
-                foreach(GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
-                {
-                    lstHijos.Add(new HijoProductos(oPrd));
-                }              
+                List<GESI.ERP.Core.BO.cProducto> lstProductos = new List<GESI.ERP.Core.BO.cProducto>();
+                #endregion
 
-                return lstHijos;
+                List<string> lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda);                
+                List<string> nuevosplit = lstCodigosProducto.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                string codigos = string.Join(",", nuevosplit);
+
+                if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
+                {
+                    lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta, costoSolicitado);
+                    
+                    foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                    {
+                        lstHijos.Add(new HijoProductos(oPrd));
+                    }
+                    
+                }
+                else
+                {
+                    lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta,"N");                  
+                    foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                    {
+                        lstHijos.Add(new HijoProductos(oPrd));
+                    }
+                    oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
+                }
+
+                oRespuesta.productos = lstHijos;               
+                Paginacion oPaginacion = new Paginacion();
+                oPaginacion.totalElementos = lstCodigosProducto.Count;
+                oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
+                oPaginacion.paginaActual = pageNumber;
+                oPaginacion.tamañoPagina = pageSize;
+                oRespuesta.paginacion = oPaginacion; 
+
+                return oRespuesta;
 
             }
             catch (Exception ex)
             {
                 Logger.LoguearErrores("Error al solicitar GetSearchResults. Descripcion: " + ex.Message);
-                throw ex;
+                throw;
             }
         }
 
 
         /// <summary>
-        /// Devuelve una lista de resultados de Busqueda
-        /// </summary>
-        /// <param name="strExpresionBusqueda"></param>
+        /// Devuelve todos los productos 
+        /// </summary>        
         /// <returns></returns>
         public static RespuestaConProductosHijos GetList( int pageNumber, int pageSize, int[] CanalesDeVenta, string costoSolicitado,string costoUsuario) // Usa GetList
         {
@@ -65,6 +95,7 @@ namespace API_Maestros_Core.BLL
             {
                 RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
                 oRespuesta.paginacion = new Paginacion();
+
                 #region ConnectionStrings
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -74,48 +105,55 @@ namespace API_Maestros_Core.BLL
                 GESI.ERP.Core.BLL.cBASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
                 #endregion
 
-                if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado))
+                #region Variables 
+                GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
+                GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
+                GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
+                List<GESI.ERP.Core.BO.cProducto> lstProductos = new List<GESI.ERP.Core.BO.cProducto>();
+                #endregion
+
+                List<string> lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults();
+                string commaSeparatedIds = string.Join(",", lstCodigosProducto);
+                List<string> splits = commaSeparatedIds.Split(',').ToList();
+                List<string> nuevosplit = splits.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                string resultado = string.Join(",", nuevosplit);
+
+                if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
                 {
-
-                    GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
-                    GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
-                    GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
-
-                    List<GESI.ERP.Core.BO.cProducto> lstProductos = new List<GESI.ERP.Core.BO.cProducto>();
-                    lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults();
-                    Paginacion oPaginacion = new Paginacion();
-                    oPaginacion.totalElementos = lstProductos.Count;
-                    oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
-                    oPaginacion.paginaActual = pageNumber;
-                    oPaginacion.tamañoPagina = pageSize;
-                    oRespuesta.paginacion = oPaginacion;
-
-                    string commaSeparatedIds = string.Join(",", lstProductos.Select(p => p.ProductoID));
-                    List<string> splits = commaSeparatedIds.Split(',').ToList();
-                    List<string> nuevosplit = splits.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-                    string resultado = string.Join(",", nuevosplit);
-
                     List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, costoSolicitado);
                     lstProductos = lstProductosAux;
+                    oRespuesta.error = new Error();
+                   
+                }
+                else
+                {
+                    List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, "N");
+                    lstProductos = lstProductosAux;
+                    oRespuesta.error = new Error();
+                    oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
+                }
 
+                #region Paginacion
+                Paginacion oPaginacion = new Paginacion();
+                oPaginacion.totalElementos = lstCodigosProducto.Count;
+                oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
+                oPaginacion.paginaActual = pageNumber;
+                oPaginacion.tamañoPagina = pageSize;
+                oRespuesta.paginacion = oPaginacion;
+                #endregion
 
                     List<HijoProductos> lstHijos = new List<HijoProductos>();
                     foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
                     {
+                        oPrd.CostosProveedores = null;
                         lstHijos.Add(new HijoProductos(oPrd));
                     }
 
                     oRespuesta.productos = lstHijos;
-                    oRespuesta.success = true;
-                    oRespuesta.error = new Error();
+                    oRespuesta.success = true;                    
 
                     return oRespuesta;
-                }
-                else
-                {
-                    throw new AccessViolationException("Permiso denegado en la solicitud de costos");
-                }
-                
+             
 
             }
             catch (AccessViolationException ax)
@@ -126,7 +164,7 @@ namespace API_Maestros_Core.BLL
             catch (Exception ex)
             {
                 Logger.LoguearErrores("Error al solicitar GetList. Descripcion: " + ex.Message);
-                throw ex;
+                throw;
             }
         }
 
@@ -137,10 +175,12 @@ namespace API_Maestros_Core.BLL
         /// <param name="ProductoID"></param>
         /// <param name="CanalesDeVenta"></param>
         /// <returns></returns>
-        public static HijoProductos GetItem(String ProductoID, String CanalesDeVenta,int CanalDeVentaID,string costoSolicitado,string costoUsuario) // Usa GetItem
+        public static RespuestaProductosGetItem GetItem(String ProductoID, String CanalesDeVenta,int CanalDeVentaID,string costoSolicitado,string costoUsuario) // Usa GetItem
         {
             try
             {
+                RespuestaProductosGetItem oRespuesta = new RespuestaProductosGetItem();
+                
                 #region ConnectionStrings
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -148,19 +188,33 @@ namespace API_Maestros_Core.BLL
                 SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
                 GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
                 GESI.ERP.Core.BLL.cBASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
-
                 GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
                 #endregion
 
-                if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado))
-                {
+                #region Variables
+                HijoProductos lstHijos = new HijoProductos();
+                string[] canales = CanalesDeVenta.Split(',');
+                int[] ints = Array.ConvertAll(canales, s => int.Parse(s));
+                List<GESI.ERP.Core.BO.cProducto> oProduc = new List<GESI.ERP.Core.BO.cProducto>();
+                #endregion
 
-                    string[] canales = CanalesDeVenta.Split(',');
-                    int[] ints = Array.ConvertAll(canales, s => int.Parse(s));
-                    HijoProductos lstHijos = new HijoProductos();
-                    List<GESI.ERP.Core.BO.cProducto> oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, ints, costoSolicitado);
+                if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifica si tiene permiso para devolver costos del proveedor
+                {
+                    #region Tiene permisos sobre costos
+                    
+                    oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, ints, costoSolicitado);
+                    oRespuesta.error = new Error();
+                    #endregion
+                }
+                else
+                {                   
+                    oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, ints, "N");
+                    oRespuesta.error = new Error();
+                    oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
+                }
+                    
                     if (CanalDeVentaID > 0)
                     {
                         if (oProduc.Count > 0)
@@ -181,17 +235,51 @@ namespace API_Maestros_Core.BLL
                     {
                         foreach (GESI.ERP.Core.BO.cProducto oPrd in oProduc)
                         {
+                            oPrd.CostosProveedores = null;
                             lstHijos = new HijoProductos(oPrd);
                         }
+                    }                                    
+                
+
+                #region Paginacion
+
+                Paginacion oPaginacion = new Paginacion();
+                oPaginacion.totalPaginas = 1;
+                oPaginacion.paginaActual = 1;
+                oPaginacion.tamañoPagina = 1;
+                
+                oRespuesta.success = true;
+                
+                if (lstHijos?.ProductoID?.Length > 0)
+                {
+                    oRespuesta.producto = new HijoProductos();
+                    oRespuesta.producto = lstHijos;
+
+                    if (lstHijos?.ProductoID?.Length > 0)
+                    {
+                        oPaginacion.totalElementos = 1;
+                    }
+                    else
+                    {
+                        oPaginacion.totalElementos = 0;
                     }
 
-                    return lstHijos;
+                    oRespuesta.paginacion = oPaginacion;
+
                 }
                 else
                 {
-                    throw new AccessViolationException("Permiso denegado en la solicitud de costos");
+                    oRespuesta.producto = null;
+                    oPaginacion.totalElementos = 0;
+                    oRespuesta.error.code = 4041;
+                    oRespuesta.error.message = "No se encontro el producto buscado";
+                    oRespuesta.paginacion = oPaginacion;
                 }
-                
+
+                #endregion
+
+                return oRespuesta;
+
             }
             catch(AccessViolationException ax )
             {
@@ -201,11 +289,18 @@ namespace API_Maestros_Core.BLL
             catch (Exception ex)
             {
                 Logger.LoguearErrores("Error al solicitar GetItem. Descripcion: " + ex.Message);
-                throw ex;
+                throw;
             }
            
         }
 
+
+        /// <summary>
+        /// Verifica si el usuario tiene permisos para solicitar Costos Por Proveedor
+        /// </summary>
+        /// <param name="costoUsuario"></param>
+        /// <param name="costoSolicitado"></param>
+        /// <returns></returns>
         private static bool VerificarPermisoSobreCostos(string costoUsuario,string costoSolicitado)
         {
             bool Habilitado = true;

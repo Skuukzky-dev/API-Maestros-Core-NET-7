@@ -53,8 +53,7 @@ namespace API_Maestros_Core.Controllers
                     ApiLogin.Token = token;
                     int resultado = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.Save(ApiLogin);
 
-
-
+                    
                     message.Content = new StringContent(JsonConvert.SerializeObject(respuestaToken));
                     //Logger.LoguearErrores("Loggeado correctamente con usuario: " + credenciales.Username);
                     return Ok(respuestaToken);
@@ -62,8 +61,8 @@ namespace API_Maestros_Core.Controllers
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
-                rspContenidoRespuesta.error.Code = 4011;
-                rspContenidoRespuesta.error.Message = "Usuario y / o contraseña incorrectos";
+                rspContenidoRespuesta.error.code = 4011;
+                rspContenidoRespuesta.error.message = "Usuario y / o contraseña incorrectos";
 
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
@@ -76,8 +75,8 @@ namespace API_Maestros_Core.Controllers
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
-                rspContenidoRespuesta.error.Code = 5001;
-                rspContenidoRespuesta.error.Message = "error al devolver el token. Descripcion: " + ex.Message;
+                rspContenidoRespuesta.error.code = 5001;
+                rspContenidoRespuesta.error.message = "error al devolver el token. Descripcion: " + ex.Message;
 
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
@@ -92,8 +91,8 @@ namespace API_Maestros_Core.Controllers
         private int _code;
         private String _message;
 
-        public int Code { get => _code; set => _code = value; }
-        public string Message { get => _message; set => _message = value; }
+        public int code { get => _code; set => _code = value; }
+        public string message { get => _message; set => _message = value; }
     }
 
 

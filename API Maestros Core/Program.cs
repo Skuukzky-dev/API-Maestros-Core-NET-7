@@ -229,8 +229,8 @@ app.Use(async (context, next) =>
                 {
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.Code = 4015;
-                    oresp.error.Message = "No se encontro encabezado para la petición";
+                    oresp.error.code = 4015;
+                    oresp.error.message = "No se encontro encabezado para la petición";
                     Logger.LoguearErrores("No se encontro encabezado para la petición");
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -244,8 +244,8 @@ app.Use(async (context, next) =>
                     context.Response.StatusCode = 401;
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.Code = 4011;
-                    oresp.error.Message = "No esta autorizado a acceder al recurso IP: " + ipAddress.ToString();
+                    oresp.error.code = 4011;
+                    oresp.error.message = "No esta autorizado a acceder al recurso IP: " + ipAddress.ToString();
                     Logger.LoguearErrores("No esta autorizado a acceder al recurso IP: " + ipAddress.ToString());
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -257,8 +257,8 @@ app.Use(async (context, next) =>
                     {
                         RespuestaToken oresp = new RespuestaToken();
                         oresp.error = new ErrorToken();
-                        oresp.error.Code = 4015;
-                        oresp.error.Message = "No se encontro encabezado para la petición";
+                        oresp.error.code = 4015;
+                        oresp.error.message = "No se encontro encabezado para la petición";
                         Logger.LoguearErrores("No se encontro encabezado para la petición");
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -280,8 +280,8 @@ app.Use(async (context, next) =>
                 {
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.Code = 4015;
-                    oresp.error.Message = "No se encontro encabezado para la petición";
+                    oresp.error.code = 4015;
+                    oresp.error.message = "No se encontro encabezado para la petición";
                     Logger.LoguearErrores("No se encontro encabezado para la petición");
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -297,8 +297,8 @@ app.Use(async (context, next) =>
                     context.Response.StatusCode = 401;
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.Code = 4011;
-                    oresp.error.Message = "No esta autorizado a acceder al recurso. URL: " + referrerUrl;
+                    oresp.error.code = 4011;
+                    oresp.error.message = "No esta autorizado a acceder al recurso. URL: " + referrerUrl;
                     Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL: " + referrerUrl);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -311,8 +311,8 @@ app.Use(async (context, next) =>
                     {
                         RespuestaToken oresp = new RespuestaToken();
                         oresp.error = new ErrorToken();
-                        oresp.error.Code = 4015;
-                        oresp.error.Message = "No se encontro encabezado para la petición";
+                        oresp.error.code = 4015;
+                        oresp.error.message = "No se encontro encabezado para la petición";
                         Logger.LoguearErrores("No se encontro encabezado para la petición");
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));

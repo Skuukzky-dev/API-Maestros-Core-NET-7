@@ -36,15 +36,13 @@ namespace API_Maestros_Core.Controllers
         [EnableCors("MyCorsPolicy")]
         [SwaggerOperation(Tags = new[] {"Canales de Venta"})]
         [SwaggerResponse(200, "OK", typeof(RespuestaConCanalesDeVenta))]
-        public IActionResult Get([FromBody] ResponseGetList oRequest = null)
+        public IActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
-            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-
-            if (oRequest == null)
-                oRequest = new ResponseGetList();
-
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);            
+            
+            
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
 
@@ -54,6 +52,7 @@ namespace API_Maestros_Core.Controllers
                
                 GESI.GESI.BO.ListaCanalesDeVenta lstCanales = new GESI.GESI.BO.ListaCanalesDeVenta();
                 moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
+                string CanalesDeVenta = null;
                 _SessionMgr = new GESI.CORE.BLL.SessionMgr();
                 bool Habilitado = false;
                 if (!HabilitadoPorToken)
@@ -76,6 +75,7 @@ namespace API_Maestros_Core.Controllers
                             _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
                             _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
                             _SessionMgr.EntidadID = 1;
+                            CanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
                             Habilitado = true;
                         }
                     }
@@ -89,12 +89,13 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.CanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
                         oRespuesta.paginacion = new Paginacion();
                         List<GESI.GESI.BO.CanalDeVenta> lstCanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
-                        lstCanalesDeVenta = GESI.GESI.BLL.TablasGeneralesGESIMgr.CanalesDeVentaGetList();
-                        oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((oRequest.pageNumber - 1) * oRequest.pageSize).Take(oRequest.pageSize).ToList();
+                        lstCanalesDeVenta = GESI.GESI.BLL.TablasGeneralesGESIMgr.CanalesDeVentaGetList(CanalesDeVenta);
+                        oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                         oRespuesta.paginacion.totalElementos = lstCanalesDeVenta.Count;
-                        oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / oRequest.pageSize);
-                        oRespuesta.paginacion.paginaActual = oRequest.pageNumber;
-                        oRespuesta.paginacion.tamañoPagina = oRequest.pageSize;
+                        oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
+                        oRespuesta.paginacion.paginaActual = pageNumber;
+                        oRespuesta.paginacion.tamañoPagina = pageSize;
+                        Logger.LoguearErrores("Respuesta GetList Canales de venta OK");
                         return Ok(oRespuesta);
                     }
                     else
