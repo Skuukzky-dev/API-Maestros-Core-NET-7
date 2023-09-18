@@ -65,7 +65,7 @@ namespace API_Maestros_Core.Controllers
                     oRespuesta.error = new Error();
                     oRespuesta.error.code = 4012;
                     oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");                   
+                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");                   
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -76,6 +76,8 @@ namespace API_Maestros_Core.Controllers
                     bool Habilitado = false;
                     string strCanalesDeVenta = "";
                     string strCostoUsuario = "N";
+                    string strEstadosProductos = "A";
+                    string strCategoriasIDs = "";
                        
                             foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                             {
@@ -87,6 +89,8 @@ namespace API_Maestros_Core.Controllers
                                     _SessionMgr.EntidadID = 1;
                                     strCostoUsuario = oHabilitacionAPI.CostosDeProveedor;
                                     strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
+                                    strEstadosProductos = oHabilitacionAPI.Estados;
+                                    strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
                                     Habilitado = true;
                                 } 
                             }
@@ -108,7 +112,7 @@ namespace API_Maestros_Core.Controllers
                                     }
 
                                     ProductosMgr._SessionMgr = _SessionMgr;
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, intCanales, costos, strCostoUsuario);
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, intCanales, costos, strCostoUsuario,strEstadosProductos,strCategoriasIDs);
 
                                     return Ok(oRespuesta);
                                 }
@@ -125,7 +129,7 @@ namespace API_Maestros_Core.Controllers
                                     }
 
                                     ProductosMgr._SessionMgr = _SessionMgr;
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, intCanales, costos, strCostoUsuario);
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, intCanales, costos, strCostoUsuario, strEstadosProductos, strCategoriasIDs);
 
                                     return Ok(oRespuesta);
 
@@ -138,29 +142,20 @@ namespace API_Maestros_Core.Controllers
                                 oRespuesta.error = new Error();
                                 oRespuesta.error.code = 4012;
                                 oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                                 oRespuesta.success = false;
                                 return Unauthorized(oRespuesta);
                             }
                         
                
                 }
-            }
-            catch (AccessViolationException ax)
-            {
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 4012;
-                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No esta habilitado a ver los costos del proveedor";
-                oRespuesta.success = false;
-                return Unauthorized(oRespuesta);
-
-            }
+            }            
             catch (Exception ex)
             {
                 oRespuesta.error = new Error();
                 oRespuesta.error.code = 5002;
                 oRespuesta.error.message = "error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                 oRespuesta.success = false;
                 return StatusCode(500,oRespuesta);
             }
@@ -189,7 +184,7 @@ namespace API_Maestros_Core.Controllers
                 oRespuesta.error = new Error();
                 oRespuesta.error.code = 4151;
                 oRespuesta.error.message = "Modelo no valido";
-                Logger.LoguearErrores("Modelo no valido");
+                Logger.LoguearErrores("Modelo no valido", "E");
                 oRespuesta.success = false;
                 return StatusCode(415, oRespuesta);
                 
@@ -202,7 +197,7 @@ namespace API_Maestros_Core.Controllers
                     oRespuesta.error = new Error();
                     oRespuesta.error.code = 4017;
                     oRespuesta.error.message = "No se encontro el productoID de la solicitud";
-                    Logger.LoguearErrores("No se encontro el productoID de la solicitud");
+                    Logger.LoguearErrores("No se encontro el productoID de la solicitud", "I");
                     oRespuesta.success = false;
                     return BadRequest(oRespuesta);
                 }
@@ -213,7 +208,7 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.error = new Error();
                         oRespuesta.error.code = 4017;
                         oRespuesta.error.message = "No se encontro el productoID de la solicitud";
-                        Logger.LoguearErrores("No se encontro el productoID de la solicitud");
+                        Logger.LoguearErrores("No se encontro el productoID de la solicitud", "I");
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
 
@@ -230,7 +225,7 @@ namespace API_Maestros_Core.Controllers
                                 oRespuesta.error = new Error();
                                 oRespuesta.error.code = 4012;
                                 oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                                 oRespuesta.success = false;
                                 return Unauthorized(oRespuesta);
                             }
@@ -241,6 +236,8 @@ namespace API_Maestros_Core.Controllers
                                 string strCanalesDeVenta = null;
                                 _SessionMgr = new GESI.CORE.BLL.SessionMgr();
                                 bool Habilitado = false;
+                                string strEstadosProductos = "A";
+                                string strCategoriasIDs = "";
                                 if (productoID != null)
                                 {
                                     if (productoID.Length > 0)
@@ -256,6 +253,8 @@ namespace API_Maestros_Core.Controllers
                                                 _SessionMgr.EntidadID = 1;
                                                 costoUsuario = oHabilitacionAPI.CostosDeProveedor;
                                                 strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
+                                                strEstadosProductos = oHabilitacionAPI.Estados;
+                                                strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
                                                 Habilitado = true;
                                             }
                                         }
@@ -265,7 +264,7 @@ namespace API_Maestros_Core.Controllers
                                         {
 
                                             ProductosMgr._SessionMgr = _SessionMgr;
-                                            oRespuesta = ProductosMgr.GetItem(productoID, strCanalesDeVenta,canalDeVentaID,costos,costoUsuario);
+                                            oRespuesta = ProductosMgr.GetItem(productoID, strCanalesDeVenta,canalDeVentaID,costos,costoUsuario,strEstadosProductos,strCategoriasIDs);
 
                                             if(oRespuesta.producto?.ProductoID?.Length > 0)
                                             {
@@ -316,7 +315,7 @@ namespace API_Maestros_Core.Controllers
                                             oRespuesta.error = new Error();
                                             oRespuesta.error.code = 4012;
                                             oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                                             oRespuesta.success = false;
                                             return Unauthorized(oRespuesta);
                                         }
@@ -327,7 +326,7 @@ namespace API_Maestros_Core.Controllers
                                         oRespuesta.error.code = 2041;
                                         oRespuesta.success = false;
                                         oRespuesta.error.message = "No se encontro expresion a buscar";
-                                        Logger.LoguearErrores("No se encontro expresion a buscar.");                                        
+                                        Logger.LoguearErrores("No se encontro expresion a buscar.", "I");                                        
                                         return StatusCode(204, oRespuesta);
                                     }
                                 }
@@ -337,7 +336,7 @@ namespace API_Maestros_Core.Controllers
                                     oRespuesta.error.code = 4041;
                                     oRespuesta.error.message = "No se encontro expresion a buscar";
                                     oRespuesta.success = false;
-                                    Logger.LoguearErrores("No se encontro expresion a buscar");                                    
+                                    Logger.LoguearErrores("No se encontro expresion a buscar", "I");                                    
                                     return StatusCode(204, oRespuesta);
                                 }
                             }
@@ -357,7 +356,7 @@ namespace API_Maestros_Core.Controllers
                             oRespuesta.error.code = 5002;
                             oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
                             oRespuesta.success = false;
-                            Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                            Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                             return StatusCode(500, oRespuesta);
                         }
                     }
@@ -371,7 +370,7 @@ namespace API_Maestros_Core.Controllers
         /// </summary>
         /// <param name="oRequest"></param>
         /// <returns></returns>
-        [HttpGet("GetSearchResult/{expresion}")]
+        [HttpGet("GetSearchResult")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaProductosGetResult))]
         public IActionResult Get(string expresion = "",int pageNumber = 1 , int pageSize = 10,string costos = "N")
@@ -394,7 +393,7 @@ namespace API_Maestros_Core.Controllers
                     oRespuesta.error = new Error();
                     oRespuesta.error.code = 4012;
                     oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -405,6 +404,8 @@ namespace API_Maestros_Core.Controllers
                     bool Habilitado = false;
                     string strCanalesDeVenta = "";
                     string strCostoUsuario = "N";
+                    string strCategoriasIDs = null;
+                    string strEstadosProductos = null;
                     if (expresion?.Length > 0)
                     {
                         #region SessionManager
@@ -418,6 +419,8 @@ namespace API_Maestros_Core.Controllers
                                 _SessionMgr.EntidadID = 1;
                                 strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
                                 strCostoUsuario = oHabilitacionAPI.CostosDeProveedor;
+                                strEstadosProductos = oHabilitacionAPI.Estados;
+                                strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
                                 Habilitado = true;
                             }
                         }
@@ -439,8 +442,8 @@ namespace API_Maestros_Core.Controllers
                                 { pageSize = 100; }
 
                                 ProductosMgr._SessionMgr = _SessionMgr;
-                                oRespuesta = ProductosMgr.GetList(expresion,intCanales,costos, strCostoUsuario,pageNumber,pageSize);
-                                Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion);
+                                oRespuesta = ProductosMgr.GetList(expresion,intCanales,costos, strCostoUsuario,pageNumber,pageSize,strEstadosProductos,strCategoriasIDs);
+                                Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion, "I");
                                 return Ok(oRespuesta);
                             }
                             else
@@ -450,8 +453,8 @@ namespace API_Maestros_Core.Controllers
 
                                 ProductosMgr._SessionMgr = _SessionMgr;
                                 ProductosMgr._SessionMgr = _SessionMgr;
-                                oRespuesta = ProductosMgr.GetList(expresion, intCanales, costos, strCostoUsuario, pageNumber, TamanoPagina);                             
-                                Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion);
+                                oRespuesta = ProductosMgr.GetList(expresion, intCanales, costos, strCostoUsuario, pageNumber, TamanoPagina, strEstadosProductos, strCategoriasIDs);                             
+                                Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion, "I");
                                 return Ok(oRespuesta);
                             }
 
@@ -463,7 +466,7 @@ namespace API_Maestros_Core.Controllers
                             oRespuesta.error.code = 4012;
                             oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
                             oRespuesta.success = false;
-                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                             return Unauthorized(oRespuesta);
                         }
 
@@ -473,7 +476,7 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.error = new Error();
                         oRespuesta.error.code = 2041;
                         oRespuesta.error.message = "No se encontro expresion a buscar";
-                        Logger.LoguearErrores("No se encontro expresion a buscar");
+                        Logger.LoguearErrores("No se encontro expresion a buscar", "I");
                         oRespuesta.success = false;
                         return StatusCode(204, oRespuesta);
                     }
@@ -484,7 +487,7 @@ namespace API_Maestros_Core.Controllers
                 oRespuesta.error = new Error();
                 oRespuesta.error.code = 5002;
                 oRespuesta.error.message = "error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                 oRespuesta.success = false;
                 return StatusCode(500, oRespuesta);
             }
@@ -552,7 +555,7 @@ namespace API_Maestros_Core.Controllers
 
 
 
-
+    
     public class HijoProductos : GESI.ERP.Core.BO.cProducto
     {
         [System.Text.Json.Serialization.JsonIgnore]
@@ -589,8 +592,10 @@ namespace API_Maestros_Core.Controllers
         [Newtonsoft.Json.JsonIgnore]
 
         public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
-
         
+        public List<int> ListaDeCategorias { get => _CodigosCategorias; set => _CodigosCategorias = value; }
+
+        private List<int> _CodigosCategorias;
 
         public HijoProductos(GESI.ERP.Core.BO.cProducto padre)
         {
@@ -611,6 +616,9 @@ namespace API_Maestros_Core.Controllers
             Imagenes = padre.Imagenes;
             Precios = padre.Precios;
             Categorias = padre.Categorias;
+            Estado = padre.Estado;
+            GrupoArtID = padre.GrupoArtID;
+            ListaDeCategorias = new List<int>();
         }
 
         public HijoProductos()

@@ -5,7 +5,18 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>API_Maestros_Core</RootNamespace>
+    <UseWindowsForms>False</UseWindowsForms>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <COMReference Include="{215d64d2-031c-33c7-96e3-61794cd1ee61}">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>4</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>215d64d2-031c-33c7-96e3-61794cd1ee61</Guid>
+    </COMReference>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
@@ -20,16 +31,16 @@
 
   <ItemGroup>
     <Reference Include="GESI.CORE.BLL">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\GESI.ERP.Core\bin\Debug\GESI.CORE.BLL.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.BLL.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.BO">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI\Core\BO\bin\Debug\GESI.CORE.BO.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.BO.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.DAL">
-      <HintPath>..\..\..\GESI\Core\DAL\bin\Debug\GESI.CORE.DAL.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.DAL.dll</HintPath>
     </Reference>
     <Reference Include="GESI.ERP.Core">
-      <HintPath>..\..\..\GESI.ERP.Core\GESI.ERP.Core\bin\Debug\GESI.ERP.Core.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.ERP.Core.dll</HintPath>
     </Reference>
     <Reference Include="GESI.GESI.BLL">
       <HintPath>I:\Desarrollo\VersCom.Net\GESI\GESI\BLL\bin\Debug\GESI.GESI.BLL.dll</HintPath>

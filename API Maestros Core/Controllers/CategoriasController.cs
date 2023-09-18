@@ -53,7 +53,7 @@ namespace API_Maestros_Core.Controllers
                 oRespuesta.error = new Error();
                 oRespuesta.error.code = 4151;
                 oRespuesta.error.message = "Modelo no válido";
-                Logger.LoguearErrores("Modelo no válido");
+                Logger.LoguearErrores("Modelo no válido", "E");
                 return StatusCode(415, oRespuesta);
             }
             else
@@ -71,7 +71,7 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.error = new Error();
                         oRespuesta.error.code = 4012;
                         oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                         return Unauthorized(oRespuesta);
                         //return oRespuesta;
                     }
@@ -116,7 +116,7 @@ namespace API_Maestros_Core.Controllers
                             oRespuesta.error = new Error();
                             oRespuesta.error.code = 4012;
                             oRespuesta.error.message = "No esta autorizado a acceder al recurso";
-                            Logger.LoguearErrores("No esta autorizado a acceder al recurso");
+                            Logger.LoguearErrores("No esta autorizado a acceder al recurso", "E");
                             return Unauthorized(oRespuesta);
                         }
                     }
@@ -127,7 +127,7 @@ namespace API_Maestros_Core.Controllers
                     oRespuesta.error = new Error();
                     oRespuesta.error.code = 5001;
                     oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                     return StatusCode(500, oRespuesta);
                 }
             }
@@ -156,7 +156,7 @@ namespace API_Maestros_Core.Controllers
                 oRespuesta.error = new Error();
                 oRespuesta.error.code = 4151;
                 oRespuesta.error.message = "Modelo no valido";
-                Logger.LoguearErrores("Modelo no valido");
+                Logger.LoguearErrores("Modelo no valido", "E");
                 oRespuesta.success = false;
                 string json = JsonConvert.SerializeObject(oRespuesta);
                 return StatusCode(415, oRespuesta);
@@ -172,7 +172,7 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.error = new Error();
                         oRespuesta.error.code = 4012;
                         oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                         oRespuesta.success = false;
                         return Unauthorized(oRespuesta);
                     }
@@ -214,7 +214,7 @@ namespace API_Maestros_Core.Controllers
                                     oRespuesta.success = true;
                                     oRespuesta.categoriaProducto = new GESI.ERP.Core.BO.cCategoriaDeProducto();
                                     oRespuesta.categoriaProducto = CategoriasMgr.GetItem(categoriaID);
-                                    Logger.LoguearErrores("Exitoso para el codigo " + categoriaID);
+                                    Logger.LoguearErrores("Exitoso para el codigo " + categoriaID, "I");
                                     return Ok(oRespuesta);
                                 }
                                 else
@@ -222,7 +222,7 @@ namespace API_Maestros_Core.Controllers
                                     oRespuesta.error = new Error();
                                     oRespuesta.error.code = 4012;
                                     oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                                     oRespuesta.success = false;
                                     return Unauthorized(oRespuesta);
                                 }
@@ -232,7 +232,7 @@ namespace API_Maestros_Core.Controllers
                                 oRespuesta.error = new Error();
                                 oRespuesta.error.code = 2041;
                                 oRespuesta.error.message = "No se encontro categoria a buscar";
-                                Logger.LoguearErrores("No se encontro categoria a buscar");
+                                Logger.LoguearErrores("No se encontro categoria a buscar", "I");
                                 oRespuesta.success = false;
                                 return StatusCode(204, oRespuesta);
                             }
@@ -242,7 +242,7 @@ namespace API_Maestros_Core.Controllers
                             oRespuesta.error = new Error();
                             oRespuesta.error.code = 4041;
                             oRespuesta.error.message = "No se encontro categoria a buscar";
-                            Logger.LoguearErrores("No se encontro categoria a buscar");
+                            Logger.LoguearErrores("No se encontro categoria a buscar", "I");
                             oRespuesta.success = false;
                             return StatusCode(204, oRespuesta);
                         }
@@ -253,7 +253,7 @@ namespace API_Maestros_Core.Controllers
                     oRespuesta.error = new Error();
                     oRespuesta.error.code = 5001;
                     oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                     oRespuesta.success = false;
                     return StatusCode(500, oRespuesta);
                 }

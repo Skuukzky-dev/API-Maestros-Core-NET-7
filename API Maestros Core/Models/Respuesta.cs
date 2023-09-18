@@ -95,4 +95,13 @@ namespace API_Maestros_Core.Models
         public int code { get => _code; set => _code = value; }
         public string? message { get => _message; set => _message = value; }
     }
+
+    public class RespuestaImagen : Respuesta
+    {
+        private string? _message;
+        private int _imagenID;
+
+        public string? message { get => _message; set => _message = value; }
+        public int imagenID { get => _imagenID; set => _imagenID = value; }
+    }
 }

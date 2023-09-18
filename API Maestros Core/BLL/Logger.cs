@@ -6,13 +6,13 @@
         /// Loguea los casos exitosos y errores de la API
         /// </summary>
         /// <param name="strDescripcionError"></param>
-        public static void LoguearErrores(String strDescripcionError)
+        public static void LoguearErrores(String strDescripcionError,String strTipo)
         {
             try
             {
                 using (StreamWriter mylogs = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\logAPI.txt"))         //se crea el archivo
                 {
-                    mylogs.WriteLine(DateTime.Now.ToString() + "|" + strDescripcionError);
+                    mylogs.WriteLine(DateTime.Now.ToString() + "|"+strTipo+"|" + strDescripcionError);
                     mylogs.Close();
                 }
             }

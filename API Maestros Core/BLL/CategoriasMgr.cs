@@ -31,7 +31,7 @@ namespace API_Maestros_Core.BLL
 
         }
 
-
+        
         /// <summary>
         /// Devuelve la categoria enviada
         /// </summary>

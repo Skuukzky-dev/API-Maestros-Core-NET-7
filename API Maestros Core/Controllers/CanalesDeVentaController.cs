@@ -61,7 +61,7 @@ namespace API_Maestros_Core.Controllers
                     oRespuesta.error = new Error();
                     oRespuesta.error.code = 4012;
                     oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario");
+                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                     return Unauthorized(oRespuesta);
                 }
                 else
@@ -95,7 +95,7 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
                         oRespuesta.paginacion.paginaActual = pageNumber;
                         oRespuesta.paginacion.tamañoPagina = pageSize;
-                        Logger.LoguearErrores("Respuesta GetList Canales de venta OK");
+                        Logger.LoguearErrores("Respuesta GetList Canales de venta OK", "I");
                         return Ok(oRespuesta);
                     }
                     else
@@ -104,7 +104,7 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.error = new Error();
                         oRespuesta.error.code = 4012;
                         oRespuesta.error.message = "No esta autorizado a acceder al recurso";
-                        Logger.LoguearErrores("No esta autorizado a acceder al recurso");
+                        Logger.LoguearErrores("No esta autorizado a acceder al recurso", "E");
                         return Unauthorized(oRespuesta);
                     }
                 }
@@ -115,7 +115,7 @@ namespace API_Maestros_Core.Controllers
                 oRespuesta.error = new Error();
                 oRespuesta.error.code = 5001;
                 oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: "+ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message);
+                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                 return Unauthorized(oRespuesta);
             }
 
