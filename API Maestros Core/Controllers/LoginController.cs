@@ -76,7 +76,7 @@ namespace API_Maestros_Core.Controllers
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
                 rspContenidoRespuesta.error.code = 5001;
-                rspContenidoRespuesta.error.message = "error al devolver el token. Descripcion: " + ex.Message;
+                rspContenidoRespuesta.error.message = "Error al devolver el token. Descripcion: " + ex.Message;
 
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));

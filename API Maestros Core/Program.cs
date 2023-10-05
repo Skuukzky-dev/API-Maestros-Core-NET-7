@@ -94,7 +94,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 RespuestaConToken tok = new RespuestaConToken();
                 tok.success = false;
                 tok.error = new Error();
-                tok.error.code = 4012;
+                tok.error.code = 4013;
                 context.Response.ContentType = "application/json";
                 tok.error.message = "No se encontro el Token en el Request";
                 Logger.LoguearErrores("No se encontro el Token en el Request", "I");
