@@ -591,71 +591,85 @@ namespace API_Maestros_Core.Controllers
             string AlmacenesIDs = "";
             moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
             _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-            try
-            {
-                if(codigos?.Length > 0)
-                {
-                    foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                    {
-                        if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                        {
-                            _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                            _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                            _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                            _SessionMgr.EntidadID = 1;
-                            AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;
-                            Habilitado = true;
-                        }
-                    }
 
-                    if(Habilitado)
+            if (!HabilitadoPorToken)
+            {
+                oRespuesta.error = new Error();
+                oRespuesta.error.code = 4016;
+                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                oRespuesta.success = false;
+                return Unauthorized(oRespuesta);
+            }
+            else
+            {
+
+                try
+                {
+                    if (codigos?.Length > 0)
                     {
-                        ProductosMgr._SessionMgr = _SessionMgr;
-                        oRespuesta = ProductosMgr.GetExistencias(codigos, pageNumber, pageSize, AlmacenesIDs);
-                        oRespuesta.success = true;
-                        if (oRespuesta.existencias == null)
+                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                         {
-                            return NoContent();
+                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
+                            {
+                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
+                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
+                                _SessionMgr.EntidadID = 1;
+                                AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;
+                                Habilitado = true;
+                            }
+                        }
+
+                        if (Habilitado)
+                        {
+                            ProductosMgr._SessionMgr = _SessionMgr;
+                            oRespuesta = ProductosMgr.GetExistencias(codigos, pageNumber, pageSize, AlmacenesIDs);
+                            oRespuesta.success = true;
+                            if (oRespuesta.existencias == null)
+                            {
+                                return NoContent();
+                            }
+                            else
+                            {
+                                return Ok(oRespuesta);
+                            }
                         }
                         else
                         {
-                            return Ok(oRespuesta);
+                            #region Autorizacion
+                            oRespuesta.error = new Error();
+                            oRespuesta.error.code = 4016;
+                            oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                            oRespuesta.success = false;
+                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                            return Unauthorized(oRespuesta);
+                            #endregion
                         }
                     }
                     else
                     {
-                        #region Autorizacion
+                        #region No hay codigos definidos
                         oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4016;
-                        oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                        oRespuesta.error.code = 4012;
+                        oRespuesta.error.message = "No se defininió un código o códigos a buscar";
                         oRespuesta.success = false;
-                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
-                        return Unauthorized(oRespuesta);
+                        Logger.LoguearErrores("No se defininió un código o códigos a buscar", "E");
+                        return BadRequest(oRespuesta);
                         #endregion
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    #region No hay codigos definidos
+                    #region Error
                     oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4012;
-                    oRespuesta.error.message = "No se defininió un código o códigos a buscar";
+                    oRespuesta.error.code = 5002;
+                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
+                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                     oRespuesta.success = false;
-                    Logger.LoguearErrores("No se defininió un código o códigos a buscar", "E");
-                    return BadRequest(oRespuesta);
+                    return StatusCode(500, oRespuesta);
                     #endregion
                 }
-            }
-            catch (Exception ex)
-            {
-                #region Error
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 5002;
-                oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
-                oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
-                #endregion
             }
         }
 
@@ -663,7 +677,7 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetPrecios")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaProductosGetPrecios))]
-        public IActionResult GetPrecios(string codigos = "", int pageNumber = 1, int pageSize = 10)
+        public IActionResult GetPrecios(string codigos = "", int pageNumber = 1, int pageSize = 10,string fechamodificaciones = "")
         {
             #region ConnectionStrings
             RespuestaProductosGetPrecios oRespuesta = new RespuestaProductosGetPrecios();
@@ -679,83 +693,107 @@ namespace API_Maestros_Core.Controllers
             string CanalesDeVentaIDs = "";
             moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
             _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-
-            try
+            if (!HabilitadoPorToken)
             {
-                if (codigos?.Length > 0)
+                oRespuesta.error = new Error();
+                oRespuesta.error.code = 4016;
+                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                oRespuesta.success = false;
+                return Unauthorized(oRespuesta);
+            }
+            else
+            {
+
+
+                try
                 {
-                    foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
+                    if (codigos?.Length > 0 || fechamodificaciones?.Length > 0)
                     {
-                        if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
+                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                         {
-                            _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                            _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                            _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                            _SessionMgr.EntidadID = 1;
-                            CanalesDeVentaIDs = oHabilitacionAPI.CanalesDeVenta;
-                            Habilitado = true;
+                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
+                            {
+                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
+                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
+                                _SessionMgr.EntidadID = 1;
+                                CanalesDeVentaIDs = oHabilitacionAPI.CanalesDeVenta;
+                                Habilitado = true;
+                            }
                         }
-                    }
 
-                    if (Habilitado)
-                    {
-                        ProductosMgr._SessionMgr = _SessionMgr;
-
-                        #region Convertir String CanalesDeVenta a int []
-                        List<string> canalesaux = CanalesDeVentaIDs.Split(',').ToList();
-                        int[] intCanales = new int[canalesaux.Count];
-                        for (int i = 0; i < canalesaux.Count; i++)
+                        if (Habilitado)
                         {
-                            int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                        }
-                        #endregion
+                            ProductosMgr._SessionMgr = _SessionMgr;
 
-                        oRespuesta = ProductosMgr.GetPrecios(codigos, intCanales, pageNumber, pageSize);
+                            #region Convertir String CanalesDeVenta a int []
+                            List<string> canalesaux = CanalesDeVentaIDs.Split(',').ToList();
+                            int[] intCanales = new int[canalesaux.Count];
+                            for (int i = 0; i < canalesaux.Count; i++)
+                            {
+                                int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
+                            }
+                            #endregion
 
-                        if(oRespuesta.Precios == null)
-                        {
-                            return NoContent();
+                            oRespuesta = ProductosMgr.GetPrecios(codigos, intCanales, pageNumber, pageSize, fechamodificaciones);
+
+                            if (oRespuesta.Precios == null)
+                            {
+                                return NoContent();
+                            }
+                            else
+                            {
+                                return Ok(oRespuesta);
+                            }
+
                         }
                         else
                         {
-                            return Ok(oRespuesta);
+                            #region Autorizacion
+                            oRespuesta.error = new Error();
+                            oRespuesta.error.code = 4016;
+                            oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                            oRespuesta.success = false;
+                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                            return Unauthorized(oRespuesta);
+                            #endregion
                         }
-
                     }
                     else
                     {
-                        #region Autorizacion
+                        #region No hay codigos definidos
                         oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4016;
-                        oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
+                        oRespuesta.error.code = 4012;
+                        oRespuesta.error.message = "No se defininió un código o códigos a buscar";
                         oRespuesta.success = false;
-                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
-                        return Unauthorized(oRespuesta);
+                        Logger.LoguearErrores("No se defininió un código o códigos a buscar", "E");
+                        return BadRequest(oRespuesta);
                         #endregion
                     }
                 }
-                else
+                catch (FormatException fex)
                 {
-                    #region No hay codigos definidos
+                    #region Error
                     oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4012;
-                    oRespuesta.error.message = "No se defininió un código o códigos a buscar";
+                    oRespuesta.error.code = 5002;
+                    oRespuesta.error.message = "Se definio un formato de fecha incorrecto: " + fechamodificaciones;
+                    Logger.LoguearErrores("Se definio un formato de fecha incorrecto: " + fechamodificaciones, "E");
                     oRespuesta.success = false;
-                    Logger.LoguearErrores("No se defininió un código o códigos a buscar", "E");
-                    return BadRequest(oRespuesta);
+                    return StatusCode(500, oRespuesta);
                     #endregion
                 }
-            }
-            catch (Exception ex)
-            {
-                #region Error
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 5002;
-                oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
-                oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
-                #endregion
+                catch (Exception ex)
+                {
+                    #region Error
+                    oRespuesta.error = new Error();
+                    oRespuesta.error.code = 5002;
+                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
+                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                    oRespuesta.success = false;
+                    return StatusCode(500, oRespuesta);
+                    #endregion
+                }
             }
 
         }

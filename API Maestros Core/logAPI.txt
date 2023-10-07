@@ -982,3 +982,123 @@ Se terminó la instrucción.
 05/10/2023 9:37:22|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
 05/10/2023 9:37:44|I|No se encontro encabezado para la petición
 05/10/2023 9:37:51|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 10:02:16|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 10:02:38|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 10:04:00|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 10:04:15|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 10:04:29|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 10:04:34|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 10:04:34|E|No se defininió un código o códigos a buscar
+05/10/2023 10:04:45|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 10:04:45|E|No se defininió un código o códigos a buscar
+05/10/2023 10:04:48|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 10:04:48|E|No se defininió un código o códigos a buscar
+05/10/2023 10:04:52|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 11:34:25|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 11:42:38|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 11:43:53|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+05/10/2023 11:44:12|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 11:45:18|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 11:45:29|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 11:46:34|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 11:46:52|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 12:42:51|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 12:44:00|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+05/10/2023 12:44:08|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 12:44:16|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 12:44:22|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 12:44:35|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 14:20:11|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 14:20:42|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+05/10/2023 14:20:57|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 14:29:21|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 14:29:35|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 14:31:14|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 14:31:26|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 15:06:32|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 15:06:45|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 15:18:02|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 15:18:18|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 15:22:04|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 15:26:41|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 15:26:53|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 15:29:14|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 15:29:29|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 15:30:00|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 15:30:10|I|Logueado exitosamente. Usuario: gesi
+05/10/2023 15:31:39|I|Se excedio la cantidad maxima de solicitudes a realizar
+05/10/2023 15:31:51|I|Logueado exitosamente. Usuario: gesi
+06/10/2023 7:31:39|I|Se excedio la cantidad maxima de solicitudes a realizar
+06/10/2023 7:32:09|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+06/10/2023 7:32:22|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 10:26:28|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 10:26:41|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+07/10/2023 10:26:53|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 10:27:14|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 10:29:49|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 10:31:32|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 10:31:36|E|Error al solicitar GetList. Descripcion: The parameter data type of UInt16 is invalid.
+07/10/2023 10:31:36|E|Error interno de la aplicacion. Descripcion: The parameter data type of UInt16 is invalid.
+07/10/2023 10:31:42|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:02:02|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:03:33|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiY2QzMzBjMmItODU2My00NTg4LWFiY2EtMmI0NWNlNTM2YzBhIiwiaWF0IjoxNjk2Njg1MjAxLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTY2ODUyMDEsImV4cCI6MTY5NjY5OTYwMSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.bUedAKI5GWrsK_57AWBYZAF5ryKR35T8cDow9MEX28Y
+07/10/2023 11:03:39|E|Error interno de la aplicacion. Descripcion: Object reference not set to an instance of an object.
+07/10/2023 11:03:44|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+07/10/2023 11:03:52|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:04:08|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:04:08|E|No se defininió un código o códigos a buscar
+07/10/2023 11:06:05|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:06:20|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:06:27|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:07:21|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:07:26|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:07:30|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:08:49|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:08:55|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:09:07|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:09:45|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:09:57|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:10:32|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:10:46|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:11:02|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:12:08|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:12:20|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:13:18|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:13:35|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:13:53|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:13:53|E|Error al solicitar GetPrecios. Descripcion: Value cannot be null. (Parameter 'collection')
+07/10/2023 11:13:53|E|Error interno de la aplicacion. Descripcion: Value cannot be null. (Parameter 'collection')
+07/10/2023 11:14:12|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:14:27|E|Error al solicitar GetPrecios. Descripcion: Value cannot be null. (Parameter 'collection')
+07/10/2023 11:14:27|E|Error interno de la aplicacion. Descripcion: Value cannot be null. (Parameter 'collection')
+07/10/2023 11:14:36|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:15:12|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:15:31|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:15:54|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:16:15|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:16:20|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:16:25|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:17:16|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:17:16|E|Error al solicitar GetExistencias. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGetExistenciaProductosPendientes', base de datos 'BD_Desarrollo_API', esquema 'dbo'.
+07/10/2023 11:17:16|E|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGetExistenciaProductosPendientes', base de datos 'BD_Desarrollo_API', esquema 'dbo'.
+07/10/2023 11:18:44|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:19:25|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:26:25|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:26:34|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:26:44|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:28:27|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 11:47:15|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:47:28|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiYWQ4NzFmNDgtOTI2Yy00ZjZkLTlhMzItYzM2ZjUwY2RjZGY5IiwiaWF0IjoxNjk2Njg3NDI0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTY2ODc0MjQsImV4cCI6MTY5NjcwMTgyNCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.Ki4q-qcGlL1cchTM0xWC3n9RaQx-wld0_opKdyyOz3w
+07/10/2023 11:47:44|E|Error interno de la aplicacion. Descripcion: Object reference not set to an instance of an object.
+07/10/2023 11:47:48|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiYWQ4NzFmNDgtOTI2Yy00ZjZkLTlhMzItYzM2ZjUwY2RjZGY5IiwiaWF0IjoxNjk2Njg3NDI0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTY2ODc0MjQsImV4cCI6MTY5NjcwMTgyNCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.Ki4q-qcGlL1cchTM0xWC3n9RaQx-wld0_opKdyyOz3w
+07/10/2023 11:47:51|E|Error interno de la aplicacion. Descripcion: Object reference not set to an instance of an object.
+07/10/2023 11:48:31|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiYWQ4NzFmNDgtOTI2Yy00ZjZkLTlhMzItYzM2ZjUwY2RjZGY5IiwiaWF0IjoxNjk2Njg3NDI0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTY2ODc0MjQsImV4cCI6MTY5NjcwMTgyNCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.Ki4q-qcGlL1cchTM0xWC3n9RaQx-wld0_opKdyyOz3w
+07/10/2023 11:53:17|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 11:53:32|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiYWQ4NzFmNDgtOTI2Yy00ZjZkLTlhMzItYzM2ZjUwY2RjZGY5IiwiaWF0IjoxNjk2Njg3NDI0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTY2ODc0MjQsImV4cCI6MTY5NjcwMTgyNCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.Ki4q-qcGlL1cchTM0xWC3n9RaQx-wld0_opKdyyOz3w
+07/10/2023 11:53:32|E|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+07/10/2023 11:54:12|I|Se excedio la cantidad maxima de solicitudes a realizar
+07/10/2023 12:05:19|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiYWQ4NzFmNDgtOTI2Yy00ZjZkLTlhMzItYzM2ZjUwY2RjZGY5IiwiaWF0IjoxNjk2Njg3NDI0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTY2ODc0MjQsImV4cCI6MTY5NjcwMTgyNCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.Ki4q-qcGlL1cchTM0xWC3n9RaQx-wld0_opKdyyOz3w
+07/10/2023 12:05:19|E|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+07/10/2023 12:05:24|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+07/10/2023 12:05:41|I|Logueado exitosamente. Usuario: gesi
+07/10/2023 12:05:41|I|OK -> GetExistencias

@@ -1,4 +1,5 @@
 ﻿using API_Maestros_Core.Controllers;
+using GESI.CORE.BO;
 using GESI.ERP.Core.BO;
 using GESI.GESI.BO;
 
@@ -119,5 +120,12 @@ namespace API_Maestros_Core.Models
 
         public string? message { get => _message; set => _message = value; }
         public int imagenID { get => _imagenID; set => _imagenID = value; }
+    }
+
+    public class RespuestaSucursales : Respuesta
+    {
+        private List<SucursalHija> _sucursales;
+        public Paginacion? paginacion { get; set; }
+        public List<SucursalHija> Sucursales { get => _sucursales; set => _sucursales = value; }
     }
 }

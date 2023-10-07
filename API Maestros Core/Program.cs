@@ -129,16 +129,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                     {
                         ProductosController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         ProductosController.HabilitadoPorToken = true;
+                        
                         CanalesDeVentaController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         CanalesDeVentaController.HabilitadoPorToken = true;
+                        
                         CategoriasController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         CategoriasController.HabilitadoPorToken = true;
+
+                        EmpresasController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                        EmpresasController.HabilitadoPorToken = true;
+
                         Logger.LoguearErrores("Logueado exitosamente. Usuario: "+MiObjetoLogin.UsuarioID, "I");
                     }
                     else // NO LO ENCONTRO EN LA BASE
                     {
                         ProductosController.HabilitadoPorToken = false;
                         CanalesDeVentaController.HabilitadoPorToken = false;
+                        CategoriasController.HabilitadoPorToken = false;
+                        EmpresasController.HabilitadoPorToken = false;
                         Logger.LoguearErrores("No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: "+ accessToken.RawData, "E");
                     }
                 }
