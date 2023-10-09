@@ -1,4 +1,5 @@
-﻿using API_Maestros_Core.Models;
+﻿using API_Maestros_Core.BLL;
+using API_Maestros_Core.Models;
 using GESI.ERP.Core.BO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -29,32 +30,15 @@ namespace API_Maestros_Core.Controllers
             {
                 #region Variables
                 RespuestaSucursales oRespuesta = new RespuestaSucursales();
-                _SessionMgr = new GESI.CORE.BLL.SessionMgr();
+
                 #endregion
 
-                bool Habilitado = false;
+                APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
-                #region Habilitaciones API
-                moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-
-                foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
+                if (MiSessionMgrAPI.Habilitado)
                 {
-                    if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                    {
-                        _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                        _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                        _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                        _SessionMgr.EntidadID = 1;
-                        Habilitado = true;
-                    }
-                }
-                #endregion
-
-
-                if (Habilitado)
-                {
-                    List<SucursalHija> lstSucursalesFinales = new List<SucursalHija>();
-                    GESI.CORE.BLL.SucursalesMgr.SessionManager = _SessionMgr;
+                        List<SucursalHija> lstSucursalesFinales = new List<SucursalHija>();
+                        GESI.CORE.BLL.SucursalesMgr.SessionManager = MiSessionMgrAPI.SessionMgr;
 
                         GESI.CORE.BO.ListaSucursales olstSucursales = GESI.CORE.BLL.SucursalesMgr.GetList();
 

@@ -263,7 +263,7 @@ namespace API_Maestros_Core.BLL
         /// <param name="ProductoID"></param>
         /// <param name="CanalesDeVenta"></param>
         /// <returns></returns>
-        public static RespuestaProductosGetItem GetItem(String ProductoID, String CanalesDeVenta, int CanalDeVentaID, string costoSolicitado, string costoUsuario, string EstadosProductos, string CategoriasIDs, string imagenes, string stock = "N", int[] Almacenes = null) // Usa GetItem
+        public static RespuestaProductosGetItem GetItem(String ProductoID, int[] CanalesDeVenta, int CanalDeVentaID, string costoSolicitado, string costoUsuario, string EstadosProductos, string CategoriasIDs, string imagenes, string stock = "N", int[] Almacenes = null) // Usa GetItem
         {
             try
             {
@@ -283,21 +283,19 @@ namespace API_Maestros_Core.BLL
 
                 #region Variables
                 HijoProductos lstHijos = new HijoProductos();
-                string[] canales = CanalesDeVenta.Split(',');
-                int[] ints = Array.ConvertAll(canales, s => int.Parse(s));
                 List<GESI.ERP.Core.BO.cProducto> oProduc = new List<GESI.ERP.Core.BO.cProducto>();
                 #endregion
 
                 if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifica si tiene permiso para devolver costos del proveedor
                 {
                     #region Tiene permisos sobre costos                    
-                    oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, ints, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
+                    oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, CanalesDeVenta, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                     oRespuesta.error = new Error();
                     #endregion
                 }
                 else
                 {
-                    oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, ints, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
+                    oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                     oRespuesta.error = new Error();
                     oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
                     oRespuesta.error.code = 4017;
@@ -407,7 +405,7 @@ namespace API_Maestros_Core.BLL
         /// </summary>
         /// <param name="codigos"></param>
         /// <param name="Almacenes"></param>
-        public static RespuestaProductosGetExistencias GetExistencias(string codigos, int pageNumber = 1, int pageSize = 10, string Almacenes = null)
+        public static RespuestaProductosGetExistencias GetExistencias(string codigos, int pageNumber = 1, int pageSize = 10,int[] Almacenes = null)
         {
             RespuestaProductosGetExistencias oRespuesta = new RespuestaProductosGetExistencias();
             #region ConnectionStrings
@@ -423,11 +421,24 @@ namespace API_Maestros_Core.BLL
             GESI.ERP.Core.BLL.ExistenciasManager.ERPsessionManager = _SessionERP;
             #endregion
 
+
             try
             {
                 List<string> lstCodigosProducto = codigos.Split(",").ToList();
+                
+                string AlmacenesIDs = null;
+                if (Almacenes?.Length > 0)
+                    AlmacenesIDs = string.Join(",", Almacenes);
 
-                List<GESI.ERP.Core.BO.cExistenciaProducto> lstExistencias = GESI.ERP.Core.BLL.ExistenciasManager.GetExistenciaProductos(codigos, Almacenes);
+                List<GESI.ERP.Core.BO.cExistenciaProducto> lstExistencias = GESI.ERP.Core.BLL.ExistenciasManager.GetExistenciaProductos(codigos, AlmacenesIDs);
+                List<ExistenciaHijas> lstExistenciasHijas = new List<ExistenciaHijas>();
+
+                foreach(GESI.ERP.Core.BO.cExistenciaProducto oExistencia in lstExistencias)
+                {
+                    ExistenciaHijas oExHija = new ExistenciaHijas(oExistencia);
+                    lstExistenciasHijas.Add(oExHija);
+                }
+
 
                 if (lstExistencias?.Count > 0)
                 {
@@ -436,7 +447,6 @@ namespace API_Maestros_Core.BLL
                         Paginacion oPaginacion = new Paginacion();
                         oPaginacion.totalElementos = lstExistencias.Count;
                         lstExistencias = lstExistencias.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
                         oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
                         oPaginacion.paginaActual = pageNumber;
                         oPaginacion.tamañoPagina = pageSize;
@@ -453,7 +463,7 @@ namespace API_Maestros_Core.BLL
                         oRespuesta.paginacion = oPaginacion;
                     }
 
-                    oRespuesta.existencias = lstExistencias;
+                    oRespuesta.existencias = lstExistenciasHijas;
                 }
                 else
                 {
@@ -599,7 +609,8 @@ namespace API_Maestros_Core.BLL
                         oPaginacion.totalPaginas = 1;
                         oPaginacion.paginaActual = 1;
                         oPaginacion.tamañoPagina = 1;
-                        oPaginacion.totalElementos = 1;
+                        oPaginacion.totalElementos = lstPrecios.Count;
+                        oRespuesta.Precios = lstPrecios;
                         oRespuesta.success = true;
                         oRespuesta.paginacion = oPaginacion;
                     }

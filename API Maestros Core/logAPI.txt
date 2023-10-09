@@ -1102,3 +1102,43 @@ Se terminó la instrucción.
 07/10/2023 12:05:24|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
 07/10/2023 12:05:41|I|Logueado exitosamente. Usuario: gesi
 07/10/2023 12:05:41|I|OK -> GetExistencias
+09/10/2023 9:37:14|I|Se excedio la cantidad maxima de solicitudes a realizar
+09/10/2023 9:37:34|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+09/10/2023 9:37:53|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:37:54|I|OK -> GetList
+09/10/2023 9:38:15|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:38:15|I|OK -> GetList
+09/10/2023 9:39:51|I|No se encontro encabezado para la petición
+09/10/2023 9:40:14|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:40:14|I|OK -> GetItem
+09/10/2023 9:40:22|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:40:22|I|OK -> GetItem
+09/10/2023 9:40:28|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:40:28|I|OK -> GetItem
+09/10/2023 9:40:32|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:40:33|I|OK -> GetItem
+09/10/2023 9:41:11|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:41:11|I|OK -> GetItem
+09/10/2023 9:41:26|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:41:26|I|OK -> GetItem
+09/10/2023 9:47:17|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:47:17|I|OK -> GetExistencias
+09/10/2023 9:48:51|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:48:52|I|OK -> GetPrecios
+09/10/2023 9:48:59|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:48:59|I|OK -> GetPrecios
+09/10/2023 9:49:21|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 9:51:36|I|OK -> GetPrecios
+09/10/2023 10:03:51|I|Se excedio la cantidad maxima de solicitudes a realizar
+09/10/2023 12:06:51|I|Se excedio la cantidad maxima de solicitudes a realizar
+09/10/2023 12:07:06|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+09/10/2023 12:07:16|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 12:07:16|I|OK -> GetExistencias
+09/10/2023 12:07:31|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 12:07:31|E|Error al solicitar GetList. Descripcion: Unable to cast object of type 'System.Collections.Generic.List`1[GESI.ERP.Core.BO.cExistenciaProducto]' to type 'System.Collections.Generic.IEnumerable`1[API_Maestros_Core.Controllers.ExistenciaHijas]'.
+09/10/2023 12:07:31|E|Error interno de la aplicacion. Descripcion: Unable to cast object of type 'System.Collections.Generic.List`1[GESI.ERP.Core.BO.cExistenciaProducto]' to type 'System.Collections.Generic.IEnumerable`1[API_Maestros_Core.Controllers.ExistenciaHijas]'.
+09/10/2023 12:11:06|I|Se excedio la cantidad maxima de solicitudes a realizar
+09/10/2023 12:11:15|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 12:11:16|I|OK -> GetList
+09/10/2023 12:11:30|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 12:11:30|I|OK -> GetExistencias

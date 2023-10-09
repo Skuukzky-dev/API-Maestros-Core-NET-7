@@ -32,11 +32,11 @@ namespace API_Maestros_Core.Models
 
     public class RespuestaProductosGetExistencias : Respuesta
     {
-        private List<GESI.ERP.Core.BO.cExistenciaProducto>? _existencias;
+        private List<ExistenciaHijas>? _existencias;
 
 
         public Paginacion? paginacion { get; set; }
-        public List<GESI.ERP.Core.BO.cExistenciaProducto>? existencias { get => _existencias; set => _existencias = value; }
+        public List<ExistenciaHijas>? existencias { get => _existencias; set => _existencias = value; }
     }
 
     public class RespuestaProductosGetPrecios : Respuesta

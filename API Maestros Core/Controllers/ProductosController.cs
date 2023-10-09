@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using GESI.CORE.DAL;
 using GESI.ERP.Core.BO;
 using GESI.CORE.DAL.Verscom2k;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,7 +52,7 @@ namespace API_Maestros_Core.Controllers
 
         public IActionResult Get( int pageNumber = 1, int pageSize = 10, string costos = "N",string imagenes = "N",string fechamodificaciones = "",string stock = "N")
         {
-            
+            #region ConnectionsStrings
             RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -59,83 +60,32 @@ namespace API_Maestros_Core.Controllers
 
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            #endregion
 
 
             try
             {
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4016;
-                    oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");                   
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");                                    
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
                 else
                 {
-                    #region Variables
-                    moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                    _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                    bool Habilitado = false;
-                    string strCanalesDeVenta = "";
-                    string strCostoUsuario = "N";
-                    string strEstadosProductos = "A";
-                    string strCategoriasIDs = "";
-                    int[] Almacenes = null;
-                    string AlmacenesIDs = "";
-                    #endregion
+                            APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
-
-                            foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
+                            if (MiSessionMgrAPI.Habilitado)
                             {
-                                if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                                {
-                                    _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                    _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                    _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                    _SessionMgr.EntidadID = 1;
-                                    strCostoUsuario = oHabilitacionAPI.CostosDeProveedor;
-                                    strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
-                                    strEstadosProductos = oHabilitacionAPI.Estados;
-                                    strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
-                                    AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;
-                                    Habilitado = true;
-                                } 
-                            }
-
-
-                            if (Habilitado)
-                            {
-                                int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);
-
-                                if (AlmacenesIDs?.Length > 0)
-                                {
-                                    List<string> AlmacenesAux = AlmacenesIDs.Split(',').ToList();
-                                    Almacenes = new int[AlmacenesAux.Count];
-                                    for (int i = 0; i < AlmacenesAux.Count; i++)
-                                    {
-                                        int.TryParse(AlmacenesAux[i], out Almacenes[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                                    }
-                                }
+                                ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                                int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);                                
 
                                 if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
                                 {
                                     if(pageSize > 100)
-                                    { pageSize = 100; }
-
-
-                                    #region Convertir String CanalesDeVenta a int []
-                                    List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
-                                    int[] intCanales = new int[canalesaux.Count];
-                                    for (int i = 0; i < canalesaux.Count; i++)
-                                    {
-                                        int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                                    }
-                                    #endregion
-
-                                    ProductosMgr._SessionMgr = _SessionMgr;
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, intCanales, costos, strCostoUsuario,strEstadosProductos,strCategoriasIDs,imagenes,fechamodificaciones,stock,Almacenes);
+                                    { pageSize = 100; }               
+                                    
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes);
 
                                     return Ok(oRespuesta);
                                 }
@@ -144,17 +94,7 @@ namespace API_Maestros_Core.Controllers
                                         if (TamanoPagina > 100)
                                             TamanoPagina = 100;
 
-                                        #region Convertir String CanalesDeVenta a int[]
-                                        List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
-                                        int[] intCanales = new int[canalesaux.Count];
-                                        for (int i = 0; i < canalesaux.Count; i++)
-                                        {
-                                            int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                                        }
-                                        #endregion
-                                    ProductosMgr._SessionMgr = _SessionMgr;
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, intCanales, costos, strCostoUsuario, strEstadosProductos, strCategoriasIDs, imagenes,fechamodificaciones,stock,Almacenes);
-
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes);
                                     return Ok(oRespuesta);
 
                                 }
@@ -163,10 +103,7 @@ namespace API_Maestros_Core.Controllers
                             else
                             {
                                 #region Sin autorizacion de acceder al servicio
-                                oRespuesta.error = new Error();
-                                oRespuesta.error.code = 4016;
-                                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                                oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");                                
                                 oRespuesta.success = false;
                                 return Unauthorized(oRespuesta);
                                 #endregion
@@ -178,10 +115,7 @@ namespace API_Maestros_Core.Controllers
             catch (FormatException fex)
             {
                 #region Error conversion Fecha 
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 4002;
-                oRespuesta.error.message = "Error al convertir fecha a DateTime";
-                Logger.LoguearErrores("Error al convertir fecha a DateTime", "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(4002, "Error al convertir fecha a DateTime", "E");                
                 oRespuesta.success = false;
                 return BadRequest(oRespuesta);
                 #endregion
@@ -189,10 +123,7 @@ namespace API_Maestros_Core.Controllers
             catch (Exception ex)
             {
                 #region Error interno de la Aplicacion
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 5002;
-                oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(5002, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");               
                 oRespuesta.success = false;
                 return StatusCode(500,oRespuesta);
                 #endregion
@@ -219,10 +150,7 @@ namespace API_Maestros_Core.Controllers
 
             if (!ModelState.IsValid)
             {
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 4151;
-                oRespuesta.error.message = "Modelo no valido";
-                Logger.LoguearErrores("Modelo no valido", "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(4151, "Modelo no valido", "E");
                 oRespuesta.success = false;
                 return StatusCode(415, oRespuesta);
                 
@@ -231,11 +159,7 @@ namespace API_Maestros_Core.Controllers
             {
                 if (productoID == null)
                 {
-
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4017;
-                    oRespuesta.error.message = "No se encontro el productoID de la solicitud";
-                    Logger.LoguearErrores("No se encontro el productoID de la solicitud", "I");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(4017, "No se encontro el productoID de la solicitud", "I");                   
                     oRespuesta.success = false;
                     return BadRequest(oRespuesta);
                 }
@@ -243,13 +167,9 @@ namespace API_Maestros_Core.Controllers
                 {
                     if (!(productoID.Length > 0))
                     {
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4017;
-                        oRespuesta.error.message = "No se encontro el productoID de la solicitud";
-                        Logger.LoguearErrores("No se encontro el productoID de la solicitud", "I");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI(4017, "No se encontro el productoID de la solicitud", "I");                       
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
-
                     }
                     else
                     {
@@ -260,61 +180,24 @@ namespace API_Maestros_Core.Controllers
                         {
                             if (!HabilitadoPorToken)
                             {
-                                oRespuesta.error = new Error();
-                                oRespuesta.error.code = 4016;
-                                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                                oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                                 oRespuesta.success = false;
                                 return Unauthorized(oRespuesta);
                             }
                             else
                             {
-                                string costoUsuario = "N";
-                                moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                                string strCanalesDeVenta = null;
-                                _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                                bool Habilitado = false;
-                                string strEstadosProductos = "A";
-                                string strCategoriasIDs = "";
-                                string AlmacenesIDs = "";
-                                int[] Almacenes = null;
+                              
                                 if (productoID != null)
                                 {
                                     if (productoID.Length > 0)
                                     {
-                                        #region SessionManager
-                                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                                        {
-                                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                                            {
-                                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                                _SessionMgr.EntidadID = 1;
-                                                costoUsuario = oHabilitacionAPI.CostosDeProveedor;
-                                                strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
-                                                strEstadosProductos = oHabilitacionAPI.Estados;
-                                                strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
-                                                AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;
-                                                Habilitado = true;
-                                            }
-                                        }
-                                        #endregion
+                                        APISessionManager MiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                                       
+                                        if (MiSessionMgr.Habilitado)
+                                        {                                          
 
-                                        if (Habilitado)
-                                        {
-                                            if (AlmacenesIDs?.Length > 0)
-                                            {
-                                                List<string> AlmacenesAux = AlmacenesIDs.Split(',').ToList();
-                                                Almacenes = new int[AlmacenesAux.Count];
-                                                for (int i = 0; i < AlmacenesAux.Count; i++)
-                                                {
-                                                    int.TryParse(AlmacenesAux[i], out Almacenes[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                                                }
-                                            }
-
-                                            ProductosMgr._SessionMgr = _SessionMgr;
-                                            oRespuesta = ProductosMgr.GetItem(productoID, strCanalesDeVenta,canalDeVentaID,costos,costoUsuario,strEstadosProductos,strCategoriasIDs,imagenes,stock,Almacenes);
+                                            ProductosMgr._SessionMgr = MiSessionMgr.SessionMgr;
+                                            oRespuesta = ProductosMgr.GetItem(productoID, MiSessionMgr.CanalesDeVenta, canalDeVentaID,costos, MiSessionMgr.CostosXProveedor, MiSessionMgr.EstadoProductos, MiSessionMgr.CategoriasIDs, imagenes,stock, MiSessionMgr.Almacenes);
 
                                             if(oRespuesta.producto?.ProductoID?.Length > 0)
                                             {
@@ -324,15 +207,10 @@ namespace API_Maestros_Core.Controllers
                                             {
                                                 return StatusCode(204, oRespuesta);
                                             }
-                                         
-
                                         }
                                         else
                                         {
-                                            oRespuesta.error = new Error();
-                                            oRespuesta.error.code = 4016;
-                                            oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                                            oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                                             oRespuesta.success = false;
                                             return Unauthorized(oRespuesta);
                                         }
@@ -340,40 +218,30 @@ namespace API_Maestros_Core.Controllers
                                     else
                                     {
                                         oRespuesta.error = new Error();
-                                        oRespuesta.error.code = 2041;
-                                        oRespuesta.success = false;
-                                        oRespuesta.error.message = "No se encontro expresion a buscar";
-                                        Logger.LoguearErrores("No se encontro expresion a buscar.", "I");                                        
+                                        oRespuesta.error = APIHelper.DevolverErrorAPI(2041, "No se encontro expresion a buscar", "I");                                        
+                                        oRespuesta.success = false;   
                                         return StatusCode(204, oRespuesta);
                                     }
                                 }
                                 else
                                 {
-                                    oRespuesta.error = new Error();
-                                    oRespuesta.error.code = 4041;
-                                    oRespuesta.error.message = "No se encontro expresion a buscar";
-                                    oRespuesta.success = false;
-                                    Logger.LoguearErrores("No se encontro expresion a buscar", "I");                                    
+                                    oRespuesta.error = APIHelper.DevolverErrorAPI(4041, "No se encontro expresion a buscar", "I");                                    
+                                    oRespuesta.success = false;                                    
                                     return StatusCode(204, oRespuesta);
                                 }
                             }
                         }
                         catch (AccessViolationException ax)
                         {
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = 4017;
-                            oRespuesta.error.message = "No esta autorizado a acceder al servicio. No esta habilitado a ver los costos del proveedor";
+                            oRespuesta.error = APIHelper.DevolverErrorAPI(4017, "No esta autorizado a acceder al servicio. No esta habilitado a ver los costos del proveedor", "I");                            
                             oRespuesta.success = false;
                             return Unauthorized(oRespuesta);
                            
                         }
                         catch (Exception ex)
                         {
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = 5002;
-                            oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                            oRespuesta.success = false;
-                            Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                            oRespuesta.error = APIHelper.DevolverErrorAPI(5002, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                            oRespuesta.success = false;                            
                             return StatusCode(500, oRespuesta);
                         }
                     }
@@ -397,8 +265,6 @@ namespace API_Maestros_Core.Controllers
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-
-
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             #endregion
@@ -407,77 +273,29 @@ namespace API_Maestros_Core.Controllers
             {
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4016;
-                    oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
                 else
                 {
-                    #region Variables
-                    moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                    _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                    bool Habilitado = false;
-                    string strCanalesDeVenta = "";
-                    string strCostoUsuario = "N";
-                    string strCategoriasIDs = null;
-                    string strEstadosProductos = null;
+                   
                     List<int> CategoriasPorParametro = new List<int>();
-                    string AlmacenesIDs = "";
-                    int[] Almacenes = null;
-                    #endregion
-
 
                     if (expresion?.Length > 0)
                     {
-                        #region SessionManager
-                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                        {
-                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                            {
-                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                _SessionMgr.EntidadID = 1;
-                                strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
-                                strCostoUsuario = oHabilitacionAPI.CostosDeProveedor;
-                                strEstadosProductos = oHabilitacionAPI.Estados;
-                                strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
-                                AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;
-                                Habilitado = true;
-                            }
-                        }
-                        #endregion
+                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
-                        List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
-                        int[] intCanales = new int[canalesaux.Count];
-                        for (int i = 0; i < canalesaux.Count; i++)
-                        {
-                            int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                        }
-
-                        if (AlmacenesIDs?.Length > 0)
-                        {
-                            List<string> AlmacenesAux = AlmacenesIDs.Split(',').ToList();
-                            Almacenes = new int[AlmacenesAux.Count];
-                            for (int i = 0; i < AlmacenesAux.Count; i++)
-                            {
-                                int.TryParse(AlmacenesAux[i], out Almacenes[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                            }
-                        }
-
-                        if (Habilitado)
+                        if (MiSessionMgrAPI.Habilitado)
                         {
                             #region Control Categorias
-                            Habilitado = true;
+                            MiSessionMgrAPI.Habilitado = true;
 
                             categoriasafiltrar = categoriasafiltrar.Replace(" ", "");
 
                             if(categoriasafiltrar?.Length == 0)
                             {
-                                Habilitado = true;
+                                MiSessionMgrAPI.Habilitado = true;
                             }
                             else
                             {
@@ -491,16 +309,16 @@ namespace API_Maestros_Core.Controllers
                                     }
                                     else
                                     {
-                                        Habilitado = false;
+                                        MiSessionMgrAPI.Habilitado = false;
                                     }
                                 }
                             }
 
                             #endregion
 
-                            if (Habilitado)
+                            if (MiSessionMgrAPI.Habilitado)
                             {
-
+                                ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
                                 int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);
 
                                 if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
@@ -508,52 +326,40 @@ namespace API_Maestros_Core.Controllers
                                     if (pageSize > 100)
                                     { pageSize = 100; }
 
-                                    ProductosMgr._SessionMgr = _SessionMgr;
-                                    oRespuesta = ProductosMgr.GetList(expresion, intCanales, costos, strCostoUsuario, pageNumber, pageSize, strEstadosProductos, strCategoriasIDs,imagenes,stock,Almacenes);
+                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, pageSize, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,stock, MiSessionMgrAPI.Almacenes);
+                                    
                                     Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion, "I");
                                     return Ok(oRespuesta);
                                 }
                                 else
                                 {
                                     if (TamanoPagina > 100) // Si el tamaño de la variable configuracion es mayor a 100. Toma los 100
-                                        TamanoPagina = 100;
-
-                                    ProductosMgr._SessionMgr = _SessionMgr;
+                                        TamanoPagina = 100;                                    
+                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, TamanoPagina, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, stock, MiSessionMgrAPI.Almacenes);
                                     
-                                    oRespuesta = ProductosMgr.GetList(expresion, intCanales, costos, strCostoUsuario, pageNumber, TamanoPagina, strEstadosProductos, strCategoriasIDs,imagenes, stock, Almacenes);
                                     Logger.LoguearErrores("Respuesta exitosa para la expresion " + expresion, "I");
                                     return Ok(oRespuesta);
                                 }
                             }
                             else
                             {
-                                oRespuesta.error = new Error();
-                                oRespuesta.error.code = 4002;
-                                oRespuesta.error.message = "Sintaxis incorrecta de categorias a filtrar. Descripcion " + categoriasafiltrar;
-                                oRespuesta.success = false;
-                                Logger.LoguearErrores("Sintaxis incorrecta de categorias a filtrar. Descripcion " + categoriasafiltrar, "E");
+                                oRespuesta.error = APIHelper.DevolverErrorAPI(4002, "Sintaxis incorrecta de categorias a filtrar. Descripcion " + categoriasafiltrar, "E");                                
+                                oRespuesta.success = false;                                
                                 return BadRequest(oRespuesta);
                             }
 
                         }
                         else
                         {
-
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = 4016;
-                            oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                            oRespuesta.success = false;
-                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                            oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                            oRespuesta.success = false;                            
                             return Unauthorized(oRespuesta);
                         }
 
                     }
                     else
                     {
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 2041;
-                        oRespuesta.error.message = "No se encontro expresion a buscar";
-                        Logger.LoguearErrores("No se encontro expresion a buscar", "I");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI(2041, "No se encontro expresion a buscar", "E");
                         oRespuesta.success = false;
                         return StatusCode(204, oRespuesta);
                     }
@@ -561,16 +367,20 @@ namespace API_Maestros_Core.Controllers
             }
             catch(Exception ex)
             {
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 5002;
-                oRespuesta.error.message = "error interno de la aplicacion. Descripcion: " + ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(5002, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                 oRespuesta.success = false;
                 return StatusCode(500, oRespuesta);
             }
         }
 
 
+        /// <summary>
+        /// Devuelve la lista de Existencias por Deposito y Producto
+        /// </summary>
+        /// <param name="codigos"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet("GetExistencias")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaProductosGetExistencias))]
@@ -587,17 +397,11 @@ namespace API_Maestros_Core.Controllers
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             #endregion
-            bool Habilitado = false;
-            string AlmacenesIDs = "";
-            moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-            _SessionMgr = new GESI.CORE.BLL.SessionMgr();
 
+            
             if (!HabilitadoPorToken)
             {
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 4016;
-                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                 oRespuesta.success = false;
                 return Unauthorized(oRespuesta);
             }
@@ -608,23 +412,12 @@ namespace API_Maestros_Core.Controllers
                 {
                     if (codigos?.Length > 0)
                     {
-                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
+                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                       
+                        if (MiSessionMgrAPI.Habilitado)
                         {
-                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                            {
-                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                _SessionMgr.EntidadID = 1;
-                                AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;
-                                Habilitado = true;
-                            }
-                        }
-
-                        if (Habilitado)
-                        {
-                            ProductosMgr._SessionMgr = _SessionMgr;
-                            oRespuesta = ProductosMgr.GetExistencias(codigos, pageNumber, pageSize, AlmacenesIDs);
+                            ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                            oRespuesta = ProductosMgr.GetExistencias(codigos, pageNumber, pageSize, MiSessionMgrAPI.Almacenes);
                             oRespuesta.success = true;
                             if (oRespuesta.existencias == null)
                             {
@@ -638,11 +431,8 @@ namespace API_Maestros_Core.Controllers
                         else
                         {
                             #region Autorizacion
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = 4016;
-                            oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                            oRespuesta.success = false;
-                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                            oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");                            
+                            oRespuesta.success = false;                            
                             return Unauthorized(oRespuesta);
                             #endregion
                         }
@@ -650,11 +440,8 @@ namespace API_Maestros_Core.Controllers
                     else
                     {
                         #region No hay codigos definidos
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4012;
-                        oRespuesta.error.message = "No se defininió un código o códigos a buscar";
-                        oRespuesta.success = false;
-                        Logger.LoguearErrores("No se defininió un código o códigos a buscar", "E");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No se defininió un código o códigos a buscar", "E");
+                        oRespuesta.success = false;                       
                         return BadRequest(oRespuesta);
                         #endregion
                     }
@@ -662,10 +449,7 @@ namespace API_Maestros_Core.Controllers
                 catch (Exception ex)
                 {
                     #region Error
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 5002;
-                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(5002, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
                     oRespuesta.success = false;
                     return StatusCode(500, oRespuesta);
                     #endregion
@@ -673,7 +457,14 @@ namespace API_Maestros_Core.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Devuelve la lista de Precios por Canal de Venta y Producto
+        /// </summary>
+        /// <param name="codigos"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="fechamodificaciones"></param>
+        /// <returns></returns>
         [HttpGet("GetPrecios")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaProductosGetPrecios))]
@@ -689,16 +480,10 @@ namespace API_Maestros_Core.Controllers
 
             #endregion
 
-            bool Habilitado = false;
-            string CanalesDeVentaIDs = "";
-            moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-            _SessionMgr = new GESI.CORE.BLL.SessionMgr();
+          
             if (!HabilitadoPorToken)
             {
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 4016;
-                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
                 oRespuesta.success = false;
                 return Unauthorized(oRespuesta);
             }
@@ -710,33 +495,13 @@ namespace API_Maestros_Core.Controllers
                 {
                     if (codigos?.Length > 0 || fechamodificaciones?.Length > 0)
                     {
-                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
+                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                       
+                        if (MiSessionMgrAPI.Habilitado)
                         {
-                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                            {
-                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                _SessionMgr.EntidadID = 1;
-                                CanalesDeVentaIDs = oHabilitacionAPI.CanalesDeVenta;
-                                Habilitado = true;
-                            }
-                        }
+                            ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
 
-                        if (Habilitado)
-                        {
-                            ProductosMgr._SessionMgr = _SessionMgr;
-
-                            #region Convertir String CanalesDeVenta a int []
-                            List<string> canalesaux = CanalesDeVentaIDs.Split(',').ToList();
-                            int[] intCanales = new int[canalesaux.Count];
-                            for (int i = 0; i < canalesaux.Count; i++)
-                            {
-                                int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
-                            }
-                            #endregion
-
-                            oRespuesta = ProductosMgr.GetPrecios(codigos, intCanales, pageNumber, pageSize, fechamodificaciones);
+                            oRespuesta = ProductosMgr.GetPrecios(codigos, MiSessionMgrAPI.CanalesDeVenta, pageNumber, pageSize, fechamodificaciones);
 
                             if (oRespuesta.Precios == null)
                             {
@@ -763,11 +528,7 @@ namespace API_Maestros_Core.Controllers
                     else
                     {
                         #region No hay codigos definidos
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4012;
-                        oRespuesta.error.message = "No se defininió un código o códigos a buscar";
-                        oRespuesta.success = false;
-                        Logger.LoguearErrores("No se defininió un código o códigos a buscar", "E");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No se defininió un código o códigos a buscar","I");                        
                         return BadRequest(oRespuesta);
                         #endregion
                     }
@@ -775,21 +536,16 @@ namespace API_Maestros_Core.Controllers
                 catch (FormatException fex)
                 {
                     #region Error
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 5002;
-                    oRespuesta.error.message = "Se definio un formato de fecha incorrecto: " + fechamodificaciones;
-                    Logger.LoguearErrores("Se definio un formato de fecha incorrecto: " + fechamodificaciones, "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(5002, "Se definio un formato de fecha incorrecto: " + fechamodificaciones, "I");                    
                     oRespuesta.success = false;
                     return StatusCode(500, oRespuesta);
                     #endregion
+
                 }
                 catch (Exception ex)
                 {
                     #region Error
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 5002;
-                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(5002, "Error interno de la aplicacion. Descripcion: " + ex.Message, "I");
                     oRespuesta.success = false;
                     return StatusCode(500, oRespuesta);
                     #endregion
@@ -903,6 +659,8 @@ namespace API_Maestros_Core.Controllers
         [Newtonsoft.Json.JsonIgnore]
         public override List<cCategoriaXProducto> Categorias { get => base.Categorias; set => base.Categorias = value; }
 
+      
+
         public HijoProductos(GESI.ERP.Core.BO.cProducto padre)
         {
             EmpresaID = padre.EmpresaID;
@@ -924,9 +682,12 @@ namespace API_Maestros_Core.Controllers
           //  Categorias = padre.Categorias;
             Estado = padre.Estado;
             GrupoArtID = padre.GrupoArtID;
-            ListaDeCategorias = new List<int>();
+            ListaDeCategorias = new List<int>();            
             Existencias = padre.Existencias;
         }
+
+       
+
 
         public HijoProductos()
         { }
@@ -935,6 +696,33 @@ namespace API_Maestros_Core.Controllers
     }
 
   
+
+    public class ExistenciaHijas : GESI.ERP.Core.BO.cExistenciaProducto
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public override uint EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+        public ExistenciaHijas(GESI.ERP.Core.BO.cExistenciaProducto padre)
+        {
+            ProductoID = padre.ProductoID;
+            AlmacenID = padre.AlmacenID;
+            FechaExistencia = padre.FechaExistencia;
+            Unidad1 = padre.Unidad1;
+            Unidad2 = padre.Unidad2;
+            Unidad1AcopioComprometido = padre.Unidad1AcopioComprometido;
+            Unidad2AcopioComprometido = padre.Unidad2AcopioComprometido;
+            Unidad1AcopioNoComprometido = padre.Unidad1AcopioNoComprometido;
+            Unidad2AcopioNoComprometido = padre.Unidad2AcopioNoComprometido;
+            Unidad1NPEPendientes = padre.Unidad1NPEPendientes;
+            Unidad2NPEPendientes = padre.Unidad2NPEPendientes;
+            Unidad1Disponible = padre.Unidad1Disponible;
+            Unidad2Disponible = padre.Unidad2Disponible;
+        }
+
+    }
+
+
     public class ResultProducts
     {
         private string _productoID;
