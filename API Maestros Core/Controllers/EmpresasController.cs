@@ -3,6 +3,7 @@ using API_Maestros_Core.Models;
 using GESI.ERP.Core.BO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,14 +25,12 @@ namespace API_Maestros_Core.Controllers
 
         [HttpGet("GetSucursales")]
         [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaSucursales))]
         public IActionResult GetSucursales(int pageNumber = 1, int pageSize = 10)
         {
+            RespuestaSucursales oRespuesta = new RespuestaSucursales();
             try
-            {
-                #region Variables
-                RespuestaSucursales oRespuesta = new RespuestaSucursales();
-
-                #endregion
+            {           
 
                 APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
@@ -42,11 +41,13 @@ namespace API_Maestros_Core.Controllers
 
                         GESI.CORE.BO.ListaSucursales olstSucursales = GESI.CORE.BLL.SucursalesMgr.GetList();
 
-                        foreach(GESI.CORE.BO.Sucursal oSucursal in olstSucursales)
-                        {
+                        #region Pasaje a Sucursal Hija
+                         foreach (GESI.CORE.BO.Sucursal oSucursal in olstSucursales)
+                        {   
                             SucursalHija oSucursalFinal = new SucursalHija(oSucursal);
                             lstSucursalesFinales.Add(oSucursalFinal);
                         }
+                    #endregion
 
                         oRespuesta.Sucursales = lstSucursalesFinales;
                 
@@ -69,16 +70,18 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4016;
-                    oRespuesta.error.message = "No está autorizado a acceder al servicio. No se encontró el token del usuario";
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No está autorizado a acceder al servicio. No se encontró el token del usuario", "E");
+                    oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
 
             }
             catch (Exception ex)
             {
-                throw;
+                oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error al devolver Sucursales. Descripcion: "+ex.Message, "E");
+                oRespuesta.success = false;
+                return StatusCode(500,oRespuesta);
+               
             }
         }
     }
@@ -223,7 +226,6 @@ namespace API_Maestros_Core.Controllers
         }
 
        
-
 
     }
 }

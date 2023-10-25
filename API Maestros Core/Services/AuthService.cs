@@ -108,7 +108,7 @@ namespace API_Maestros_Core.Services
 
                 // SqlConnection sqlapi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
 
-                Logger.LoguearErrores("ConnectionStringPaz: " + sqlapi.ConnectionString, "I");
+               // Logger.LoguearErrores("ConnectionStringPaz: " + sqlapi.ConnectionString, "I");
 
                 bool login = GESI.CORE.BLL.UsuariosMgr.Login(strUsuarioID, strPassword);
                 return login;

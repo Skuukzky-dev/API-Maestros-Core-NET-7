@@ -1142,3 +1142,148 @@ Se terminó la instrucción.
 09/10/2023 12:11:16|I|OK -> GetList
 09/10/2023 12:11:30|I|Logueado exitosamente. Usuario: gesi
 09/10/2023 12:11:30|I|OK -> GetExistencias
+09/10/2023 16:51:51|I|Se excedio la cantidad maxima de solicitudes a realizar
+09/10/2023 16:52:09|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Urbania;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+09/10/2023 16:52:27|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 16:52:28|I|OK -> GetList
+09/10/2023 16:52:50|I|No se encontro encabezado para la petición
+09/10/2023 16:53:13|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 16:53:13|I|OK -> GetItem
+09/10/2023 16:54:06|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 16:54:06|I|OK -> GetPrecios
+09/10/2023 16:56:43|I|Logueado exitosamente. Usuario: gesi
+09/10/2023 16:56:43|I|OK -> GetPrecios
+09/10/2023 16:57:05|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 8:58:20|I|Se excedio la cantidad maxima de solicitudes a realizar
+10/10/2023 8:59:32|I|Se excedio la cantidad maxima de solicitudes a realizar
+10/10/2023 9:03:01|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Urbania;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+10/10/2023 9:04:20|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Urbania;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+10/10/2023 9:04:45|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 9:04:51|I|OK -> GetPrecios
+10/10/2023 9:11:27|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 9:11:27|E|Error al solicitar GetExistencias. Descripcion: FechaExistencia
+10/10/2023 9:11:27|E|Error interno de la aplicacion. Descripcion: FechaExistencia
+10/10/2023 9:16:28|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 9:16:28|E|Error al solicitar GetExistencias. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGetExistenciaProductosPendientes', base de datos 'cli_Urbania', esquema 'dbo'.
+10/10/2023 9:16:28|E|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGetExistenciaProductosPendientes', base de datos 'cli_Urbania', esquema 'dbo'.
+10/10/2023 9:17:22|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 9:17:23|I|OK -> GetExistencias
+10/10/2023 23:00:33|I|Se excedio la cantidad maxima de solicitudes a realizar
+10/10/2023 23:00:58|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+10/10/2023 23:01:27|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 23:01:27|E|Error al solicitar GetExistencias. Descripcion: No se encontró el procedimiento almacenado 'uspAlmacenesGetlist'.
+10/10/2023 23:01:27|E|Error interno de la aplicacion. Descripcion: No se encontró el procedimiento almacenado 'uspAlmacenesGetlist'.
+10/10/2023 23:02:12|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 23:02:12|E|Error al solicitar GetExistencias. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspAlmacenesGetlist', base de datos 'BD_Desarrollo_API', esquema 'dbo'.
+10/10/2023 23:02:12|E|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspAlmacenesGetlist', base de datos 'BD_Desarrollo_API', esquema 'dbo'.
+10/10/2023 23:03:42|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 23:03:42|I|OK -> GetExistencias
+10/10/2023 23:03:54|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 23:03:54|I|OK -> GetExistencias
+10/10/2023 23:04:52|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 23:04:53|I|OK -> GetList
+10/10/2023 23:05:06|I|Logueado exitosamente. Usuario: gesi
+10/10/2023 23:05:08|I|OK -> GetList
+11/10/2023 7:44:33|I|Se excedio la cantidad maxima de solicitudes a realizar
+11/10/2023 7:46:31|I|Se excedio la cantidad maxima de solicitudes a realizar
+11/10/2023 8:05:32|I|Se excedio la cantidad maxima de solicitudes a realizar
+20/10/2023 12:04:04|I|Se excedio la cantidad maxima de solicitudes a realizar
+20/10/2023 12:11:16|I|Logueado exitosamente. Usuario: gesi
+20/10/2023 12:11:16|I|OK -> GetList
+20/10/2023 12:15:04|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiYWI2MDU4ZjUtY2FjNS00NmJhLWE0MmUtNWNiNjNkOGY5YmU5IiwiaWF0IjoxNjk3ODE0NjU1LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTc4MTQ2NTUsImV4cCI6MTY5NzgyOTA1NSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.Tm91qGTPXJAHDYYj24GvzSgOtMRPlIrG2aBVLnLu7H8
+20/10/2023 12:15:04|E|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+20/10/2023 12:15:19|I|Logueado exitosamente. Usuario: gesi
+20/10/2023 12:15:20|E|Error al solicitar GetList. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspAlmacenesGetlist', base de datos 'cli_urbania', esquema 'dbo'.
+20/10/2023 12:15:20|E|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspAlmacenesGetlist', base de datos 'cli_urbania', esquema 'dbo'.
+20/10/2023 12:16:32|I|Logueado exitosamente. Usuario: gesi
+20/10/2023 12:16:33|I|OK -> GetList
+20/10/2023 12:16:40|I|Logueado exitosamente. Usuario: gesi
+20/10/2023 12:16:41|I|OK -> GetList
+20/10/2023 12:26:08|E|No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiODdhZTdmODgtNjM5OS00NGQyLWI5M2YtY2YzY2I0NjgyMTc1IiwiaWF0IjoxNjk3ODE0OTA4LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTc4MTQ5MDgsImV4cCI6MTY5NzgyOTMwOCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.kPMzITQiyNHHxOJhN9-cTPMd0toaKpBzJZcACKItSBY
+20/10/2023 12:26:08|E|No esta autorizado a acceder al servicio. No se encontro el token del usuario
+20/10/2023 12:26:55|I|Logueado exitosamente. Usuario: gesi
+20/10/2023 12:26:55|I|Respuesta GetList Canales de venta OK
+20/10/2023 14:08:18|I|Se excedio la cantidad maxima de solicitudes a realizar
+20/10/2023 14:08:46|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=cli_Urbania;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+20/10/2023 14:08:57|I|Logueado exitosamente. Usuario: gesi
+20/10/2023 14:08:58|I|OK -> GetList
+20/10/2023 14:21:15|I|Logueado exitosamente. Usuario: gesi
+20/10/2023 14:21:16|I|OK -> GetList
+21/10/2023 10:23:44|I|Se excedio la cantidad maxima de solicitudes a realizar
+21/10/2023 10:28:49|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+21/10/2023 10:29:06|I|Token invalido. Acceso denegado
+21/10/2023 10:29:21|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 10:29:25|I|OK -> GetList
+21/10/2023 11:07:09|I|Se excedio la cantidad maxima de solicitudes a realizar. Cantidad maxima Permitida: 10
+21/10/2023 11:07:59|I|ConnectionStringPaz: Data Source=servidorsql\sql2012;Initial Catalog=BD_DESARROLLO_API;User ID=uAPI-ERP-LecturaMaestros;Password=[LaClaveEsSecreta];MultipleActiveResultSets=True;
+21/10/2023 11:08:22|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:23|I|OK -> GetList
+21/10/2023 11:08:27|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:28|I|OK -> GetList
+21/10/2023 11:08:29|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:30|I|OK -> GetList
+21/10/2023 11:08:30|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:31|I|OK -> GetList
+21/10/2023 11:08:32|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:32|I|OK -> GetList
+21/10/2023 11:08:33|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:34|I|OK -> GetList
+21/10/2023 11:08:35|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:35|I|OK -> GetList
+21/10/2023 11:08:36|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:37|I|OK -> GetList
+21/10/2023 11:08:37|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:38|I|OK -> GetList
+21/10/2023 11:08:39|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:08:39|I|OK -> GetList
+21/10/2023 11:09:29|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:29|I|OK -> GetList
+21/10/2023 11:09:31|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:31|I|OK -> GetList
+21/10/2023 11:09:32|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:33|I|OK -> GetList
+21/10/2023 11:09:34|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:34|I|OK -> GetList
+21/10/2023 11:09:35|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:36|I|OK -> GetList
+21/10/2023 11:09:37|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:37|I|OK -> GetList
+21/10/2023 11:09:38|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:39|I|OK -> GetList
+21/10/2023 11:09:40|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:40|I|OK -> GetList
+21/10/2023 11:09:41|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:42|I|OK -> GetList
+21/10/2023 11:09:42|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:09:43|I|OK -> GetList
+21/10/2023 11:10:44|I|Se excedio la cantidad maxima de solicitudes a realizar. Cantidad maxima Permitida: 10
+21/10/2023 11:11:11|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:12|I|OK -> GetList
+21/10/2023 11:11:14|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:14|I|OK -> GetList
+21/10/2023 11:11:15|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:16|I|OK -> GetList
+21/10/2023 11:11:16|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:17|I|OK -> GetList
+21/10/2023 11:11:18|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:18|I|OK -> GetList
+21/10/2023 11:11:19|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:20|I|OK -> GetList
+21/10/2023 11:11:21|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:21|I|OK -> GetList
+21/10/2023 11:11:22|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:23|I|OK -> GetList
+21/10/2023 11:11:24|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:24|I|OK -> GetList
+21/10/2023 11:11:25|I|Logueado exitosamente. Usuario: gesi
+21/10/2023 11:11:26|I|OK -> GetList
+21/10/2023 11:18:01|I|Se excedio la cantidad maxima de solicitudes a realizar. Cantidad maxima Permitida: 60
+21/10/2023 11:18:07|I|No se encontro encabezado para la petición
+21/10/2023 11:19:46|I|Se excedio la cantidad maxima de solicitudes a realizar. Cantidad maxima Permitida: 60
+21/10/2023 11:23:08|I|Se excedio la cantidad maxima de solicitudes a realizar. Cantidad maxima Permitida: 60
+21/10/2023 11:23:16|I|No se encontro encabezado para la petición Endpoint: /api/Login
+23/10/2023 11:34:03|I|No se encontro encabezado para la petición Endpoint: /api/Login
+23/10/2023 11:34:37|I|Logueado exitosamente. Usuario: gesi
+23/10/2023 11:34:38|I|OK -> GetList
+23/10/2023 11:36:47|I|Logueado exitosamente. Usuario: gesi
+23/10/2023 11:36:47|I|OK -> GetList

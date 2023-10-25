@@ -383,7 +383,7 @@ namespace API_Maestros_Core.BLL
                 }
                 oRespuesta.success = true;
                 #endregion
-                Logger.LoguearErrores("OK -> GetItem", "I");
+                Logger.LoguearErrores("OK -> GetItem ProductoID: "+ProductoID, "I");
                 return oRespuesta;
 
             }
@@ -476,7 +476,7 @@ namespace API_Maestros_Core.BLL
                     oRespuesta.existencias = null;
                 }
                 oRespuesta.error = new Error();
-                Logger.LoguearErrores("OK -> GetExistencias", "I");
+                Logger.LoguearErrores("OK -> GetExistencias. Codigos: "+codigos, "I");
                 return oRespuesta;
             }
             catch (Exception ex)
@@ -550,7 +550,7 @@ namespace API_Maestros_Core.BLL
 
                 oRespuesta.error = new Error();
 
-                Logger.LoguearErrores("OK -> GetPrecios", "I");
+                Logger.LoguearErrores("OK -> GetPrecios . Codigos "+codigos, "I");
                 return oRespuesta;
             }
             catch (Exception ex)

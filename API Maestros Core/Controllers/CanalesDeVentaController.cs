@@ -38,6 +38,7 @@ namespace API_Maestros_Core.Controllers
         [SwaggerResponse(200, "OK", typeof(RespuestaConCanalesDeVenta))]
         public IActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
+            #region ConnectionStrings
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);            
@@ -45,45 +46,28 @@ namespace API_Maestros_Core.Controllers
             
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            #endregion
 
             RespuestaConCanalesDeVenta oRespuesta = new RespuestaConCanalesDeVenta();
             try
             {
                
                 GESI.GESI.BO.ListaCanalesDeVenta lstCanales = new GESI.GESI.BO.ListaCanalesDeVenta();
-                moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
                 string CanalesDeVenta = null;
-                _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                bool Habilitado = false;
+
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.success = false;
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 4012;
-                    oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                    oRespuesta.success = false;                   
                     return Unauthorized(oRespuesta);
                 }
                 else
                 {
-                    #region SessionManager
-                    foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                    {
-                        if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                        {
-                            _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                            _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                            _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                            _SessionMgr.EntidadID = 1;
-                            CanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
-                            Habilitado = true;
-                        }
-                    }
-                    #endregion
+                    APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);                                      
 
-                    if (Habilitado)
+                    if (MiSessionMgrAPI.Habilitado)
                     {
-                        GESI.GESI.BLL.TablasGeneralesGESIMgr.SessionManager = _SessionMgr;
+                        GESI.GESI.BLL.TablasGeneralesGESIMgr.SessionManager = MiSessionMgrAPI.SessionMgr;
                         oRespuesta.success = true;
                         oRespuesta.error = new Error();
                         oRespuesta.CanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
@@ -100,22 +84,16 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.success = false;
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4012;
-                        oRespuesta.error.message = "No esta autorizado a acceder al recurso";
-                        Logger.LoguearErrores("No esta autorizado a acceder al recurso", "E");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al recurso", "E");
+                        oRespuesta.success = false;                        
                         return Unauthorized(oRespuesta);
                     }
                 }
             }
             catch(Exception ex)
             {
-                oRespuesta.success = false;
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 5001;
-                oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: "+ex.Message;
-                Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                oRespuesta.success = false;               
                 return Unauthorized(oRespuesta);
             }
 

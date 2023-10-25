@@ -159,19 +159,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.Configure<IpRateLimitOptions>(options =>
 {
+    var CantidadMaximaSolicitudes = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["RateLimit"];
     options.GeneralRules = new List<RateLimitRule>
         {
             new RateLimitRule
             {
                 Endpoint = "*",
-                Limit = 20,
+                Limit = Convert.ToDouble(CantidadMaximaSolicitudes),
                 Period = "1m",
                 
             }
         };
     
-    options.QuotaExceededMessage = "Se excedio la cantidad maxima de solicitudes a realizar";
-    Logger.LoguearErrores("Se excedio la cantidad maxima de solicitudes a realizar", "I");
+    options.QuotaExceededMessage = "Se excedio la cantidad maxima de solicitudes a realizar. Cantidad maxima Permitida: "+ CantidadMaximaSolicitudes;
+    //Logger.LoguearErrores("Se excedio la cantidad maxima de solicitudes a realizar. Cantidad maxima Permitida: " + CantidadMaximaSolicitudes, "I");
 });
 
 
@@ -240,8 +241,8 @@ app.Use(async (context, next) =>
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4015;
-                    oresp.error.message = "No se encontro encabezado para la petición";
-                    Logger.LoguearErrores("No se encontro encabezado para la petición", "I");
+                    oresp.error.message = "No se encontro encabezado para la petición. Endpoint: "+context.Request.Path.Value;
+                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value, "I");
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -270,8 +271,8 @@ app.Use(async (context, next) =>
                         RespuestaToken oresp = new RespuestaToken();
                         oresp.error = new ErrorToken();
                         oresp.error.code = 4015;
-                        oresp.error.message = "No se encontro encabezado para la petición";
-                        Logger.LoguearErrores("No se encontro encabezado para la petición","I");
+                        oresp.error.message = "No se encontro encabezado para la petición . Endpoint: "+ context.Request.Path.Value;
+                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value,"I");
                         context.Response.ContentType = "application/json";
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -294,8 +295,8 @@ app.Use(async (context, next) =>
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4015;
-                    oresp.error.message = "No se encontro encabezado para la petición";
-                    Logger.LoguearErrores("No se encontro encabezado para la petición", "I");
+                    oresp.error.message = "No se encontro encabezado para la petición . Endpoint: "+context.Request.Path.Value;
+                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value, "I");
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -327,8 +328,8 @@ app.Use(async (context, next) =>
                         RespuestaToken oresp = new RespuestaToken();
                         oresp.error = new ErrorToken();
                         oresp.error.code = 4015;
-                        oresp.error.message = "No se encontro encabezado para la petición";
-                        Logger.LoguearErrores("No se encontro encabezado para la petición", "E");
+                        oresp.error.message = "No se encontro encabezado para la petición . Endpoint: " + context.Request.Path.Value;
+                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value, "E");
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         context.Response.ContentType = "application/json";
 

@@ -37,7 +37,7 @@ namespace API_Maestros_Core.Controllers
         public IActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
 
-       
+            #region ConnectionsStrings
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -46,14 +46,12 @@ namespace API_Maestros_Core.Controllers
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConCategorias oRespuesta = new RespuestaConCategorias();
+            #endregion
 
             if (!ModelState.IsValid)
             {
+                oRespuesta.error = APIHelper.DevolverErrorAPI(4151, "Modelo no válido", "E");
                 oRespuesta.success = false;
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 4151;
-                oRespuesta.error.message = "Modelo no válido";
-                Logger.LoguearErrores("Modelo no válido", "E");
                 return StatusCode(415, oRespuesta);
             }
             else
@@ -62,38 +60,20 @@ namespace API_Maestros_Core.Controllers
                 try
                 {
 
-                    moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                    _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                    bool Habilitado = false;
                     if (!HabilitadoPorToken)
                     {
-                        oRespuesta.success = false;
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4012;
-                        oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
-                        return Unauthorized(oRespuesta);
-                        //return oRespuesta;
+                        oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                        oRespuesta.success = false;                        
+                        return Unauthorized(oRespuesta);                        
                     }
                     else
                     {
-
-                        foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                        {
-                            if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                            {
-                                _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                _SessionMgr.EntidadID = 1;
-                                Habilitado = true;
-                            }
-                        }
-
-                        if (Habilitado)
+                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                        
+                        if (MiSessionMgrAPI.Habilitado)
                         {
                             Paginacion oPaginacion = new Paginacion();
-                            CategoriasMgr._SessionMgr = _SessionMgr;
+                            CategoriasMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
                             oRespuesta.success = true;
                             oRespuesta.error = new Error();
                             oRespuesta.categoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
@@ -112,22 +92,16 @@ namespace API_Maestros_Core.Controllers
                         }
                         else
                         {
-                            oRespuesta.success = false;
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = 4012;
-                            oRespuesta.error.message = "No esta autorizado a acceder al recurso";
-                            Logger.LoguearErrores("No esta autorizado a acceder al recurso", "E");
+                            oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al recurso", "E");
+                            oRespuesta.success = false;                            
                             return Unauthorized(oRespuesta);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    oRespuesta.success = false;
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 5001;
-                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                    oRespuesta.success = false;                                       
                     return StatusCode(500, oRespuesta);
                 }
             }
@@ -140,9 +114,8 @@ namespace API_Maestros_Core.Controllers
         [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
         public IActionResult Get(string categoriaID)
         {
-            RespuestaCategoriasGetItem oRespuesta = new RespuestaCategoriasGetItem();
-
- 
+            #region ConnectionsStrings
+            RespuestaCategoriasGetItem oRespuesta = new RespuestaCategoriasGetItem(); 
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -150,59 +123,39 @@ namespace API_Maestros_Core.Controllers
 
             SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
             GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            #endregion
+
 
             if (!ModelState.IsValid)
             {
-                oRespuesta.error = new Error();
-                oRespuesta.error.code = 4151;
-                oRespuesta.error.message = "Modelo no valido";
-                Logger.LoguearErrores("Modelo no valido", "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI(4151, "Modelo no valido", "E");                
                 oRespuesta.success = false;
-                string json = JsonConvert.SerializeObject(oRespuesta);
                 return StatusCode(415, oRespuesta);
             
             }
             else
             {
-
                 try
                 {
                     if (!HabilitadoPorToken)
                     {
-                        oRespuesta.error = new Error();
-                        oRespuesta.error.code = 4012;
-                        oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                        Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI(4151, "Modelo no valido", "E");                       
                         oRespuesta.success = false;
                         return Unauthorized(oRespuesta);
                     }
                     else
                     {
-                        moHabilitacionesAPI = GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
-                        string strCanalesDeVenta = null;
-                        _SessionMgr = new GESI.CORE.BLL.SessionMgr();
-                        bool Habilitado = false;
+                        
                         if (categoriaID != null)
                         {
                             if (categoriaID.Length > 0)
                             {
-                                foreach (GESI.CORE.BO.Verscom2k.HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
-                                {
-                                    if (oHabilitacionAPI.TipoDeAPI.Equals(mostrTipoAPI))
-                                    {
-                                        _SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
-                                        _SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                                        _SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                                        _SessionMgr.EntidadID = 1;
-                                        strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
-                                        Habilitado = true;
-                                    }
-                                }
+                                APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
-                                if (Habilitado)
+                                if (MiSessionMgrAPI.Habilitado)
                                 {
 
-                                    CategoriasMgr._SessionMgr = _SessionMgr;
+                                    CategoriasMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
 
                                     Paginacion oPaginacion = new Paginacion();
                                     oPaginacion.totalElementos = 1;
@@ -219,41 +172,28 @@ namespace API_Maestros_Core.Controllers
                                 }
                                 else
                                 {
-                                    oRespuesta.error = new Error();
-                                    oRespuesta.error.code = 4012;
-                                    oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario";
-                                    Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                                    oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");                                   
                                     oRespuesta.success = false;
                                     return Unauthorized(oRespuesta);
                                 }
                             }
                             else
                             {
-                                oRespuesta.error = new Error();
-                                oRespuesta.error.code = 2041;
-                                oRespuesta.error.message = "No se encontro categoria a buscar";
+                                
                                 Logger.LoguearErrores("No se encontro categoria a buscar", "I");
-                                oRespuesta.success = false;
-                                return StatusCode(204, oRespuesta);
+                                return StatusCode(204);
                             }
                         }
                         else
-                        {
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = 4041;
-                            oRespuesta.error.message = "No se encontro categoria a buscar";
+                        {   
                             Logger.LoguearErrores("No se encontro categoria a buscar", "I");
-                            oRespuesta.success = false;
-                            return StatusCode(204, oRespuesta);
+                            return StatusCode(204);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    oRespuesta.error = new Error();
-                    oRespuesta.error.code = 5001;
-                    oRespuesta.error.message = "Error interno de la aplicacion. Descripcion: " + ex.Message;
-                    Logger.LoguearErrores("Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");                   
                     oRespuesta.success = false;
                     return StatusCode(500, oRespuesta);
                 }

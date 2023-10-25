@@ -100,5 +100,19 @@ namespace API_Maestros_Core.BLL
             return error;
         }
 
+
+        public enum cCodigosError
+        {
+            cUsuarioIncorrecto = 4011,
+            cTokenInvalido = 4012,
+            cTokenNoEncontrado = 4013,
+            cTokenEncabezadoNoEncontrado = 4015,
+            cNuevoToken = 4016,
+            cSintaxisIncorrecta = 4001,
+            cErrorConversionDato = 4002,
+            cErrorInternoAlDevolverToken = 5001,
+            cErrorInternoAplicacion = 5002,
+            cModeloNoValido = 4151
+        }
     }
 }

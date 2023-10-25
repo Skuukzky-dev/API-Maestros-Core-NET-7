@@ -30,7 +30,7 @@ namespace API_Maestros_Core.Controllers
         }*/
 
         // POST api/<ImagenesController>
-        [HttpPost]
+       /* [HttpPost]
         [Authorize]
         [EnableCors("MyCorsPolicy")]
         public async Task<IActionResult> Post([FromForm] ImagenProducto oImagen)
@@ -211,7 +211,7 @@ namespace API_Maestros_Core.Controllers
             {
                 return StatusCode(500);
             }
-        }
+        }*/
 
         // DELETE api/<ImagenesController>/5
        /* [HttpDelete("{id}")]
