@@ -24,6 +24,7 @@ namespace API_Maestros_Core.Controllers
         public static string mostrTipoAPI = "LEER_MAESTROS";
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
+        public static string TokenEnviado = "";
         #endregion
 
         // GET: api/<CategoriasController>
@@ -50,9 +51,9 @@ namespace API_Maestros_Core.Controllers
 
             if (!ModelState.IsValid)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI(4151, "Modelo no válido", "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no válido", "E", strUsuarioID,APIHelper.CategoriasGetList);
                 oRespuesta.success = false;
-                return StatusCode(415, oRespuesta);
+                return StatusCode((int)APIHelper.cCodigosError.cModeloNoValido, oRespuesta);
             }
             else
             {
@@ -62,7 +63,7 @@ namespace API_Maestros_Core.Controllers
 
                     if (!HabilitadoPorToken)
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E", strUsuarioID, APIHelper.CategoriasGetList);
                         oRespuesta.success = false;                        
                         return Unauthorized(oRespuesta);                        
                     }
@@ -92,7 +93,7 @@ namespace API_Maestros_Core.Controllers
                         }
                         else
                         {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al recurso", "E");
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CategoriasGetList);
                             oRespuesta.success = false;                            
                             return Unauthorized(oRespuesta);
                         }
@@ -100,7 +101,7 @@ namespace API_Maestros_Core.Controllers
                 }
                 catch (Exception ex)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetList);
                     oRespuesta.success = false;                                       
                     return StatusCode(500, oRespuesta);
                 }
@@ -128,9 +129,9 @@ namespace API_Maestros_Core.Controllers
 
             if (!ModelState.IsValid)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI(4151, "Modelo no valido", "E");                
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);                
                 oRespuesta.success = false;
-                return StatusCode(415, oRespuesta);
+                return StatusCode((int)APIHelper.cCodigosError.cModeloNoValido, oRespuesta);
             
             }
             else
@@ -139,7 +140,7 @@ namespace API_Maestros_Core.Controllers
                 {
                     if (!HabilitadoPorToken)
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI(4151, "Modelo no valido", "E");                       
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);                       
                         oRespuesta.success = false;
                         return Unauthorized(oRespuesta);
                     }
@@ -167,12 +168,12 @@ namespace API_Maestros_Core.Controllers
                                     oRespuesta.success = true;
                                     oRespuesta.categoriaProducto = new GESI.ERP.Core.BO.cCategoriaDeProducto();
                                     oRespuesta.categoriaProducto = CategoriasMgr.GetItem(categoriaID);
-                                    Logger.LoguearErrores("Exitoso para el codigo " + categoriaID, "I");
+                                    Logger.LoguearErrores("Exitoso para el codigo " + categoriaID, "I", _SessionMgr.UsuarioID, APIHelper.CategoriasGetItem);
                                     return Ok(oRespuesta);
                                 }
                                 else
                                 {
-                                    oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");                                   
+                                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E", strUsuarioID, APIHelper.CategoriasGetItem);                                   
                                     oRespuesta.success = false;
                                     return Unauthorized(oRespuesta);
                                 }
@@ -180,20 +181,20 @@ namespace API_Maestros_Core.Controllers
                             else
                             {
                                 
-                                Logger.LoguearErrores("No se encontro categoria a buscar", "I");
-                                return StatusCode(204);
+                                Logger.LoguearErrores("No se encontro categoria a buscar", "I", strUsuarioID, APIHelper.CategoriasGetItem);
+                                return NoContent();
                             }
                         }
                         else
                         {   
-                            Logger.LoguearErrores("No se encontro categoria a buscar", "I");
-                            return StatusCode(204);
+                            Logger.LoguearErrores("No se encontro categoria a buscar", "I", strUsuarioID, APIHelper.CategoriasGetItem);
+                            return NoContent();
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");                   
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);                   
                     oRespuesta.success = false;
                     return StatusCode(500, oRespuesta);
                 }

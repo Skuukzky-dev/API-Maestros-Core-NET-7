@@ -19,6 +19,7 @@ namespace API_Maestros_Core.Controllers
         public static string mostrTipoAPI = "LEER_MAESTROS";
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
+        public static string TokenEnviado = "";
         #endregion
 
        
@@ -70,7 +71,7 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI(4016, "No está autorizado a acceder al servicio. No se encontró el token del usuario", "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No está autorizado a acceder al servicio. No se encontró el token del usuario", "E", strUsuarioID,APIHelper.SucursalesGetList);
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -78,7 +79,7 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error al devolver Sucursales. Descripcion: "+ex.Message, "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Sucursales. Descripcion: "+ex.Message, "E", strUsuarioID, APIHelper.SucursalesGetList);
                 oRespuesta.success = false;
                 return StatusCode(500,oRespuesta);
                

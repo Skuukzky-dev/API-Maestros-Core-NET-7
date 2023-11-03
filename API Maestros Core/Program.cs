@@ -3,6 +3,7 @@ using API_Maestros_Core.Controllers;
 using API_Maestros_Core.Models;
 using API_Maestros_Core.Services;
 using AspNetCoreRateLimit;
+using GESI.CORE.BLL;
 using GESI.GESI.BLL.wsfev1;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -83,7 +84,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 tok.error.code = 4012;
                 context.Response.ContentType = "application/json";
                 tok.error.message = "Token invalido. Acceso denegado";
-                Logger.LoguearErrores("Token invalido. Acceso denegado", "I");
+                Logger.LoguearErrores("Token invalido. Acceso denegado", "I","", context.Request.Path.Value);
                 
                 // we can write our own custom response content here
                 await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(tok));
@@ -97,7 +98,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 tok.error.code = 4013;
                 context.Response.ContentType = "application/json";
                 tok.error.message = "No se encontro el Token en el Request";
-                Logger.LoguearErrores("No se encontro el Token en el Request", "I");
+                Logger.LoguearErrores("No se encontro el Token en el Request", "I","", context.Request.Path.Value);
                 // we can write our own custom response content here
                 await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(tok));
             }
@@ -106,7 +107,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         },
         OnTokenValidated = async(context) =>
         {
-            int hola = 0;
           //  GESI.CORE.BO.Verscom2k.APILogin MiObjetoLogin = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.GetItem(context.SecurityToken["RowData"]);
             var accessToken = context.SecurityToken as JwtSecurityToken;
             if (accessToken != null)
@@ -125,21 +125,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
                     GESI.CORE.BO.Verscom2k.APILogin MiObjetoLogin = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.GetItem(accessToken.RawData);
 
-                    if(MiObjetoLogin != null) // ESTA OK
+                    if(MiObjetoLogin != null) // ESTA OK. ENCONTRO EL TOKEN EN LA TABLA DE TOKENS X USUARIO
                     {
                         ProductosController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         ProductosController.HabilitadoPorToken = true;
-                        
+                        ProductosController.TokenEnviado = accessToken.RawData;
+
                         CanalesDeVentaController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         CanalesDeVentaController.HabilitadoPorToken = true;
-                        
+                        CanalesDeVentaController.TokenEnviado = accessToken.RawData;
+
                         CategoriasController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         CategoriasController.HabilitadoPorToken = true;
+                        CategoriasController.TokenEnviado = accessToken.RawData;
+
 
                         EmpresasController.strUsuarioID = MiObjetoLogin.UsuarioID;
                         EmpresasController.HabilitadoPorToken = true;
+                        EmpresasController.TokenEnviado = accessToken.RawData;
 
-                        Logger.LoguearErrores("Logueado exitosamente. Usuario: "+MiObjetoLogin.UsuarioID, "I");
                     }
                     else // NO LO ENCONTRO EN LA BASE
                     {
@@ -147,7 +151,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                         CanalesDeVentaController.HabilitadoPorToken = false;
                         CategoriasController.HabilitadoPorToken = false;
                         EmpresasController.HabilitadoPorToken = false;
-                        Logger.LoguearErrores("No autorizado a acceder al recurso por no encontrar el Token en tabla HabilitacionesUsuario. Token: "+ accessToken.RawData, "E");
+               
                     }
                 }
             }
@@ -242,7 +246,7 @@ app.Use(async (context, next) =>
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4015;
                     oresp.error.message = "No se encontro encabezado para la petición. Endpoint: "+context.Request.Path.Value;
-                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value, "I");
+                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value, "I", "", context.Request.Path.Value);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -258,7 +262,7 @@ app.Use(async (context, next) =>
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4011;
                     oresp.error.message = "No esta autorizado a acceder al recurso IP: " + ipAddress.ToString();
-                    Logger.LoguearErrores("No esta autorizado a acceder al recurso IP: " + ipAddress.ToString(),"I");
+                    Logger.LoguearErrores("No esta autorizado a acceder al recurso IP: " + ipAddress.ToString(),"I", "", context.Request.Path.Value);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -272,7 +276,7 @@ app.Use(async (context, next) =>
                         oresp.error = new ErrorToken();
                         oresp.error.code = 4015;
                         oresp.error.message = "No se encontro encabezado para la petición . Endpoint: "+ context.Request.Path.Value;
-                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value,"I");
+                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value,"I", "", context.Request.Path.Value);
                         context.Response.ContentType = "application/json";
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -280,7 +284,7 @@ app.Use(async (context, next) =>
                     }
                     else
                     {
-                        Logger.LoguearErrores("IPs Autorizadas: " + IPConfig,"I");
+                        Logger.LoguearErrores("IPs Autorizadas: " + IPConfig,"I", "", context.Request.Path.Value);
                     }
                 }
             }
@@ -296,7 +300,7 @@ app.Use(async (context, next) =>
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4015;
                     oresp.error.message = "No se encontro encabezado para la petición . Endpoint: "+context.Request.Path.Value;
-                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value, "I");
+                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value, "I", "", context.Request.Path.Value);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -314,7 +318,7 @@ app.Use(async (context, next) =>
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4011;
                     oresp.error.message = "No esta autorizado a acceder al recurso. URL: " + referrerUrl;
-                    Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL: " + referrerUrl, "E");
+                    Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL: " + referrerUrl, "E", "", context.Request.Path.Value);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -329,7 +333,7 @@ app.Use(async (context, next) =>
                         oresp.error = new ErrorToken();
                         oresp.error.code = 4015;
                         oresp.error.message = "No se encontro encabezado para la petición . Endpoint: " + context.Request.Path.Value;
-                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value, "E");
+                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value, "E", "", context.Request.Path.Value);
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         context.Response.ContentType = "application/json";
 
@@ -338,7 +342,7 @@ app.Use(async (context, next) =>
                     }
                     else
                     {
-                        Logger.LoguearErrores("Dominios Autorizados: " + urlConfig, "I");
+                        Logger.LoguearErrores("Dominios Autorizados: " + urlConfig, "I", "", context.Request.Path.Value);
                     }
                     
                 }

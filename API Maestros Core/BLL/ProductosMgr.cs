@@ -5,6 +5,7 @@ using GESI.GESI.BO;
 using Newtonsoft.Json;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing.Printing;
 
 
@@ -30,6 +31,8 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+              
+               
                 #region ConnectionStrings
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -51,13 +54,17 @@ namespace API_Maestros_Core.BLL
 
                 if (CategoriasIDs.Length == 0)
                     CategoriasIDs = null;
-
+                APIHelper.QueEstabaHaciendo = "Obteniendo lista de codigos de la expresion";
+                
                 List<string> lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda, strEstado: EstadosProductos, strCategorias: CategoriasIDs);
                 List<string> nuevosplit = lstCodigosProducto.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                 string codigos = string.Join(",", nuevosplit);
+                
+                APIHelper.QueEstabaHaciendo = "Verificando permisos en costos";
 
                 if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
                 {
+                    APIHelper.QueEstabaHaciendo = "Obteniendo productos";
 
                     lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
 
@@ -86,9 +93,11 @@ namespace API_Maestros_Core.BLL
                         lstHijos.Add(new HijoProductos(oPrd));
                     }
                     oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
-                    oRespuesta.error.code = 4017;
+                    oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                     oRespuesta.success = true;
                 }
+
+                APIHelper.QueEstabaHaciendo = "Completando paginado";
 
                 oRespuesta.productos = lstHijos;
                 Paginacion oPaginacion = new Paginacion();
@@ -97,13 +106,13 @@ namespace API_Maestros_Core.BLL
                 oPaginacion.paginaActual = pageNumber;
                 oPaginacion.tamañoPagina = pageSize;
                 oRespuesta.paginacion = oPaginacion;
-                Logger.LoguearErrores("OK -> GetSearchResults", "I");
+                Logger.LoguearErrores("GetSearchResults: Exitoso Expresion:"+ strExpresionBusqueda, "I",_SessionMgr.UsuarioID,APIHelper.ProductosGetSearchResult);
                 return oRespuesta;
 
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetSearchResults. Descripcion: " + ex.Message, "E");
+                Logger.LoguearErrores("Error al solicitar GetSearchResults. Descripcion: " + ex.Message + " . Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetSearchResult);
                 throw;
             }
         }
@@ -148,6 +157,7 @@ namespace API_Maestros_Core.BLL
                     try
                     {
                         DateTime Fecha = DateTime.Parse(fechamodificaciones);
+                        APIHelper.QueEstabaHaciendo = "Obteniendo productos modificados a partir de fecha";
                         lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetProductosModificadosDesdeFecha(Fecha, EstadosProductos, (int)LogCambios.tTablasGenerales);
 
                         string commaSeparatedIds = string.Join(",", lstCodigosProducto);
@@ -156,9 +166,12 @@ namespace API_Maestros_Core.BLL
                         string resultado = string.Join(",", nuevosplit);
 
 
+                        APIHelper.QueEstabaHaciendo = "Verificando permisos sobre costos";
 
                         if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
                         {
+                            APIHelper.QueEstabaHaciendo = "Obteniendo listado de productos";
+
                             List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
 
                             lstProductos = lstProductosAux;
@@ -166,11 +179,13 @@ namespace API_Maestros_Core.BLL
                         }
                         else
                         {
+                            APIHelper.QueEstabaHaciendo = "Obteniendo listado de productos";
+
                             List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                             lstProductos = lstProductosAux;
                             oRespuesta.error = new Error();
                             oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
-                            oRespuesta.error.code = 4017;
+                            oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                         }
                     }
                     catch (FormatException fex)
@@ -180,14 +195,19 @@ namespace API_Maestros_Core.BLL
                 }
                 else
                 {
+                    APIHelper.QueEstabaHaciendo = "Buscando resultados de productos";
+
                     lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strEstado: EstadosProductos, strCategorias: CategoriasIDs);
                     string commaSeparatedIds = string.Join(",", lstCodigosProducto);
                     List<string> splits = commaSeparatedIds.Split(',').ToList();
                     List<string> nuevosplit = splits.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                     string resultado = string.Join(",", nuevosplit);
 
+                    APIHelper.QueEstabaHaciendo = "Verificando permisos sobre costos";
+
                     if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
                     {
+                        APIHelper.QueEstabaHaciendo = "Obteniendo productos";
                         List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                         lstProductos = lstProductosAux;
                         oRespuesta.error = new Error();
@@ -195,11 +215,12 @@ namespace API_Maestros_Core.BLL
                     }
                     else
                     {
+                        APIHelper.QueEstabaHaciendo = "Obteniendo productos";
                         List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                         lstProductos = lstProductosAux;
                         oRespuesta.error = new Error();
                         oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
-                        oRespuesta.error.code = 4017;
+                        oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                     }
                 }
 
@@ -234,7 +255,7 @@ namespace API_Maestros_Core.BLL
                 oRespuesta.productos = lstHijos;
                 oRespuesta.success = true;
 
-                Logger.LoguearErrores("OK -> GetList", "I");
+                Logger.LoguearErrores("GetList: Existoso", "I", _SessionMgr.UsuarioID,APIHelper.ProductosGetList);
 
                 return oRespuesta;
 
@@ -246,12 +267,12 @@ namespace API_Maestros_Core.BLL
             }
             catch (AccessViolationException ax)
             {
-                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E");
+                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetList);
                 throw ax;
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetList. Descripcion: " + ex.Message, "E");
+                Logger.LoguearErrores("Error al solicitar GetList. Descripcion: " + ex.Message+" Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetList);
                 throw;
             }
         }
@@ -285,6 +306,8 @@ namespace API_Maestros_Core.BLL
                 HijoProductos lstHijos = new HijoProductos();
                 List<GESI.ERP.Core.BO.cProducto> oProduc = new List<GESI.ERP.Core.BO.cProducto>();
                 #endregion
+                
+                APIHelper.QueEstabaHaciendo = "Verificando permisos sobre costos";
 
                 if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifica si tiene permiso para devolver costos del proveedor
                 {
@@ -295,10 +318,12 @@ namespace API_Maestros_Core.BLL
                 }
                 else
                 {
+                    APIHelper.QueEstabaHaciendo = "Obteniendo listado de productos";
+
                     oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                     oRespuesta.error = new Error();
                     oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
-                    oRespuesta.error.code = 4017;
+                    oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                 }
 
                 if (CanalDeVentaID > 0)
@@ -339,10 +364,6 @@ namespace API_Maestros_Core.BLL
                         }
 
                         lstHijos = oHijo;
-
-
-
-
                     }
                 }
 
@@ -383,25 +404,26 @@ namespace API_Maestros_Core.BLL
                 }
                 oRespuesta.success = true;
                 #endregion
-                Logger.LoguearErrores("OK -> GetItem ProductoID: "+ProductoID, "I");
+
+                Logger.LoguearErrores("GetItem: Exitoso ProductoID: "+ProductoID, "I", _SessionMgr.UsuarioID, APIHelper.ProductosGetItem);
                 return oRespuesta;
 
             }
             catch (AccessViolationException ax)
             {
-                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E");
+                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetItem);
                 throw ax;
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetItem. Descripcion: " + ex.Message, "E");
+                Logger.LoguearErrores("Error al solicitar GetItem. Descripcion: " + ex.Message+ " .Haciendo: " + APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetItem);
                 throw;
             }
 
         }
 
         /// <summary>
-        /// Devuelve las existencias por productoS
+        /// Devuelve las existencias por productos
         /// </summary>
         /// <param name="codigos"></param>
         /// <param name="Almacenes"></param>
@@ -476,12 +498,12 @@ namespace API_Maestros_Core.BLL
                     oRespuesta.existencias = null;
                 }
                 oRespuesta.error = new Error();
-                Logger.LoguearErrores("OK -> GetExistencias. Codigos: "+codigos, "I");
+                Logger.LoguearErrores("GetExistencias:Exitoso. Codigos: "+codigos, "I", _SessionMgr.UsuarioID,APIHelper.ProductosGetExistencias);
                 return oRespuesta;
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetExistencias. Descripcion: " + ex.Message, "E");
+                Logger.LoguearErrores("Error al solicitar GetExistencias. Descripcion: " + ex.Message+ " .Haciendo: " + APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetExistencias);
                 throw;
             }
         }
@@ -550,12 +572,12 @@ namespace API_Maestros_Core.BLL
 
                 oRespuesta.error = new Error();
 
-                Logger.LoguearErrores("OK -> GetPrecios . Codigos "+codigos, "I");
+                Logger.LoguearErrores("GetPrecios:Exitoso . Codigos "+codigos, "I", _SessionMgr.UsuarioID,APIHelper.ProductoGetPrecios);
                 return oRespuesta;
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetPrecios. Descripcion: " + ex.Message, "E");
+                Logger.LoguearErrores("Error al solicitar GetPrecios. Descripcion: " + ex.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductoGetPrecios);
                 throw ex;
             }
         }

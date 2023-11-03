@@ -24,6 +24,7 @@ namespace API_Maestros_Core.Controllers
         public static string mostrTipoAPI = "LEER_MAESTROS";
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
+        public static string TokenEnviado = "";
         #endregion
 
         // GET: api/<CanalesDeVentaController>
@@ -57,7 +58,7 @@ namespace API_Maestros_Core.Controllers
 
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E");
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
                     oRespuesta.success = false;                   
                     return Unauthorized(oRespuesta);
                 }
@@ -79,12 +80,12 @@ namespace API_Maestros_Core.Controllers
                         oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
                         oRespuesta.paginacion.paginaActual = pageNumber;
                         oRespuesta.paginacion.tamañoPagina = pageSize;
-                        Logger.LoguearErrores("Respuesta GetList Canales de venta OK", "I");
+                        Logger.LoguearErrores("Respuesta GetList Canales de venta OK", "I", MiSessionMgrAPI.SessionMgr.UsuarioID, APIHelper.CanalesDeVentaGetList);
                         return Ok(oRespuesta);
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI(4012, "No esta autorizado a acceder al recurso", "E");
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
                         oRespuesta.success = false;                        
                         return Unauthorized(oRespuesta);
                     }
@@ -92,7 +93,7 @@ namespace API_Maestros_Core.Controllers
             }
             catch(Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI(5001, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E");
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
                 oRespuesta.success = false;               
                 return Unauthorized(oRespuesta);
             }

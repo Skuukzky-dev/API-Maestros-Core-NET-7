@@ -90,9 +90,9 @@ namespace API_Maestros_Core.BLL
         /// <param name="message"></param>
         /// <param name="tipo"></param>
         /// <returns></returns>
-        public static Error DevolverErrorAPI(int code, string message,string tipo)
+        public static Error DevolverErrorAPI(int code, string message,string tipo,string usuario,string endpoint)
         {
-            Logger.LoguearErrores(message, tipo);
+            Logger.LoguearErrores(message, tipo,usuario,endpoint);
             Error error = new Error();
             error.code = code;
             error.message = message;
@@ -112,7 +112,25 @@ namespace API_Maestros_Core.BLL
             cErrorConversionDato = 4002,
             cErrorInternoAlDevolverToken = 5001,
             cErrorInternoAplicacion = 5002,
-            cModeloNoValido = 4151
+            cModeloNoValido = 4151,
+            cPermisoDenegadoCostos = 4017,
+            cCodigoNoHalladoEnLaSolicitud = 4041
+
         }
+
+        public const string ProductosGetList = "GetList";
+        public const string ProductosGetItem = "GetItem";
+        public const string ProductosGetSearchResult = "GetSearchResult";
+        public const string ProductosGetExistencias = "GetExistencias";
+        public const string ProductoGetPrecios = "GetPrecios";
+        public const string CanalesDeVentaGetList = "CanalesDeVenta/GetList";
+        public const string Login = "Login";
+        public const string CategoriasGetList = "Categorias/GetList";
+        public const string CategoriasGetItem = "Categorias/GetItem";
+        public const string SucursalesGetList = "GetSucursales";
+
+        public static string QueEstabaHaciendo = "";
+        
+                
     }
 }
