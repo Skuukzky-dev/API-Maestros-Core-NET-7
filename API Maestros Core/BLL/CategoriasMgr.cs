@@ -11,17 +11,26 @@ namespace API_Maestros_Core.BLL
         /// Devuelve toda la lista de categorias de productos
         /// </summary>
         /// <returns></returns>
-        public static List<GESI.ERP.Core.BO.cCategoriaDeProducto> GetList()
+        public static List<CategoriaHija> GetList()
         {
             try
             {
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.CategoriasManager.ERPsessionManager = _SessionERP;
                 GESI.ERP.Core.BLL.CategoriasManager.SessionManager = _SessionMgr;
-
+                List<CategoriaHija> lstCategoriasHijas = new List<CategoriaHija>();
                 List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategoriasProducto = GESI.ERP.Core.BLL.CategoriasManager.GetList();
             
-                return lstCategoriasProducto;
+                if(lstCategoriasProducto?.Count > 0)
+                {
+                    foreach(GESI.ERP.Core.BO.cCategoriaDeProducto oCategoria in lstCategoriasProducto)
+                    {
+                        lstCategoriasHijas.Add(new CategoriaHija(oCategoria));
+                    }
+                }
+
+
+                return lstCategoriasHijas;
 
             }
             catch(Exception ex)
@@ -37,7 +46,7 @@ namespace API_Maestros_Core.BLL
         /// </summary>
         /// <param name="CategoriaID"></param>
         /// <returns></returns>
-        public static GESI.ERP.Core.BO.cCategoriaDeProducto GetItem(String CategoriaID)
+        public static CategoriaHija GetItem(String CategoriaID)
         {
             try
             {
@@ -45,12 +54,18 @@ namespace API_Maestros_Core.BLL
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.CategoriasManager.ERPsessionManager = _SessionERP;
                 GESI.ERP.Core.BLL.CategoriasManager.SessionManager = _SessionMgr;
-
+                List<CategoriaHija> lstCategoriasHijas = new List<CategoriaHija>();
                 List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategoriasProducto = GESI.ERP.Core.BLL.CategoriasManager.GetList(CategoriaID);
 
                 if(lstCategoriasProducto?.Count > 0)
-                { 
-                return lstCategoriasProducto[0];
+                {
+                  
+                        foreach (GESI.ERP.Core.BO.cCategoriaDeProducto oCategoria in lstCategoriasProducto)
+                        {
+                            lstCategoriasHijas.Add(new CategoriaHija(oCategoria));
+                        }
+
+                    return lstCategoriasHijas[0];
                 }
                 else
                 {
@@ -61,6 +76,27 @@ namespace API_Maestros_Core.BLL
             {
                 throw ex;
             }
+        }
+
+
+        public class CategoriaHija : GESI.ERP.Core.BO.cCategoriaDeProducto
+        {
+            [System.Text.Json.Serialization.JsonIgnore]
+            [Newtonsoft.Json.JsonIgnore]
+            public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+            public CategoriaHija(GESI.ERP.Core.BO.cCategoriaDeProducto padre)
+            {
+                CategoriaID = padre.CategoriaID;
+                Descripcion = padre.Descripcion;
+                CategoriaPadreID = padre.CategoriaPadreID;
+            }
+
+            public CategoriaHija()
+            {
+
+            }
+            
         }
 
     }

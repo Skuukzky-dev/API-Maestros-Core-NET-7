@@ -1,2 +1,17 @@
 2/11/2023 15:11:51|I|API|Login|Logueado exitosamente. Usuario: API|::1|localhost:7062
 2/11/2023 15:12:06|I|API|GetList|GetList: Existoso
+10/11/2023 09:28:22|I|gesi|Login|Logueado exitosamente. Usuario: gesi|::1|localhost:7062 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiODZjZjY5ZDctMzMzZS00NDQ2LWE4YjgtMjZmYzcxYzNlMGVhIiwiaWF0IjoxNjk5NjE5MzAwLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTk2MTkzMDAsImV4cCI6MTY5OTYzMzcwMCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.7sn1HRTB3iAfPjMgAVFLsOp6lnxgqVTTJcc4Pa2lpts
+10/11/2023 09:29:36|I|gesi|GetList|GetList: Existoso
+10/11/2023 16:56:45|I|gesi|Login|Logueado exitosamente. Usuario: gesi|::1|localhost:7062 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMzhjNzU2MjktMjk1MS00MWYxLTkzM2MtMGZjYTM1MzAyZjg3IiwiaWF0IjoxNjk5NjQ2MjA1LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTk2NDYyMDUsImV4cCI6MTY5OTY2MDYwNSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.m5Vzd69dyrIL9thBGUQCf1DjFV87o7rM4XqpVC-WmI4
+10/11/2023 16:59:42|I||/api/CanalesDeVenta/GetList|No se encontro encabezado para la petición Endpoint: /api/CanalesDeVenta/GetList
+10/11/2023 17:00:11|E|gesi|CanalesDeVenta/GetList|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspGetCanalesDeVentaPorUsuario', base de datos 'BD_URBANIA_API', esquema 'dbo'.
+10/11/2023 17:01:24|E|gesi|CanalesDeVenta/GetList|Error interno de la aplicacion. Descripcion: Se denegó el permiso EXECUTE en el objeto 'uspCanalesDeVentaGetlist', base de datos 'BD_URBANIA_API', esquema 'dbo'.
+10/11/2023 17:02:01|I|gesi|CanalesDeVenta/GetList|Respuesta GetList Canales de venta OK
+10/11/2023 17:02:46|I|gesi|CanalesDeVenta/GetList|Respuesta GetList Canales de venta OK
+11/11/2023 12:15:05|I|gesi|Login|Logueado exitosamente. Usuario: gesi||localhost:7062 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMTQwMTQ4MzEtMzIyZS00MTdlLWI1MGUtZGFmN2Y2OGUwZDBiIiwiaWF0IjoxNjk5NzE1NzA1LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTk3MTU3MDUsImV4cCI6MTY5OTczMDEwNSwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.wAMcHS10v9qkKB6mpdMYxY1YoEJ5hW4jsQU_vNFz5ZM
+11/11/2023 12:17:33|I|gesi|GetList|GetList: Existoso
+11/11/2023 12:18:41|I|gesi|GetList|GetList: Existoso
+11/11/2023 12:19:02|I|gesi|GetList|GetList: Existoso
+11/11/2023 12:19:17|I|gesi|GetList|GetList: Existoso
+11/11/2023 12:19:38|I|gesi|GetList|GetList: Existoso
+11/11/2023 12:20:05|I|gesi|GetList|GetList: Existoso

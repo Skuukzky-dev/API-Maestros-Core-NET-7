@@ -18,6 +18,7 @@ namespace API_Maestros_Core.BLL
             try
             {
                 MiSessionMgrAPI = new APISessionManager();
+                MiSessionMgrAPI.ERPSessionMgr = new GESI.ERP.Core.SessionManager();
                 MiSessionMgrAPI.SessionMgr = new SessionMgr();
                 MiSessionMgrAPI.Habilitado = false;
 
@@ -34,10 +35,15 @@ namespace API_Maestros_Core.BLL
                 {
                     foreach(HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                     {
-                        MiSessionMgrAPI.SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
+                        MiSessionMgrAPI.SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;                        
                         MiSessionMgrAPI.SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
                         MiSessionMgrAPI.SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
                         MiSessionMgrAPI.SessionMgr.EntidadID = 1;
+
+                        MiSessionMgrAPI.ERPSessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                        MiSessionMgrAPI.ERPSessionMgr.EmpresaID = (uint)oHabilitacionAPI.EmpresaID;
+                        
+
                         MiSessionMgrAPI.CostosXProveedor = oHabilitacionAPI.CostosDeProveedor;
                         MiSessionMgrAPI.EstadoProductos = oHabilitacionAPI.Estados;
                         MiSessionMgrAPI.CategoriasIDs = oHabilitacionAPI.CategoriasIDs;
@@ -61,15 +67,41 @@ namespace API_Maestros_Core.BLL
                     #endregion
 
                     #region CanalesDeVenta
+
+                    // Devolver Canales de Venta habilitados por usuario
+
+                    List<GESI.ERP.Core.BO.cCanalDeVenta> lstCanalesXUsuario = MiSessionMgrAPI.ERPSessionMgr.GetCanalesDeVentaHabilitados();
+
                     if (strCanalesDeVenta?.Length > 0)
                     {
                         List<string> canalesaux = strCanalesDeVenta.Split(',').ToList();
                         int[] intCanales = new int[canalesaux.Count];
+                        List<int> lstCanales =  new List<int>();
                         for (int i = 0; i < canalesaux.Count; i++)
                         {
                             int.TryParse(canalesaux[i], out intCanales[i]); // Convertir cada substring en un entero y asignarlo al array de enteros
+
+                            List<GESI.ERP.Core.BO.cCanalDeVenta> lstCanalesAux = lstCanalesXUsuario.Where(x => x.CanalDeVentaID == intCanales[i]).ToList();
+
+                            if(lstCanalesAux?.Count  > 0)
+                            {
+                                lstCanales.Add(intCanales[i]);
+                            }
+
                         }
-                        MiSessionMgrAPI.CanalesDeVenta = intCanales;
+
+                        if (lstCanales?.Count > 0)
+                        {
+                            MiSessionMgrAPI.CanalesDeVenta = lstCanales.ToArray();
+                        }
+                        else
+                        {
+                            MiSessionMgrAPI.CanalesDeVenta = intCanales;
+                        }
+                    }
+                    else
+                    {
+                        MiSessionMgrAPI.CanalesDeVenta = lstCanalesXUsuario.ToArray();
                     }
                     #endregion
 

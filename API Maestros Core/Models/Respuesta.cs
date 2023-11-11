@@ -2,6 +2,7 @@
 using GESI.CORE.BO;
 using GESI.ERP.Core.BO;
 using GESI.GESI.BO;
+using static API_Maestros_Core.BLL.CategoriasMgr;
 
 namespace API_Maestros_Core.Models
 {
@@ -66,27 +67,27 @@ namespace API_Maestros_Core.Models
 
     public class RespuestaConCanalesDeVenta : Respuesta
     {
-        private List<GESI.GESI.BO.CanalDeVenta>? _CanalesDeVenta;
+        private List<GESI.ERP.Core.BO.cCanalDeVenta>? _CanalesDeVenta;
 
-        public List<CanalDeVenta>? CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
+        public List<GESI.ERP.Core.BO.cCanalDeVenta>? CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
 
         public Paginacion? paginacion { get; set; } 
     }
 
     public class RespuestaConCategorias : Respuesta
     {
-        private List<GESI.ERP.Core.BO.cCategoriaDeProducto>? _CategoriasProductos;
+        private List<CategoriaHija>? _CategoriasProductos;
 
-        public List<cCategoriaDeProducto>? categoriasProductos { get => _CategoriasProductos; set => _CategoriasProductos = value; }
+        public List<CategoriaHija>? categoriasProductos { get => _CategoriasProductos; set => _CategoriasProductos = value; }
 
         public Paginacion? paginacion { get; set; }
     }
 
     public class RespuestaCategoriasGetItem : Respuesta
     {
-        private GESI.ERP.Core.BO.cCategoriaDeProducto? _CategoriasProductos;
+        private CategoriaHija? _CategoriasProductos;
 
-        public cCategoriaDeProducto? categoriaProducto { get => _CategoriasProductos; set => _CategoriasProductos = value; }
+        public CategoriaHija? categoriaProducto { get => _CategoriasProductos; set => _CategoriasProductos = value; }
 
         public Paginacion? paginacion { get; set; }
     }

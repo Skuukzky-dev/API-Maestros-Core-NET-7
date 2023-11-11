@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing.Printing;
 using System.Net;
+using static API_Maestros_Core.BLL.CategoriasMgr;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -77,8 +78,8 @@ namespace API_Maestros_Core.Controllers
                             CategoriasMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
                             oRespuesta.success = true;
                             oRespuesta.error = new Error();
-                            oRespuesta.categoriasProductos = new List<GESI.ERP.Core.BO.cCategoriaDeProducto>();
-                            List<GESI.ERP.Core.BO.cCategoriaDeProducto> lstCategorias = CategoriasMgr.GetList();
+                            oRespuesta.categoriasProductos = new List<CategoriaHija>();
+                            List<CategoriaHija> lstCategorias = CategoriasMgr.GetList();
                             oRespuesta.categoriasProductos.AddRange(CategoriasMgr.GetList());
                            
 
@@ -166,7 +167,6 @@ namespace API_Maestros_Core.Controllers
                                     oRespuesta.paginacion = oPaginacion;
                                     oRespuesta.error = new Error();
                                     oRespuesta.success = true;
-                                    oRespuesta.categoriaProducto = new GESI.ERP.Core.BO.cCategoriaDeProducto();
                                     oRespuesta.categoriaProducto = CategoriasMgr.GetItem(categoriaID);
                                     Logger.LoguearErrores("Exitoso para el codigo " + categoriaID, "I", _SessionMgr.UsuarioID, APIHelper.CategoriasGetItem);
                                     return Ok(oRespuesta);

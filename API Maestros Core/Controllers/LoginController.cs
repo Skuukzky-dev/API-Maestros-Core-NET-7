@@ -56,11 +56,11 @@ namespace API_Maestros_Core.Controllers
                     ApiLogin.UsuarioID = credenciales.Username;
                     ApiLogin.Token = token;
                     int resultado = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.Save(ApiLogin);
+                    var clientIpAddress = HttpContext.Request.Headers["X-Client-IP"];
 
-                    
                     message.Content = new StringContent(JsonConvert.SerializeObject(respuestaToken));                  
                     
-                    Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID+ "|"+context.Connection.RemoteIpAddress+"|"+context.Request.Host +" Token: "+token, "I", ApiLogin.UsuarioID,APIHelper.Login);
+                    Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID+ "|"+ clientIpAddress + "|"+context.Request.Host +" Token: "+token, "I", ApiLogin.UsuarioID,APIHelper.Login);
                     return Ok(respuestaToken);
                 }
 

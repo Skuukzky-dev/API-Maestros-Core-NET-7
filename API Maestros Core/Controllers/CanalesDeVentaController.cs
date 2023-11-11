@@ -71,10 +71,12 @@ namespace API_Maestros_Core.Controllers
                         GESI.GESI.BLL.TablasGeneralesGESIMgr.SessionManager = MiSessionMgrAPI.SessionMgr;
                         oRespuesta.success = true;
                         oRespuesta.error = new Error();
-                        oRespuesta.CanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
+                        oRespuesta.CanalesDeVenta = new List<GESI.ERP.Core.BO.cCanalDeVenta>();
                         oRespuesta.paginacion = new Paginacion();
-                        List<GESI.GESI.BO.CanalDeVenta> lstCanalesDeVenta = new List<GESI.GESI.BO.CanalDeVenta>();
-                        lstCanalesDeVenta = GESI.GESI.BLL.TablasGeneralesGESIMgr.CanalesDeVentaGetList(CanalesDeVenta);
+                        GESI.ERP.Core.SessionManager ErpSessionMgr = new GESI.ERP.Core.SessionManager();
+                        ErpSessionMgr.EmpresaID = (uint)MiSessionMgrAPI.SessionMgr.EmpresaID;
+                        ErpSessionMgr.UsuarioID = MiSessionMgrAPI.SessionMgr.UsuarioID;
+                        List<GESI.ERP.Core.BO.cCanalDeVenta> lstCanalesDeVenta = ErpSessionMgr.GetCanalesDeVentaHabilitados();
                         oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                         oRespuesta.paginacion.totalElementos = lstCanalesDeVenta.Count;
                         oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);

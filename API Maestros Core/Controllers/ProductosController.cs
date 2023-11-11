@@ -615,7 +615,7 @@ namespace API_Maestros_Core.Controllers
     
     public class HijoProductos : GESI.ERP.Core.BO.cProducto
     {
-        [System.Text.Json.Serialization.JsonIgnore]
+       /* [System.Text.Json.Serialization.JsonIgnore]
         [Newtonsoft.Json.JsonIgnore]
 
         public override short RubroID { get; set; }
@@ -644,7 +644,7 @@ namespace API_Maestros_Core.Controllers
         [Newtonsoft.Json.JsonIgnore]
 
         public override short FiltroArticulos3ID { get => base.FiltroArticulos3ID; set => base.FiltroArticulos3ID = value; }
-
+       */
         [System.Text.Json.Serialization.JsonIgnore]
         [Newtonsoft.Json.JsonIgnore]
 

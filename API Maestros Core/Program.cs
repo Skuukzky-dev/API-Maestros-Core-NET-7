@@ -83,8 +83,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 tok.error = new Error();
                 tok.error.code = 4012;
                 context.Response.ContentType = "application/json";
-                tok.error.message = "Token invalido. Acceso denegado";
-                Logger.LoguearErrores("Token invalido. Acceso denegado", "I","", context.Request.Path.Value);
+              //  var context1 = HttpContext.ChallengeAsync(JwtBearerDefaults.AuthenticationScheme).Result;
+                tok.error.message = "Token invalido. Acceso denegado. Ips: "+ context.HttpContext.Connection.RemoteIpAddress;
+                Logger.LoguearErrores("Token invalido. Acceso denegado Ips: "+ context.HttpContext.Connection.RemoteIpAddress, "I","", context.Request.Path.Value);
                 
                 // we can write our own custom response content here
                 await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(tok));
