@@ -15,3 +15,15 @@
 11/11/2023 12:19:17|I|gesi|GetList|GetList: Existoso
 11/11/2023 12:19:38|I|gesi|GetList|GetList: Existoso
 11/11/2023 12:20:05|I|gesi|GetList|GetList: Existoso
+14/11/2023 09:45:14|I|gesi|Login|Logueado exitosamente. Usuario: gesi||localhost:7062 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiODBkYThhZWMtNDQxYS00OGI3LThkMTktYWQ3YTQ3MjlhYjMzIiwiaWF0IjoxNjk5OTY1OTE0LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTk5NjU5MTQsImV4cCI6MTY5OTk4MDMxNCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.PaY0ckwzZksYiNyUVcM-2l_FxX2vWhbAapQ7MFoVp1E
+14/11/2023 12:15:47|I|gesi|Login|Logueado exitosamente. Usuario: gesi||localhost:7062 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnZXNpIiwianRpIjoiMzdiZWUzNTctZWFmZS00OTY3LTgwNTMtNzY2YjFmN2YxZWFjIiwiaWF0IjoxNjk5OTc0OTQ3LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE2OTk5NzQ5NDcsImV4cCI6MTY5OTk4OTM0NywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.DUwTMLORlSYfpe-_2c6ND3nkqsjDGhTQIPskxAZVUXs
+14/11/2023 12:16:27|I|gesi|GetList|GetList: Existoso
+14/11/2023 12:19:52|I|gesi|GetList|GetList: Existoso
+14/11/2023 12:30:57|E|gesi|GetList|Error al solicitar GetList. Descripcion: La función o el procedimiento uspGetProductos tiene demasiados argumentos. Haciendo: Obteniendo productos
+14/11/2023 12:30:57|E|gesi|GetList|Error interno de la aplicacion. Descripcion: La función o el procedimiento uspGetProductos tiene demasiados argumentos. Haciendo: Obteniendo productos
+14/11/2023 12:33:11|I|gesi|GetList|GetList: Existoso
+14/11/2023 12:38:02|I|gesi|GetSearchResult|GetSearchResults: Exitoso Expresion:vanit
+14/11/2023 12:38:17|I|gesi|GetSearchResult|GetSearchResults: Exitoso Expresion:vanit
+14/11/2023 12:38:32|I|gesi|GetSearchResult|GetSearchResults: Exitoso Expresion:vanit
+14/11/2023 12:38:44|I|gesi|GetSearchResult|GetSearchResults: Exitoso Expresion:ceramic
+14/11/2023 12:39:09|I|gesi|GetSearchResult|GetSearchResults: Exitoso Expresion:ceramic

@@ -27,7 +27,7 @@ namespace API_Maestros_Core.BLL
         /// </summary>
         /// <param name="strExpresionBusqueda"></param>
         /// <returns></returns>
-        public static RespuestaConProductosHijos GetList(String strExpresionBusqueda, int[] CanalesDeVenta, string costoSolicitado, string costoUsuario, int pageNumber, int pageSize, string EstadosProductos, string CategoriasIDs, string imagenes, string stock = "N", int[] Almacenes = null)  // Usa GetSearchResults
+        public static RespuestaConProductosHijos GetList(String strExpresionBusqueda, int[] CanalesDeVenta, string costoSolicitado, string costoUsuario, int pageNumber, int pageSize, string EstadosProductos, string CategoriasIDs, string imagenes, string stock = "N", int[] Almacenes = null,string publicaEcommerce = "T")  // Usa GetSearchResults
         {
             try
             {
@@ -54,9 +54,12 @@ namespace API_Maestros_Core.BLL
 
                 if (CategoriasIDs.Length == 0)
                     CategoriasIDs = null;
+
                 APIHelper.QueEstabaHaciendo = "Obteniendo lista de codigos de la expresion";
-                
-                List<string> lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda, strEstado: EstadosProductos, strCategorias: CategoriasIDs);
+
+                int? publicaEcommerceint = FiltroEcommerce(publicaEcommerce);
+
+                List<string> lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda, strEstado: EstadosProductos, strCategorias: CategoriasIDs,intPublicaECommerce: (ushort?)publicaEcommerceint);
                 List<string> nuevosplit = lstCodigosProducto.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                 string codigos = string.Join(",", nuevosplit);
                 
@@ -122,7 +125,7 @@ namespace API_Maestros_Core.BLL
         /// Devuelve todos los productos 
         /// </summary>        
         /// <returns></returns>
-        public static RespuestaConProductosHijos GetList(int pageNumber, int pageSize, int[] CanalesDeVenta, string costoSolicitado, string costoUsuario, string EstadosProductos, string CategoriasIDs, string imagenes, string fechamodificaciones = "", string stock = "N", int[] Almacenes = null) // Usa GetList
+        public static RespuestaConProductosHijos GetList(int pageNumber, int pageSize, int[] CanalesDeVenta, string costoSolicitado, string costoUsuario, string EstadosProductos, string CategoriasIDs, string imagenes, string fechamodificaciones = "", string stock = "N", int[] Almacenes = null,string publicaEcommerce = "T") // Usa GetList
         {
             try
             {
@@ -196,13 +199,13 @@ namespace API_Maestros_Core.BLL
                 else
                 {
                     APIHelper.QueEstabaHaciendo = "Buscando resultados de productos";
-
-                    lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strEstado: EstadosProductos, strCategorias: CategoriasIDs);
+                    int? publica = FiltroEcommerce(publicaEcommerce);
+                    lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strEstado: EstadosProductos, strCategorias: CategoriasIDs,intPublicaECommerce:(ushort?)publica);
                     string commaSeparatedIds = string.Join(",", lstCodigosProducto);
                     List<string> splits = commaSeparatedIds.Split(',').ToList();
                     List<string> nuevosplit = splits.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                     string resultado = string.Join(",", nuevosplit);
-
+                 
                     APIHelper.QueEstabaHaciendo = "Verificando permisos sobre costos";
 
                     if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
@@ -690,6 +693,31 @@ namespace API_Maestros_Core.BLL
             return Habilitado;
         }
 
+        /// <summary>
+        /// Devuelve el valor si se filtra por publicaEcommerce o no
+        /// </summary>
+        /// <param name="publicaEcommerce"></param>
+        /// <returns></returns>
+        private static int? FiltroEcommerce(string publicaEcommerce)
+        {
+            int? publica = null;
+            
+            switch(publicaEcommerce)
+            {
+                case "N":
+                    publica = 0;
+                    break;
+
+                case "S":
+                    publica = 255;
+                    break;
+
+                default:
+                    publica = null;
+                    break;
+            }
+            return publica;
+        }
 
     }
 

@@ -52,7 +52,7 @@ namespace API_Maestros_Core.Controllers
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaConProductosHijos))]
 
-        public IActionResult Get( int pageNumber = 1, int pageSize = 10, string costos = "N",string imagenes = "N",string fechamodificaciones = "",string stock = "N")
+        public IActionResult Get( int pageNumber = 1, int pageSize = 10, string costos = "N",string imagenes = "N",string fechamodificaciones = "",string stock = "N",string publicaecommerce = "T")
         {
             #region ConnectionsStrings
             RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
@@ -87,7 +87,7 @@ namespace API_Maestros_Core.Controllers
                                     if(pageSize > 100)
                                     { pageSize = 100; }               
                                     
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes);
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes,publicaecommerce);
 
                                     return Ok(oRespuesta);
                                 }
@@ -96,7 +96,7 @@ namespace API_Maestros_Core.Controllers
                                         if (TamanoPagina > 100)
                                             TamanoPagina = 100;
 
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes);
+                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes,publicaecommerce);
                                     return Ok(oRespuesta);
 
                                 }
@@ -261,7 +261,7 @@ namespace API_Maestros_Core.Controllers
         [HttpGet("GetSearchResult")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaProductosGetResult))]
-        public IActionResult Get(string expresion = "",int pageNumber = 1 , int pageSize = 10,string costos = "N",string categoriasafiltrar = "",string imagenes = "N",string stock = "N")
+        public IActionResult Get(string expresion = "",int pageNumber = 1 , int pageSize = 10,string costos = "N",string categoriasafiltrar = "",string imagenes = "N",string stock = "N",string publicaecommerce = "T")
         {
             #region ConnectionStrings
             RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
@@ -329,7 +329,7 @@ namespace API_Maestros_Core.Controllers
                                     if (pageSize > 100)
                                     { pageSize = 100; }
 
-                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, pageSize, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,stock, MiSessionMgrAPI.Almacenes);                                    
+                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, pageSize, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,stock, MiSessionMgrAPI.Almacenes,publicaecommerce);                                    
                                     
                                     return Ok(oRespuesta);
                                 }
@@ -337,7 +337,7 @@ namespace API_Maestros_Core.Controllers
                                 {
                                     if (TamanoPagina > 100) // Si el tamaño de la variable configuracion es mayor a 100. Toma los 100
                                         TamanoPagina = 100;                                    
-                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, TamanoPagina, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, stock, MiSessionMgrAPI.Almacenes);
+                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, TamanoPagina, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, stock, MiSessionMgrAPI.Almacenes,publicaecommerce);
                                     
                                     return Ok(oRespuesta);
                                 }

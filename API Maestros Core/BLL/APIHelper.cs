@@ -101,7 +101,17 @@ namespace API_Maestros_Core.BLL
                     }
                     else
                     {
-                        MiSessionMgrAPI.CanalesDeVenta = lstCanalesXUsuario.ToArray();
+                        if(lstCanalesXUsuario?.Count > 0)
+                        {
+                            List<int> lstCanalesAux = new List<int>();
+                            foreach(GESI.ERP.Core.BO.cCanalDeVenta oCanal in lstCanalesXUsuario)
+                            {
+                                lstCanalesAux.Add(oCanal.CanalDeVentaID);
+                            }
+
+                            MiSessionMgrAPI.CanalesDeVenta = lstCanalesAux.ToArray();
+                        }
+                       
                     }
                     #endregion
 
