@@ -134,7 +134,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static Error DevolverErrorAPI(int code, string message,string tipo,string usuario,string endpoint)
         {
-            Logger.LoguearErrores(message, tipo,usuario,endpoint);
+            Logger.LoguearErrores(message, tipo,usuario,endpoint, code);
             Error error = new Error();
             error.code = code;
             error.message = message;

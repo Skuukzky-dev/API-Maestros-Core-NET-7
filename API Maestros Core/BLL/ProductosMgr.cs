@@ -58,7 +58,7 @@ namespace API_Maestros_Core.BLL
                 APIHelper.QueEstabaHaciendo = "Obteniendo lista de codigos de la expresion";
 
                 int? publicaEcommerceint = FiltroEcommerce(publicaEcommerce);
-
+                strExpresionBusqueda = Uri.UnescapeDataString(strExpresionBusqueda);
                 List<string> lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda, strEstado: EstadosProductos, strCategorias: CategoriasIDs,intPublicaECommerce: (ushort?)publicaEcommerceint);
                 List<string> nuevosplit = lstCodigosProducto.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                 string codigos = string.Join(",", nuevosplit);
@@ -109,13 +109,20 @@ namespace API_Maestros_Core.BLL
                 oPaginacion.paginaActual = pageNumber;
                 oPaginacion.tamañoPagina = pageSize;
                 oRespuesta.paginacion = oPaginacion;
-                Logger.LoguearErrores("GetSearchResults: Exitoso Expresion:"+ strExpresionBusqueda, "I",_SessionMgr.UsuarioID,APIHelper.ProductosGetSearchResult);
+                int cantidadreg = 0;
+
+                if(lstCodigosProducto?.Count > 0)
+                {
+                    cantidadreg = lstCodigosProducto.Count;
+                }
+
+                Logger.LoguearErrores("GetSearchResults: Exitoso Expresion:"+ strExpresionBusqueda+" Cantidad: "+ cantidadreg, "I",_SessionMgr.UsuarioID,APIHelper.ProductosGetSearchResult);
                 return oRespuesta;
 
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetSearchResults. Descripcion: " + ex.Message + " . Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetSearchResult);
+                Logger.LoguearErrores("Error al solicitar GetSearchResults. Descripcion: " + ex.Message + " . Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetSearchResult,(int)APIHelper.cCodigosError.cErrorInternoAplicacion);
                 throw;
             }
         }
@@ -270,12 +277,12 @@ namespace API_Maestros_Core.BLL
             }
             catch (AccessViolationException ax)
             {
-                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetList);
+                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetList,(int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
                 throw ax;
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetList. Descripcion: " + ex.Message+" Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetList);
+                Logger.LoguearErrores("Error al solicitar GetList. Descripcion: " + ex.Message+" Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetList,(int)APIHelper.cCodigosError.cErrorInternoAplicacion);
                 throw;
             }
         }
@@ -414,12 +421,12 @@ namespace API_Maestros_Core.BLL
             }
             catch (AccessViolationException ax)
             {
-                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetItem);
+                Logger.LoguearErrores("Permiso denegado sobre costoSolicitado. Descripcion: " + ax.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetItem,(int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
                 throw ax;
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetItem. Descripcion: " + ex.Message+ " .Haciendo: " + APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetItem);
+                Logger.LoguearErrores("Error al solicitar GetItem. Descripcion: " + ex.Message+ " .Haciendo: " + APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetItem, (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
                 throw;
             }
 
@@ -506,7 +513,7 @@ namespace API_Maestros_Core.BLL
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetExistencias. Descripcion: " + ex.Message+ " .Haciendo: " + APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetExistencias);
+                Logger.LoguearErrores("Error al solicitar GetExistencias. Descripcion: " + ex.Message+ " .Haciendo: " + APIHelper.QueEstabaHaciendo, "E", _SessionMgr.UsuarioID, APIHelper.ProductosGetExistencias, (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
                 throw;
             }
         }
@@ -580,7 +587,7 @@ namespace API_Maestros_Core.BLL
             }
             catch (Exception ex)
             {
-                Logger.LoguearErrores("Error al solicitar GetPrecios. Descripcion: " + ex.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductoGetPrecios);
+                Logger.LoguearErrores("Error al solicitar GetPrecios. Descripcion: " + ex.Message, "E", _SessionMgr.UsuarioID, APIHelper.ProductoGetPrecios,(int)APIHelper.cCodigosError.cErrorInternoAplicacion);
                 throw ex;
             }
         }

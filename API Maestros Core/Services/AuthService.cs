@@ -108,10 +108,21 @@ namespace API_Maestros_Core.Services
 
                 // SqlConnection sqlapi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
 
-               // Logger.LoguearErrores("ConnectionStringPaz: " + sqlapi.ConnectionString, "I");
-
+                // Logger.LoguearErrores("ConnectionStringPaz: " + sqlapi.ConnectionString, "I");
+                bool Habilitado = false;
                 bool login = GESI.CORE.BLL.UsuariosMgr.Login(strUsuarioID, strPassword);
-                return login;
+                List<GESI.CORE.BO.Verscom2k.HabilitacionesAPI> lstHabilitacionesAPI =  GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
+
+                if(lstHabilitacionesAPI?.Count > 0)
+                {
+                    if(login)
+                    {
+                        Habilitado = true;
+                    }
+                }
+
+              
+                return Habilitado;
 
             }
             catch (Exception ex)

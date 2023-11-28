@@ -83,6 +83,60 @@ namespace API_Maestros_Core.Models
         public Paginacion? paginacion { get; set; }
     }
 
+    public class RespuestaConRubros : Respuesta
+    {
+        private List<RubroHijo>? _RubrosProductos;
+
+        public List<RubroHijo>? rubrosProductos { get => _RubrosProductos; set => _RubrosProductos = value; }
+
+        public Paginacion? paginacion { get; set; }
+    }
+
+    public class RespuestaConSubRubros : Respuesta
+    {
+        private List<SubRubroHijo>? _SubRubrosProductos;
+
+        public List<SubRubroHijo>? subRubrosProductos { get => _SubRubrosProductos; set => _SubRubrosProductos = value; }
+
+        public Paginacion? paginacion { get; set; }
+    }
+
+    public class RespuestaConSubSubRubros : Respuesta
+    {
+        private List<SubSubRubroHijo>? _SubSubRubrosProductos;
+
+        public List<SubSubRubroHijo>? subsubRubrosProductos { get => _SubSubRubrosProductos; set => _SubSubRubrosProductos = value; }
+
+        public Paginacion? paginacion { get; set; }
+    }
+
+    public class RespuestaConFiltroArticulos1 : Respuesta
+    {
+        private List<Filtro1Hijo>? _FiltroArticulos1;
+
+        public List<Filtro1Hijo>? filtro1Productos { get => _FiltroArticulos1; set => _FiltroArticulos1 = value; }
+
+        public Paginacion? paginacion { get; set; }
+    }
+
+    public class RespuestaConFiltroArticulos2 : Respuesta
+    {
+        private List<Filtro2Hijo>? _FiltroArticulos2;
+
+        public List<Filtro2Hijo>? filtro2Productos { get => _FiltroArticulos2; set => _FiltroArticulos2 = value; }
+
+        public Paginacion? paginacion { get; set; }
+    }
+
+    public class RespuestaConFiltroArticulos3 : Respuesta
+    {
+        private List<Filtro3Hijo>? _FiltroArticulos3;
+
+        public List<Filtro3Hijo>? filtro3Productos { get => _FiltroArticulos3; set => _FiltroArticulos3 = value; }
+
+        public Paginacion? paginacion { get; set; }
+    }
+
     public class RespuestaCategoriasGetItem : Respuesta
     {
         private CategoriaHija? _CategoriasProductos;

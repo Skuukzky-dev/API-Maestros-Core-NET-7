@@ -1,5 +1,7 @@
 ﻿using API_Maestros_Core.BLL;
 using API_Maestros_Core.Models;
+using GESI.ERP.Core.BLL;
+using GESI.ERP.Core.BO;
 using GESI.GESI.BO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -201,9 +203,238 @@ namespace API_Maestros_Core.Controllers
             }
         }
 
+        [HttpGet("RubrosGetList")]
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult RubrosGetList(int pageNumber = 1, int pageSize = 10)
+        {
+            #region ConnectionsStrings
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+           
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            RespuestaConRubros oRespuesta = new RespuestaConRubros();
+            #endregion
+            try
+            {
+                if(!HabilitadoPorToken)
+                {
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oRespuesta.success = false;
+                    return Unauthorized(oRespuesta);
+                }
+                else
+                {
+                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                    oRespuesta = CategoriasMgr.RubrosGetList(pageNumber, pageSize);
+                    return Ok(oRespuesta);
+                }
+            }
+            catch(Exception ex)
+            {
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Rubros. "+ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oRespuesta.success = false;
+                return StatusCode(500, oRespuesta);
+            }
+        }
 
 
-     
+        [HttpGet("SubRubrosGetList")]
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult SubRubrosGetList(int pageNumber = 1, int pageSize = 10)
+        {
+            #region ConnectionsStrings
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            RespuestaConSubRubros oRespuesta = new RespuestaConSubRubros();
+            #endregion
+            try
+            {
+                if (!HabilitadoPorToken)
+                {
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oRespuesta.success = false;
+                    return Unauthorized(oRespuesta);
+                }
+                else
+                {
+                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                    oRespuesta = CategoriasMgr.SubRubrosGetList(pageNumber, pageSize);
+                    return Ok(oRespuesta);
+                }
+            }
+            catch (Exception ex)
+            {
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver SubRubros. "+ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oRespuesta.success = false;
+                return StatusCode(500, oRespuesta);
+            }
+        }
+
+        [HttpGet("SubSubRubrosGetList")]
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult SubSubRubrosGetList(int pageNumber = 1, int pageSize = 10)
+        {
+            #region ConnectionsStrings
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            RespuestaConSubSubRubros oRespuesta = new RespuestaConSubSubRubros();
+            #endregion
+            try
+            {
+                if (!HabilitadoPorToken)
+                {
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oRespuesta.success = false;
+                    return Unauthorized(oRespuesta);
+                }
+                else
+                {
+                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                    oRespuesta = CategoriasMgr.SubSubRubrosGetList(pageNumber, pageSize);
+                    return Ok(oRespuesta);
+                }
+            }
+            catch (Exception ex)
+            {
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver SubSubRubros. " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oRespuesta.success = false;
+                return StatusCode(500, oRespuesta);
+            }
+        }
+
+
+        [HttpGet("Filtro1GetList")]
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult Filtro1GetList(int pageNumber = 1, int pageSize = 10)
+        {
+            #region ConnectionsStrings
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            RespuestaConFiltroArticulos1 oRespuesta = new RespuestaConFiltroArticulos1();
+            #endregion
+            try
+            {
+                if (!HabilitadoPorToken)
+                {
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oRespuesta.success = false;
+                    return Unauthorized(oRespuesta);
+                }
+                else
+                {
+                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                    oRespuesta = CategoriasMgr.FiltroArticulos1GetList(pageNumber, pageSize);
+                    return Ok(oRespuesta);
+                }
+            }
+            catch (Exception ex)
+            {
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Filtro1. Descripcion: "+ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oRespuesta.success = false;
+                return StatusCode(500, oRespuesta);
+            }
+        }
+
+
+        [HttpGet("Filtro2GetList")]
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult Filtro2GetList(int pageNumber = 1, int pageSize = 10)
+        {
+            #region ConnectionsStrings
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            RespuestaConFiltroArticulos2 oRespuesta = new RespuestaConFiltroArticulos2();
+            #endregion
+            try
+            {
+                if (!HabilitadoPorToken)
+                {
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oRespuesta.success = false;
+                    return Unauthorized(oRespuesta);
+                }
+                else
+                {
+                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                    oRespuesta = CategoriasMgr.FiltroArticulos2GetList(pageNumber, pageSize);
+                    return Ok(oRespuesta);
+                }
+            }
+            catch (Exception ex)
+            {
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Filtro2 " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oRespuesta.success = false;
+                return StatusCode(500, oRespuesta);
+            }
+        }
+
+        [HttpGet("Filtro3GetList")]
+        [EnableCors("MyCorsPolicy")]
+        [SwaggerResponse(200, "OK", typeof(RespuestaConCategorias))]
+        public IActionResult Filtro3GetList(int pageNumber = 1, int pageSize = 10)
+        {
+            #region ConnectionsStrings
+            ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            RespuestaConFiltroArticulos3 oRespuesta = new RespuestaConFiltroArticulos3();
+            #endregion
+            try
+            {
+                if (!HabilitadoPorToken)
+                {
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oRespuesta.success = false;
+                    return Unauthorized(oRespuesta);
+                }
+                else
+                {
+                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                    oRespuesta = CategoriasMgr.FiltroArticulos3GetList(pageNumber, pageSize);
+                    return Ok(oRespuesta);
+                }
+            }
+            catch (Exception ex)
+            {
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Filtro3. " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oRespuesta.success = false;
+                return StatusCode(500, oRespuesta);
+            }
+        }
+
+
     }
 
     public class ResponseCategoriasGetItem
@@ -223,7 +454,100 @@ namespace API_Maestros_Core.Controllers
 
     }
 
-   
-        
+    public class RubroHijo : GESI.ERP.Core.BO.v2kRubro
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+        public RubroHijo(v2kRubro oRubro)
+        {
+            RubroID = oRubro.RubroID;
+            CategoriaID = oRubro.CategoriaID;
+            Descripcion = oRubro.Descripcion;
+        }
+
+    }
+
+
+    public class SubRubroHijo : GESI.ERP.Core.BO.v2kSubRubro
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+        public SubRubroHijo(v2kSubRubro oRubro)
+        {
+            RubroID = oRubro.RubroID;
+            SubRubroID = oRubro.SubRubroID;
+            CategoriaID = oRubro.CategoriaID;
+            Descripcion = oRubro.Descripcion;
+        }
+
+    }
+
+    public class SubSubRubroHijo : GESI.ERP.Core.BO.v2kSubSubRubro
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+        public SubSubRubroHijo(v2kSubSubRubro oRubro)
+        {
+            RubroID = oRubro.RubroID;
+            SubRubroID = oRubro.SubRubroID;
+            SubSubRubroID = oRubro.SubSubRubroID;
+            CategoriaID = oRubro.CategoriaID;
+            Descripcion = oRubro.Descripcion;
+        }
+
+    }
+
+
+    public class Filtro1Hijo : GESI.ERP.Core.BO.v2kFiltroArticulos1ID
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+        public Filtro1Hijo(v2kFiltroArticulos1ID oRubro)
+        {
+            FiltroArticulos1ID = oRubro.FiltroArticulos1ID;
+            CategoriaID = oRubro.CategoriaID;
+            Descripcion = oRubro.Descripcion;
+        }
+
+    }
+
+
+    public class Filtro2Hijo : GESI.ERP.Core.BO.v2kFiltroArticulos2ID
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+        public Filtro2Hijo(v2kFiltroArticulos2ID oRubro)
+        {
+            FiltroArticulos2ID = oRubro.FiltroArticulos2ID;
+            CategoriaID = oRubro.CategoriaID;
+            Descripcion = oRubro.Descripcion;
+        }
+
+    }
+
+    public class Filtro3Hijo : GESI.ERP.Core.BO.v2kFiltroArticulos3ID
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public override int EmpresaID { get => base.EmpresaID; set => base.EmpresaID = value; }
+
+        public Filtro3Hijo(v2kFiltroArticulos3ID oRubro)
+        {
+            FiltroArticulos3ID = oRubro.FiltroArticulos3ID;
+            CategoriaID = oRubro.CategoriaID;
+            Descripcion = oRubro.Descripcion;
+        }
+
+    }
 
 }

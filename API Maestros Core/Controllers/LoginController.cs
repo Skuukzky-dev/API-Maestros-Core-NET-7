@@ -71,7 +71,7 @@ namespace API_Maestros_Core.Controllers
                 rspContenidoRespuesta.error.message = "Usuario y / o contraseña incorrectos";
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
-                Logger.LoguearErrores("Usuario y / o contraseña incorrectos. Usuario: " + credenciales.Username + "|" + context.Connection.RemoteIpAddress + "|" + context.Request.Host, "I", credenciales.Username, APIHelper.Login);
+                Logger.LoguearErrores("Usuario y / o contraseña incorrectos. Usuario: " + credenciales.Username + "|" + context.Connection.RemoteIpAddress + "|" + context.Request.Host, "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cUsuarioIncorrecto);
 
                 return Unauthorized(rspContenidoRespuesta);
             }
@@ -86,7 +86,7 @@ namespace API_Maestros_Core.Controllers
 
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
-                Logger.LoguearErrores("Error al devolver el token. Descripcion: " + ex.Message, "I", credenciales.Username, APIHelper.Login);
+                Logger.LoguearErrores("Error al devolver el token. Descripcion: " + ex.Message, "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cErrorInternoAlDevolverToken);
 
                 //Logger.LoguearErrores("Usuario y / o contraseña incorrectos");
                 return StatusCode(500, rspContenidoRespuesta);
