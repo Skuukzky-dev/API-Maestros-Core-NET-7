@@ -7,6 +7,8 @@ using GESI.CORE.BLL;
 using GESI.GESI.BLL.wsfev1;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -128,22 +130,31 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
                     if(MiObjetoLogin != null) // ESTA OK. ENCONTRO EL TOKEN EN LA TABLA DE TOKENS X USUARIO
                     {
-                        ProductosController.strUsuarioID = MiObjetoLogin.UsuarioID;
-                        ProductosController.HabilitadoPorToken = true;
-                        ProductosController.TokenEnviado = accessToken.RawData;
-
-                        CanalesDeVentaController.strUsuarioID = MiObjetoLogin.UsuarioID;
-                        CanalesDeVentaController.HabilitadoPorToken = true;
-                        CanalesDeVentaController.TokenEnviado = accessToken.RawData;
-
-                        CategoriasController.strUsuarioID = MiObjetoLogin.UsuarioID;
-                        CategoriasController.HabilitadoPorToken = true;
-                        CategoriasController.TokenEnviado = accessToken.RawData;
+                       
+                            ProductosController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            ProductosController.HabilitadoPorToken = true;
+                            ProductosController.TokenEnviado = accessToken.RawData;
+                            ProductosController.strProtocolo = context.Request.Scheme;
+                            var referrerUrl = context.Request.Headers[":authority"].ToString();
+                            // context.HttpContext.Response
 
 
-                        EmpresasController.strUsuarioID = MiObjetoLogin.UsuarioID;
-                        EmpresasController.HabilitadoPorToken = true;
-                        EmpresasController.TokenEnviado = accessToken.RawData;
+                            CanalesDeVentaController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            CanalesDeVentaController.HabilitadoPorToken = true;
+                            CanalesDeVentaController.TokenEnviado = accessToken.RawData;
+                            CanalesDeVentaController.strProtocolo = context.Request.Scheme;
+        
+
+                            CategoriasController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            CategoriasController.HabilitadoPorToken = true;
+                            CategoriasController.TokenEnviado = accessToken.RawData;
+                            CategoriasController.strProtocolo = context.Request.Scheme;
+                            
+
+                            EmpresasController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            EmpresasController.HabilitadoPorToken = true;
+                            EmpresasController.TokenEnviado = accessToken.RawData;
+                            EmpresasController.strProtocolo = context.Request.Scheme;
 
                     }
                     else // NO LO ENCONTRO EN LA BASE
@@ -235,6 +246,8 @@ app.Use(async (context, next) =>
     var referrerUrl = context.Request.Headers["Referer"].ToString();
     
 
+
+
     if (referrerUrl != null)
     {
         if (referrerUrl.Length <= 0)
@@ -263,7 +276,7 @@ app.Use(async (context, next) =>
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4011;
                     oresp.error.message = "No esta autorizado a acceder al recurso IP: " + ipAddress.ToString();
-                    Logger.LoguearErrores("No esta autorizado a acceder al recurso IP: " + ipAddress.ToString(),"I", "", context.Request.Path.Value);
+                    Logger.LoguearErrores("No esta autorizado a acceder al recurso IP: " + ipAddress.ToString()+" | Referer: "+referrerUrl,"I", "", context.Request.Path.Value);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -276,8 +289,8 @@ app.Use(async (context, next) =>
                         RespuestaToken oresp = new RespuestaToken();
                         oresp.error = new ErrorToken();
                         oresp.error.code = 4015;
-                        oresp.error.message = "No se encontro encabezado para la petición . Endpoint: "+ context.Request.Path.Value+" IP: "+ context.Connection.RemoteIpAddress;
-                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value+" IP: "+ context.Connection.RemoteIpAddress, "I", "", context.Request.Path.Value);
+                        oresp.error.message = "No se encontro encabezado para la petición . Endpoint: "+ context.Request.Path.Value+" IP: "+ context.Connection.RemoteIpAddress+" Referer: "+referrerUrl;
+                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value+" IP: "+ context.Connection.RemoteIpAddress+" Referer: " + referrerUrl, "I", "", context.Request.Path.Value);
                         context.Response.ContentType = "application/json";
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -300,8 +313,8 @@ app.Use(async (context, next) =>
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
                     oresp.error.code = 4015;
-                    oresp.error.message = "No se encontro encabezado para la petición . Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress;
-                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress, "I", "", context.Request.Path.Value);
+                    oresp.error.message = "No se encontro encabezado para la petición . Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress + " Referer: " + referrerUrl;
+                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress + " Referer: " + referrerUrl, "I", "", context.Request.Path.Value);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));

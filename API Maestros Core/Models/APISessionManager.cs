@@ -3,6 +3,9 @@ using GESI.ERP.Core;
 
 namespace API_Maestros_Core.Models
 {
+    /// <summary>
+    /// Nuevo SessionMgr Generado con todos los datos que incluye la tabla HabilitacionesAPI
+    /// </summary>
     public class APISessionManager
     {
         private GESI.CORE.BLL.SessionMgr _SessionMgr;

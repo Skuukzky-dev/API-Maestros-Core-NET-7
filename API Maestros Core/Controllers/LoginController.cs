@@ -56,11 +56,11 @@ namespace API_Maestros_Core.Controllers
                     ApiLogin.UsuarioID = credenciales.Username;
                     ApiLogin.Token = token;
                     int resultado = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.Save(ApiLogin);
-                    var clientIpAddress = HttpContext.Request.Headers["X-Client-IP"];
-
+                    //var clientIpAddress = HttpContext.Request.Headers["X-Client-IP"];
+                    string clientIpAddress = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();   //context.Connection.RemoteIpAddress
                     message.Content = new StringContent(JsonConvert.SerializeObject(respuestaToken));                  
                     
-                    Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID+ "|"+ clientIpAddress + "|"+context.Request.Host +" Token: "+token, "I", ApiLogin.UsuarioID,APIHelper.Login);
+                    Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID+ "|"+ clientIpAddress +" Token: "+token, "I", ApiLogin.UsuarioID,APIHelper.Login);
                     return Ok(respuestaToken);
                 }
 
@@ -71,7 +71,7 @@ namespace API_Maestros_Core.Controllers
                 rspContenidoRespuesta.error.message = "Usuario y / o contraseña incorrectos";
                 message.StatusCode = HttpStatusCode.Unauthorized;
                 message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
-                Logger.LoguearErrores("Usuario y / o contraseña incorrectos. Usuario: " + credenciales.Username + "|" + context.Connection.RemoteIpAddress + "|" + context.Request.Host, "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cUsuarioIncorrecto);
+                Logger.LoguearErrores("Usuario y / o contraseña incorrectos. Usuario: " + credenciales.Username + "|" + context.Connection.RemoteIpAddress , "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cUsuarioIncorrecto);
 
                 return Unauthorized(rspContenidoRespuesta);
             }

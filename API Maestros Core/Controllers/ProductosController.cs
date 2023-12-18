@@ -38,6 +38,7 @@ namespace API_Maestros_Core.Controllers
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
+        public static string strProtocolo = "";
         #endregion
 
         // GET: api/<ProductosController>
@@ -67,6 +68,7 @@ namespace API_Maestros_Core.Controllers
 
             try
             {
+              
                 if (!HabilitadoPorToken)
                 {
                     oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Recibido: "+TokenEnviado, "E", strUsuarioID,APIHelper.ProductosGetList);                                    
@@ -75,43 +77,53 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                            APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"]; 
 
-                            if (MiSessionMgrAPI.Habilitado)
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    {
+                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+
+                        if (MiSessionMgrAPI.Habilitado)
+                        {
+                            ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                            int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);
+
+                            if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
                             {
-                                ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
-                                int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);                                
+                                if (pageSize > 100)
+                                { pageSize = 100; }
 
-                                if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
-                                {
-                                    if(pageSize > 100)
-                                    { pageSize = 100; }               
-                                    
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes,publicaecommerce);
+                                oRespuesta = ProductosMgr.GetList(pageNumber, pageSize, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, fechamodificaciones, stock, MiSessionMgrAPI.Almacenes, publicaecommerce);
 
-                                    return Ok(oRespuesta);
-                                }
-                                else
-                                {
-                                        if (TamanoPagina > 100)
-                                            TamanoPagina = 100;
-
-                                    oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,fechamodificaciones,stock,MiSessionMgrAPI.Almacenes,publicaecommerce);
-                                    return Ok(oRespuesta);
-
-                                }
-                                
+                                return Ok(oRespuesta);
                             }
                             else
                             {
-                                #region Sin autorizacion de acceder al servicio
-                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token enviado: "+TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetList);                                
-                                oRespuesta.success = false;
-                                return Unauthorized(oRespuesta);
-                                #endregion
+                                if (TamanoPagina > 100)
+                                    TamanoPagina = 100;
+
+                                oRespuesta = ProductosMgr.GetList(pageNumber, TamanoPagina, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, fechamodificaciones, stock, MiSessionMgrAPI.Almacenes, publicaecommerce);
+                                return Ok(oRespuesta);
+
                             }
 
-
+                        }
+                        else
+                        {
+                            #region Sin autorizacion de acceder al servicio
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetList);
+                            oRespuesta.success = false;
+                            return Unauthorized(oRespuesta);
+                            #endregion
+                        }
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
+                    }
+                    
                 }
             }
             catch (FormatException fex)
@@ -159,95 +171,106 @@ namespace API_Maestros_Core.Controllers
             }
             else
             {
-                APIHelper.QueEstabaHaciendo = "Buscando producto";
-                if (productoID == null)
+                string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro el productoID de la solicitud", "I", strUsuarioID, APIHelper.ProductosGetItem);                   
-                    oRespuesta.success = false;
-                    return BadRequest(oRespuesta);
-                }
-                else
-                {
-                    if (!(productoID.Length > 0))
+                    APIHelper.QueEstabaHaciendo = "Buscando producto";
+                    if (productoID == null)
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro el productoID de la solicitud", "I", strUsuarioID, APIHelper.ProductosGetItem);                       
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro el productoID de la solicitud", "I", strUsuarioID, APIHelper.ProductosGetItem);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
                     else
                     {
-
-                        SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-                        GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
-                        try
+                        if (!(productoID.Length > 0))
                         {
-                            if (!HabilitadoPorToken)
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro el productoID de la solicitud", "I", strUsuarioID, APIHelper.ProductosGetItem);
+                            oRespuesta.success = false;
+                            return BadRequest(oRespuesta);
+                        }
+                        else
+                        {
+
+                            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+                            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+                            try
                             {
-                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: "+TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetItem);
-                                oRespuesta.success = false;
-                                return Unauthorized(oRespuesta);
-                            }
-                            else
-                            {
-                              
-                                if (productoID != null)
+                                if (!HabilitadoPorToken)
                                 {
-                                    if (productoID.Length > 0)
+                                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetItem);
+                                    oRespuesta.success = false;
+                                    return Unauthorized(oRespuesta);
+                                }
+                                else
+                                {
+
+                                    if (productoID != null)
                                     {
-                                        APISessionManager MiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
-                                       
-                                        if (MiSessionMgr.Habilitado)
-                                        {                                          
+                                        if (productoID.Length > 0)
+                                        {
+                                            APISessionManager MiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
 
-                                            ProductosMgr._SessionMgr = MiSessionMgr.SessionMgr;
-                                            oRespuesta = ProductosMgr.GetItem(productoID, MiSessionMgr.CanalesDeVenta, canalDeVentaID,costos, MiSessionMgr.CostosXProveedor, MiSessionMgr.EstadoProductos, MiSessionMgr.CategoriasIDs, imagenes,stock, MiSessionMgr.Almacenes);
-
-                                            if(oRespuesta.producto?.ProductoID?.Length > 0)
+                                            if (MiSessionMgr.Habilitado)
                                             {
-                                                return Ok(oRespuesta);
+
+                                                ProductosMgr._SessionMgr = MiSessionMgr.SessionMgr;
+                                                oRespuesta = ProductosMgr.GetItem(productoID, MiSessionMgr.CanalesDeVenta, canalDeVentaID, costos, MiSessionMgr.CostosXProveedor, MiSessionMgr.EstadoProductos, MiSessionMgr.CategoriasIDs, imagenes, stock, MiSessionMgr.Almacenes);
+
+                                                if (oRespuesta.producto?.ProductoID?.Length > 0)
+                                                {
+                                                    return Ok(oRespuesta);
+                                                }
+                                                else
+                                                {
+                                                    return StatusCode(204, oRespuesta);
+                                                }
                                             }
                                             else
                                             {
-                                                return StatusCode(204, oRespuesta);
+                                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Haciendo: " + APIHelper.QueEstabaHaciendo, "E", strUsuarioID, APIHelper.ProductosGetItem);
+                                                oRespuesta.success = false;
+                                                return Unauthorized(oRespuesta);
                                             }
                                         }
                                         else
                                         {
-                                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", strUsuarioID, APIHelper.ProductosGetItem);
+                                            oRespuesta.error = new Error();
+                                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro expresion a buscar. Haciendo: " + APIHelper.QueEstabaHaciendo, "I", strUsuarioID, APIHelper.ProductosGetItem);
                                             oRespuesta.success = false;
-                                            return Unauthorized(oRespuesta);
+                                            return StatusCode(204, oRespuesta);
                                         }
                                     }
                                     else
                                     {
-                                        oRespuesta.error = new Error();
-                                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro expresion a buscar. Haciendo: "+ APIHelper.QueEstabaHaciendo, "I", strUsuarioID, APIHelper.ProductosGetItem);                                        
-                                        oRespuesta.success = false;   
+                                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro expresion a buscar. Haciendo: " + APIHelper.QueEstabaHaciendo, "I", strUsuarioID, APIHelper.ProductosGetItem);
+                                        oRespuesta.success = false;
                                         return StatusCode(204, oRespuesta);
                                     }
                                 }
-                                else
-                                {
-                                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro expresion a buscar. Haciendo: "+ APIHelper.QueEstabaHaciendo, "I", strUsuarioID, APIHelper.ProductosGetItem);                                    
-                                    oRespuesta.success = false;                                    
-                                    return StatusCode(204, oRespuesta);
-                                }
+                            }
+                            catch (AccessViolationException ax)
+                            {
+                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cPermisoDenegadoCostos, "No esta autorizado a acceder al servicio. No esta habilitado a ver los costos del proveedor. Haciendo: " + APIHelper.QueEstabaHaciendo, "I", strUsuarioID, APIHelper.ProductosGetItem);
+                                oRespuesta.success = false;
+                                return Unauthorized(oRespuesta);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message + ". Codigo: " + productoID + " Haciendo: " + APIHelper.QueEstabaHaciendo, "E", strUsuarioID, APIHelper.ProductosGetItem);
+                                oRespuesta.success = false;
+                                return StatusCode(500, oRespuesta);
                             }
                         }
-                        catch (AccessViolationException ax)
-                        {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cPermisoDenegadoCostos, "No esta autorizado a acceder al servicio. No esta habilitado a ver los costos del proveedor. Haciendo: "+ APIHelper.QueEstabaHaciendo, "I", strUsuarioID, APIHelper.ProductosGetItem);                            
-                            oRespuesta.success = false;
-                            return Unauthorized(oRespuesta);
-                           
-                        }
-                        catch (Exception ex)
-                        {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message+". Codigo: "+productoID + " Haciendo: "+ APIHelper.QueEstabaHaciendo, "E", strUsuarioID, APIHelper.ProductosGetItem);
-                            oRespuesta.success = false;                            
-                            return StatusCode(500, oRespuesta);
-                        }
                     }
+                }
+                else
+                {
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetItem);
+                    oRespuesta.success = false;
+                    return BadRequest(oRespuesta);
                 }
             }
            
@@ -282,87 +305,97 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                   
-                    List<int> CategoriasPorParametro = new List<int>();
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
-                    if (expresion?.Length > 0)
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                     {
-                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                        List<int> CategoriasPorParametro = new List<int>();
 
-                        if (MiSessionMgrAPI.Habilitado)
+                        if (expresion?.Length > 0)
                         {
-                            #region Control Categorias
-                            MiSessionMgrAPI.Habilitado = true;
-
-                            categoriasafiltrar = categoriasafiltrar.Replace(" ", "");
-
-                            if(categoriasafiltrar?.Length == 0)
-                            {
-                                MiSessionMgrAPI.Habilitado = true;
-                            }
-                            else
-                            {
-                                string[] partes = categoriasafiltrar.Split(',');
-
-                                foreach (string parte in partes)
-                                {
-                                    if (int.TryParse(parte, out int numero))
-                                    {
-                                        CategoriasPorParametro.Add(numero);
-                                    }
-                                    else
-                                    {
-                                        MiSessionMgrAPI.Habilitado = false;
-                                    }
-                                }
-                            }
-
-                            #endregion
+                            APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
                             if (MiSessionMgrAPI.Habilitado)
                             {
-                                ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
-                                int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);
+                                #region Control Categorias
+                                MiSessionMgrAPI.Habilitado = true;
 
-                                if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
+                                categoriasafiltrar = categoriasafiltrar.Replace(" ", "");
+
+                                if (categoriasafiltrar?.Length == 0)
                                 {
-                                    if (pageSize > 100)
-                                    { pageSize = 100; }
-
-                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, pageSize, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes,stock, MiSessionMgrAPI.Almacenes,publicaecommerce);                                    
-                                    
-                                    return Ok(oRespuesta);
+                                    MiSessionMgrAPI.Habilitado = true;
                                 }
                                 else
                                 {
-                                    if (TamanoPagina > 100) // Si el tamaño de la variable configuracion es mayor a 100. Toma los 100
-                                        TamanoPagina = 100;                                    
-                                    oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, TamanoPagina, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, stock, MiSessionMgrAPI.Almacenes,publicaecommerce);
-                                    
-                                    return Ok(oRespuesta);
+                                    string[] partes = categoriasafiltrar.Split(',');
+
+                                    foreach (string parte in partes)
+                                    {
+                                        if (int.TryParse(parte, out int numero))
+                                        {
+                                            CategoriasPorParametro.Add(numero);
+                                        }
+                                        else
+                                        {
+                                            MiSessionMgrAPI.Habilitado = false;
+                                        }
+                                    }
                                 }
+
+                                #endregion
+
+                                if (MiSessionMgrAPI.Habilitado)
+                                {
+                                    ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                                    int TamanoPagina = Convert.ToInt32(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TamanoPagina"]);
+
+                                    if (pageSize <= TamanoPagina) // Si el tamaño de la pagina enviado es menor a 100.
+                                    {
+                                        if (pageSize > 100)
+                                        { pageSize = 100; }
+
+                                        oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, pageSize, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, stock, MiSessionMgrAPI.Almacenes, publicaecommerce);
+
+                                        return Ok(oRespuesta);
+                                    }
+                                    else
+                                    {
+                                        if (TamanoPagina > 100) // Si el tamaño de la variable configuracion es mayor a 100. Toma los 100
+                                            TamanoPagina = 100;
+                                        oRespuesta = ProductosMgr.GetList(expresion, MiSessionMgrAPI.CanalesDeVenta, costos, MiSessionMgrAPI.CostosXProveedor, pageNumber, TamanoPagina, MiSessionMgrAPI.EstadoProductos, MiSessionMgrAPI.CategoriasIDs, imagenes, stock, MiSessionMgrAPI.Almacenes, publicaecommerce);
+
+                                        return Ok(oRespuesta);
+                                    }
+                                }
+                                else
+                                {
+                                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cSintaxisIncorrecta, "Sintaxis incorrecta de categorias a filtrar. Descripcion " + categoriasafiltrar, "E", strUsuarioID, APIHelper.ProductosGetSearchResult);
+                                    oRespuesta.success = false;
+                                    return BadRequest(oRespuesta);
+                                }
+
                             }
                             else
                             {
-                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cSintaxisIncorrecta, "Sintaxis incorrecta de categorias a filtrar. Descripcion " + categoriasafiltrar, "E", strUsuarioID, APIHelper.ProductosGetSearchResult);                                
-                                oRespuesta.success = false;                                
-                                return BadRequest(oRespuesta);
+                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetSearchResult);
+                                oRespuesta.success = false;
+                                return Unauthorized(oRespuesta);
                             }
 
                         }
                         else
                         {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetSearchResult);
-                            oRespuesta.success = false;                            
-                            return Unauthorized(oRespuesta);
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro expresion a buscar", "E", strUsuarioID, APIHelper.ProductosGetSearchResult);
+                            oRespuesta.success = false;
+                            return StatusCode(204, oRespuesta);
                         }
-
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontro expresion a buscar", "E", strUsuarioID, APIHelper.ProductosGetSearchResult);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetItem);
                         oRespuesta.success = false;
-                        return StatusCode(204, oRespuesta);
+                        return BadRequest(oRespuesta);
                     }
                 }
             }
@@ -408,43 +441,54 @@ namespace API_Maestros_Core.Controllers
             }
             else
             {
+                string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
+                 
                 try
                 {
-                    if (codigos?.Length > 0)
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                     {
-                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
-                       
-                        if (MiSessionMgrAPI.Habilitado)
+                        if (codigos?.Length > 0)
                         {
-                            ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
-                            oRespuesta = ProductosMgr.GetExistencias(codigos, pageNumber, pageSize, MiSessionMgrAPI.Almacenes);
-                            oRespuesta.success = true;
-                            if (oRespuesta.existencias == null)
+                            APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+
+                            if (MiSessionMgrAPI.Habilitado)
                             {
-                                return NoContent();
+                                ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                                oRespuesta = ProductosMgr.GetExistencias(codigos, pageNumber, pageSize, MiSessionMgrAPI.Almacenes);
+                                oRespuesta.success = true;
+                                if (oRespuesta.existencias == null)
+                                {
+                                    return NoContent();
+                                }
+                                else
+                                {
+                                    return Ok(oRespuesta);
+                                }
                             }
                             else
                             {
-                                return Ok(oRespuesta);
+                                #region Autorizacion
+                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetExistencias);
+                                oRespuesta.success = false;
+                                return Unauthorized(oRespuesta);
+                                #endregion
                             }
                         }
                         else
                         {
-                            #region Autorizacion
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductosGetExistencias);                            
-                            oRespuesta.success = false;                            
-                            return Unauthorized(oRespuesta);
+                            #region No hay codigos definidos
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se defininió un código o códigos a buscar", "E", strUsuarioID, APIHelper.ProductosGetExistencias);
+                            oRespuesta.success = false;
+                            return BadRequest(oRespuesta);
                             #endregion
                         }
                     }
                     else
                     {
-                        #region No hay codigos definidos
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se defininió un código o códigos a buscar", "E", strUsuarioID, APIHelper.ProductosGetExistencias);
-                        oRespuesta.success = false;                       
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetExistencias);
+                        oRespuesta.success = false;
                         return BadRequest(oRespuesta);
-                        #endregion
                     }
                 }
                 catch (Exception ex)
@@ -492,44 +536,56 @@ namespace API_Maestros_Core.Controllers
             {
                 try
                 {
-                    if (codigos?.Length > 0 || fechamodificaciones?.Length > 0)
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                     {
-                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
-                       
-                        if (MiSessionMgrAPI.Habilitado)
+
+                        if (codigos?.Length > 0 || fechamodificaciones?.Length > 0)
                         {
-                            ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                            APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
-                            oRespuesta = ProductosMgr.GetPrecios(codigos, MiSessionMgrAPI.CanalesDeVenta, pageNumber, pageSize, fechamodificaciones);
-
-                            if (oRespuesta.Precios == null)
+                            if (MiSessionMgrAPI.Habilitado)
                             {
-                                return NoContent();
+                                ProductosMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+
+                                oRespuesta = ProductosMgr.GetPrecios(codigos, MiSessionMgrAPI.CanalesDeVenta, pageNumber, pageSize, fechamodificaciones);
+
+                                if (oRespuesta.Precios == null)
+                                {
+                                    return NoContent();
+                                }
+                                else
+                                {
+                                    return Ok(oRespuesta);
+                                }
+
                             }
                             else
                             {
-                                return Ok(oRespuesta);
+                                #region Autorizacion
+                                oRespuesta.error = new Error();
+                                oRespuesta.error.code = (int)APIHelper.cCodigosError.cNuevoToken;
+                                oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado;
+                                oRespuesta.success = false;
+                                Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductoGetPrecios);
+                                return Unauthorized(oRespuesta);
+                                #endregion
                             }
-
                         }
                         else
                         {
-                            #region Autorizacion
-                            oRespuesta.error = new Error();
-                            oRespuesta.error.code = (int)APIHelper.cCodigosError.cNuevoToken;
-                            oRespuesta.error.message = "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: "+TokenEnviado;
-                            oRespuesta.success = false;
-                            Logger.LoguearErrores("No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.ProductoGetPrecios);
-                            return Unauthorized(oRespuesta);
+                            #region No hay codigos definidos
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se defininió un código o códigos a buscar", "I", strUsuarioID, APIHelper.ProductoGetPrecios);
+                            return BadRequest(oRespuesta);
                             #endregion
                         }
                     }
                     else
                     {
-                        #region No hay codigos definidos
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se defininió un código o códigos a buscar","I", strUsuarioID, APIHelper.ProductoGetPrecios);                        
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetItem);
+                        oRespuesta.success = false;
                         return BadRequest(oRespuesta);
-                        #endregion
                     }
                 }
                 catch (FormatException fex)

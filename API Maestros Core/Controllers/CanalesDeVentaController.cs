@@ -25,6 +25,7 @@ namespace API_Maestros_Core.Controllers
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
+        public static string strProtocolo = "";
         #endregion
 
         // GET: api/<CanalesDeVentaController>
@@ -54,8 +55,7 @@ namespace API_Maestros_Core.Controllers
             {
                
                 GESI.GESI.BO.ListaCanalesDeVenta lstCanales = new GESI.GESI.BO.ListaCanalesDeVenta();
-                string CanalesDeVenta = null;
-
+                
                 if (!HabilitadoPorToken)
                 {
                     oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
@@ -64,32 +64,37 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);                                      
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
-                    if (MiSessionMgrAPI.Habilitado)
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                     {
-                        GESI.GESI.BLL.TablasGeneralesGESIMgr.SessionManager = MiSessionMgrAPI.SessionMgr;
-                        oRespuesta.success = true;
-                        oRespuesta.error = new Error();
-                        oRespuesta.CanalesDeVenta = new List<GESI.ERP.Core.BO.cCanalDeVenta>();
-                        oRespuesta.paginacion = new Paginacion();
-                        GESI.ERP.Core.SessionManager ErpSessionMgr = new GESI.ERP.Core.SessionManager();
-                        ErpSessionMgr.EmpresaID = (uint)MiSessionMgrAPI.SessionMgr.EmpresaID;
-                        ErpSessionMgr.UsuarioID = MiSessionMgrAPI.SessionMgr.UsuarioID;
-                        List<GESI.ERP.Core.BO.cCanalDeVenta> lstCanalesDeVenta = ErpSessionMgr.GetCanalesDeVentaHabilitados();
-                        oRespuesta.CanalesDeVenta = lstCanalesDeVenta.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-                        oRespuesta.paginacion.totalElementos = lstCanalesDeVenta.Count;
-                        oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
-                        oRespuesta.paginacion.paginaActual = pageNumber;
-                        oRespuesta.paginacion.tamañoPagina = pageSize;
-                        Logger.LoguearErrores("Respuesta GetList Canales de venta OK", "I", MiSessionMgrAPI.SessionMgr.UsuarioID, APIHelper.CanalesDeVentaGetList);
-                        return Ok(oRespuesta);
+                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+
+                        if (MiSessionMgrAPI.Habilitado)
+                        {
+                            CanalesDeVentaMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                            oRespuesta = CanalesDeVentaMgr.GetListCanalesDeVenta(pageNumber, pageSize);
+                            if (oRespuesta != null)
+                            {
+                                return Ok(oRespuesta);
+                            }
+                            else
+                            {
+                                return NoContent();
+                            }
+                        }
+                        else
+                        {
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
+                            oRespuesta.success = false;
+                            return Unauthorized(oRespuesta);
+                        }
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
-                        oRespuesta.success = false;                        
-                        return Unauthorized(oRespuesta);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
                     }
                 }
             }

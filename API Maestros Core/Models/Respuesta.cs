@@ -1,4 +1,5 @@
-﻿using API_Maestros_Core.Controllers;
+﻿using API_Maestros_Core.BLL;
+using API_Maestros_Core.Controllers;
 using GESI.CORE.BO;
 using GESI.ERP.Core.BO;
 using GESI.GESI.BO;
@@ -67,9 +68,9 @@ namespace API_Maestros_Core.Models
 
     public class RespuestaConCanalesDeVenta : Respuesta
     {
-        private List<GESI.ERP.Core.BO.cCanalDeVenta>? _CanalesDeVenta;
+        private List<CanalDeVentaHijo>? _CanalesDeVenta;
 
-        public List<GESI.ERP.Core.BO.cCanalDeVenta>? CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
+        public List<CanalDeVentaHijo>? CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
 
         public Paginacion? paginacion { get; set; } 
     }

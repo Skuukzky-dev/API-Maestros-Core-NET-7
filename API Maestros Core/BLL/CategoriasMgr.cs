@@ -4,6 +4,12 @@ using System.Net.NetworkInformation;
 
 namespace API_Maestros_Core.BLL
 {
+    /// <summary>
+    /// DOCUMENTACIÓN API:
+    /// 
+    /// https://docs.google.com/document/d/1DTp_-oqErewTyGkTvkW0FwsUmlVNlsy8iopBPZYQBrs/edit?usp=sharing
+    /// 
+    /// </summary>
     public class CategoriasMgr
     {
         public static GESI.CORE.BLL.SessionMgr _SessionMgr;
@@ -148,7 +154,12 @@ namespace API_Maestros_Core.BLL
         }
 
 
-
+        /// <summary>
+        /// Devuelve la lista de SubRubros en endpoint SubRubrosGetList
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public static RespuestaConSubRubros SubRubrosGetList(int pageNumber = 1, int pageSize = 10)
         {
 
@@ -190,8 +201,12 @@ namespace API_Maestros_Core.BLL
         }
 
 
-
-
+        /// <summary>
+        /// Devuelve la lista de SubSubRubros en Endpoint SubSubRubrosGetList
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public static RespuestaConSubSubRubros SubSubRubrosGetList(int pageNumber = 1, int pageSize = 10)
         {
 
@@ -231,6 +246,12 @@ namespace API_Maestros_Core.BLL
         }
 
 
+        /// <summary>
+        /// Devuelve la lista de FiltroArticulos1 en Endpoint FiltroArticulos1GetList
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public static RespuestaConFiltroArticulos1 FiltroArticulos1GetList(int pageNumber = 1, int pageSize = 10)
         {
 
@@ -270,6 +291,12 @@ namespace API_Maestros_Core.BLL
         }
 
 
+        /// <summary>
+        /// Devuelve la lista de FiltroArticulos2 en Endpoint FiltroArticulos2GetList
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public static RespuestaConFiltroArticulos2 FiltroArticulos2GetList(int pageNumber = 1, int pageSize = 10)
         {
 
@@ -308,7 +335,12 @@ namespace API_Maestros_Core.BLL
             }
         }
 
-
+        /// <summary>
+        /// Devuelve la lista de FiltroArticulos3 en Endpoint FiltroArticulos3GetList
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public static RespuestaConFiltroArticulos3 FiltroArticulos3GetList(int pageNumber = 1, int pageSize = 10)
         {
 

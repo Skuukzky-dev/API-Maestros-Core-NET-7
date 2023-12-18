@@ -28,6 +28,7 @@ namespace API_Maestros_Core.Controllers
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
+        public static string strProtocolo = "";
         #endregion
 
         // GET: api/<CategoriasController>
@@ -72,33 +73,45 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
-                        
-                        if (MiSessionMgrAPI.Habilitado)
-                        {
-                            Paginacion oPaginacion = new Paginacion();
-                            CategoriasMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
-                            oRespuesta.success = true;
-                            oRespuesta.error = new Error();
-                            oRespuesta.categoriasProductos = new List<CategoriaHija>();
-                            List<CategoriaHija> lstCategorias = CategoriasMgr.GetList();
-                            oRespuesta.categoriasProductos.AddRange(CategoriasMgr.GetList());
-                           
+                        string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
-                            oRespuesta.categoriasProductos = lstCategorias.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-                            oPaginacion.totalElementos = oRespuesta.categoriasProductos.Count;
-              
-                            oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
-                            oPaginacion.paginaActual = pageNumber;
-                            oPaginacion.tamañoPagina = pageSize;
-                            oRespuesta.paginacion = oPaginacion;
-                            return Ok(oRespuesta);
+                        if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                        {
+
+                            APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+
+                            if (MiSessionMgrAPI.Habilitado)
+                            {
+                                Paginacion oPaginacion = new Paginacion();
+                                CategoriasMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                                oRespuesta.success = true;
+                                oRespuesta.error = new Error();
+                                oRespuesta.categoriasProductos = new List<CategoriaHija>();
+                                List<CategoriaHija> lstCategorias = CategoriasMgr.GetList();
+                                oRespuesta.categoriasProductos.AddRange(CategoriasMgr.GetList());
+
+
+                                oRespuesta.categoriasProductos = lstCategorias.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                                oPaginacion.totalElementos = oRespuesta.categoriasProductos.Count;
+
+                                oPaginacion.totalPaginas = (int)Math.Ceiling((double)oPaginacion.totalElementos / pageSize);
+                                oPaginacion.paginaActual = pageNumber;
+                                oPaginacion.tamañoPagina = pageSize;
+                                oRespuesta.paginacion = oPaginacion;
+                                return Ok(oRespuesta);
+                            }
+                            else
+                            {
+                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CategoriasGetList);
+                                oRespuesta.success = false;
+                                return Unauthorized(oRespuesta);
+                            }
                         }
                         else
                         {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CategoriasGetList);
-                            oRespuesta.success = false;                            
-                            return Unauthorized(oRespuesta);
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetItem);
+                            oRespuesta.success = false;
+                            return BadRequest(oRespuesta);
                         }
                     }
                 }
@@ -149,48 +162,60 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        
-                        if (categoriaID != null)
+                        string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                        if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                         {
-                            if (categoriaID.Length > 0)
+
+
+                            if (categoriaID != null)
                             {
-                                APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
-
-                                if (MiSessionMgrAPI.Habilitado)
+                                if (categoriaID.Length > 0)
                                 {
+                                    APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
 
-                                    CategoriasMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                                    if (MiSessionMgrAPI.Habilitado)
+                                    {
 
-                                    Paginacion oPaginacion = new Paginacion();
-                                    oPaginacion.totalElementos = 1;
-                                    oPaginacion.totalPaginas = 1;
-                                    oPaginacion.paginaActual = 1;
-                                    oPaginacion.tamañoPagina = 1;
-                                    oRespuesta.paginacion = oPaginacion;
-                                    oRespuesta.error = new Error();
-                                    oRespuesta.success = true;
-                                    oRespuesta.categoriaProducto = CategoriasMgr.GetItem(categoriaID);
-                                    Logger.LoguearErrores("Exitoso para el codigo " + categoriaID, "I", _SessionMgr.UsuarioID, APIHelper.CategoriasGetItem);
-                                    return Ok(oRespuesta);
+                                        CategoriasMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+
+                                        Paginacion oPaginacion = new Paginacion();
+                                        oPaginacion.totalElementos = 1;
+                                        oPaginacion.totalPaginas = 1;
+                                        oPaginacion.paginaActual = 1;
+                                        oPaginacion.tamañoPagina = 1;
+                                        oRespuesta.paginacion = oPaginacion;
+                                        oRespuesta.error = new Error();
+                                        oRespuesta.success = true;
+                                        oRespuesta.categoriaProducto = CategoriasMgr.GetItem(categoriaID);
+                                        Logger.LoguearErrores("Exitoso para el codigo " + categoriaID, "I", _SessionMgr.UsuarioID, APIHelper.CategoriasGetItem);
+                                        return Ok(oRespuesta);
+                                    }
+                                    else
+                                    {
+                                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                                        oRespuesta.success = false;
+                                        return Unauthorized(oRespuesta);
+                                    }
                                 }
                                 else
                                 {
-                                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E", strUsuarioID, APIHelper.CategoriasGetItem);                                   
-                                    oRespuesta.success = false;
-                                    return Unauthorized(oRespuesta);
+
+                                    Logger.LoguearErrores("No se encontro categoria a buscar", "I", strUsuarioID, APIHelper.CategoriasGetItem);
+                                    return NoContent();
                                 }
                             }
                             else
                             {
-                                
                                 Logger.LoguearErrores("No se encontro categoria a buscar", "I", strUsuarioID, APIHelper.CategoriasGetItem);
                                 return NoContent();
                             }
                         }
                         else
-                        {   
-                            Logger.LoguearErrores("No se encontro categoria a buscar", "I", strUsuarioID, APIHelper.CategoriasGetItem);
-                            return NoContent();
+                        {
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetItem);
+                            oRespuesta.success = false;
+                            return BadRequest(oRespuesta);
                         }
                     }
                 }
@@ -227,10 +252,21 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
-                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
-                    oRespuesta = CategoriasMgr.RubrosGetList(pageNumber, pageSize);
-                    return Ok(oRespuesta);
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    {
+                        APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                        CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                        oRespuesta = CategoriasMgr.RubrosGetList(pageNumber, pageSize);
+                        return Ok(oRespuesta);
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
+                    }
                 }
             }
             catch(Exception ex)
@@ -266,10 +302,21 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
-                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
-                    oRespuesta = CategoriasMgr.SubRubrosGetList(pageNumber, pageSize);
-                    return Ok(oRespuesta);
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    {
+                        APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                        CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                        oRespuesta = CategoriasMgr.SubRubrosGetList(pageNumber, pageSize);
+                        return Ok(oRespuesta);
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
+                    }
                 }
             }
             catch (Exception ex)
@@ -304,10 +351,22 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
-                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
-                    oRespuesta = CategoriasMgr.SubSubRubrosGetList(pageNumber, pageSize);
-                    return Ok(oRespuesta);
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    {
+
+                        APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                        CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                        oRespuesta = CategoriasMgr.SubSubRubrosGetList(pageNumber, pageSize);
+                        return Ok(oRespuesta);
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
+                    }
                 }
             }
             catch (Exception ex)
@@ -343,10 +402,21 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
-                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
-                    oRespuesta = CategoriasMgr.FiltroArticulos1GetList(pageNumber, pageSize);
-                    return Ok(oRespuesta);
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    {
+                        APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                        CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                        oRespuesta = CategoriasMgr.FiltroArticulos1GetList(pageNumber, pageSize);
+                        return Ok(oRespuesta);
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
+                    }
                 }
             }
             catch (Exception ex)
@@ -382,10 +452,21 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
-                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
-                    oRespuesta = CategoriasMgr.FiltroArticulos2GetList(pageNumber, pageSize);
-                    return Ok(oRespuesta);
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    {
+                        APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                        CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                        oRespuesta = CategoriasMgr.FiltroArticulos2GetList(pageNumber, pageSize);
+                        return Ok(oRespuesta);
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
+                    }
                 }
             }
             catch (Exception ex)
@@ -420,10 +501,21 @@ namespace API_Maestros_Core.Controllers
                 }
                 else
                 {
-                    APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
-                    CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
-                    oRespuesta = CategoriasMgr.FiltroArticulos3GetList(pageNumber, pageSize);
-                    return Ok(oRespuesta);
+                    string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    {
+                        APISessionManager MiApiSessionMgr = APIHelper.SetearMgrAPI(strUsuarioID);
+                        CategoriasMgr._SessionMgr = MiApiSessionMgr.SessionMgr;
+                        oRespuesta = CategoriasMgr.FiltroArticulos3GetList(pageNumber, pageSize);
+                        return Ok(oRespuesta);
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oRespuesta.success = false;
+                        return BadRequest(oRespuesta);
+                    }
                 }
             }
             catch (Exception ex)

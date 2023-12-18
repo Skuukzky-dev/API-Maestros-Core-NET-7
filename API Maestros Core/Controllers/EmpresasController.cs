@@ -20,9 +20,10 @@ namespace API_Maestros_Core.Controllers
         public static string strUsuarioID = "";
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
+        public static string strProtocolo = "";
         #endregion
 
-       
+
 
         [HttpGet("GetSucursales")]
         [EnableCors("MyCorsPolicy")]
@@ -31,28 +32,31 @@ namespace API_Maestros_Core.Controllers
         {
             RespuestaSucursales oRespuesta = new RespuestaSucursales();
             try
-            {           
+            {
+                string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
-                APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
-
-                if (MiSessionMgrAPI.Habilitado)
+                if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                 {
+                    APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+
+                    if (MiSessionMgrAPI.Habilitado)
+                    {
                         List<SucursalHija> lstSucursalesFinales = new List<SucursalHija>();
                         GESI.CORE.BLL.SucursalesMgr.SessionManager = MiSessionMgrAPI.SessionMgr;
 
                         GESI.CORE.BO.ListaSucursales olstSucursales = GESI.CORE.BLL.SucursalesMgr.GetList();
 
                         #region Pasaje a Sucursal Hija
-                         foreach (GESI.CORE.BO.Sucursal oSucursal in olstSucursales)
-                        {   
+                        foreach (GESI.CORE.BO.Sucursal oSucursal in olstSucursales)
+                        {
                             SucursalHija oSucursalFinal = new SucursalHija(oSucursal);
                             lstSucursalesFinales.Add(oSucursalFinal);
                         }
-                    #endregion
+                        #endregion
 
                         oRespuesta.Sucursales = lstSucursalesFinales;
-                
-                        if(oRespuesta.Sucursales?.Count > 0)
+
+                        if (oRespuesta.Sucursales?.Count > 0)
                         {
                             oRespuesta.error = new Error();
                             oRespuesta.success = true;
@@ -60,7 +64,7 @@ namespace API_Maestros_Core.Controllers
                             oRespuesta.paginacion.tamañoPagina = pageSize;
                             oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
                             oRespuesta.paginacion.paginaActual = pageNumber;
-                            oRespuesta.paginacion.totalElementos = lstSucursalesFinales.Count;                            
+                            oRespuesta.paginacion.totalElementos = lstSucursalesFinales.Count;
 
                             return Ok(oRespuesta);
                         }
@@ -68,12 +72,19 @@ namespace API_Maestros_Core.Controllers
                         {
                             return NoContent();
                         }
+                    }
+                    else
+                    {
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No está autorizado a acceder al servicio. No se encontró el token del usuario", "E", strUsuarioID, APIHelper.SucursalesGetList);
+                        oRespuesta.success = false;
+                        return Unauthorized(oRespuesta);
+                    }
                 }
                 else
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No está autorizado a acceder al servicio. No se encontró el token del usuario", "E", strUsuarioID,APIHelper.SucursalesGetList);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
                     oRespuesta.success = false;
-                    return Unauthorized(oRespuesta);
+                    return BadRequest(oRespuesta);
                 }
 
             }

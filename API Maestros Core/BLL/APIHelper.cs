@@ -5,6 +5,13 @@ using GESI.CORE.DAL.Verscom2k;
 
 namespace API_Maestros_Core.BLL
 {
+
+    /// <summary>
+    /// DOCUMENTACIÓN API:
+    /// 
+    /// https://docs.google.com/document/d/1DTp_-oqErewTyGkTvkW0FwsUmlVNlsy8iopBPZYQBrs/edit?usp=sharing
+    /// 
+    /// </summary>
     public class APIHelper
     {
         /// <summary>
@@ -35,22 +42,25 @@ namespace API_Maestros_Core.BLL
                 {
                     foreach(HabilitacionesAPI oHabilitacionAPI in moHabilitacionesAPI)
                     {
-                        MiSessionMgrAPI.SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;                        
-                        MiSessionMgrAPI.SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                        MiSessionMgrAPI.SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
-                        MiSessionMgrAPI.SessionMgr.EntidadID = 1;
+                        if (oHabilitacionAPI.TipoDeAPI.Equals(TipoDeAPI)) // VERIFICA SI ES DE TIPO LEER_MAESTROS
+                        {
+                            MiSessionMgrAPI.SessionMgr.EmpresaID = oHabilitacionAPI.EmpresaID;
+                            MiSessionMgrAPI.SessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                            MiSessionMgrAPI.SessionMgr.SucursalID = oHabilitacionAPI.SucursalID;
+                            MiSessionMgrAPI.SessionMgr.EntidadID = 1;
 
-                        MiSessionMgrAPI.ERPSessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
-                        MiSessionMgrAPI.ERPSessionMgr.EmpresaID = (uint)oHabilitacionAPI.EmpresaID;
-                        
+                            MiSessionMgrAPI.ERPSessionMgr.UsuarioID = oHabilitacionAPI.UsuarioID;
+                            MiSessionMgrAPI.ERPSessionMgr.EmpresaID = (uint)oHabilitacionAPI.EmpresaID;
 
-                        MiSessionMgrAPI.CostosXProveedor = oHabilitacionAPI.CostosDeProveedor;
-                        MiSessionMgrAPI.EstadoProductos = oHabilitacionAPI.Estados;
-                        MiSessionMgrAPI.CategoriasIDs = oHabilitacionAPI.CategoriasIDs;
-                        MiSessionMgrAPI.Habilitado = true;
-                        strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;                        
-                        strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
-                        AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;                        
+
+                            MiSessionMgrAPI.CostosXProveedor = oHabilitacionAPI.CostosDeProveedor;
+                            MiSessionMgrAPI.EstadoProductos = oHabilitacionAPI.Estados;
+                            MiSessionMgrAPI.CategoriasIDs = oHabilitacionAPI.CategoriasIDs;
+                            MiSessionMgrAPI.Habilitado = true;
+                            strCanalesDeVenta = oHabilitacionAPI.CanalesDeVenta;
+                            strCategoriasIDs = oHabilitacionAPI.CategoriasIDs;
+                            AlmacenesIDs = oHabilitacionAPI.AlmacenesIDs;
+                        }
                     }
 
                     #region Almacenes
@@ -142,6 +152,32 @@ namespace API_Maestros_Core.BLL
             return error;
         }
 
+        /// <summary>
+        /// Evalua el protocolo a utilizar en back con la variable de configuracion
+        /// </summary>
+        /// <param name="protocoloconfig"></param>
+        /// <param name="protocolo"></param>
+        /// <returns></returns>
+        public static bool EvaluarProtocolo(string protocoloconfig,string protocolo)
+        {
+            bool Habilitado = false;
+
+            if(protocoloconfig.Length > 0)
+            {
+                if(protocolo.Equals(protocoloconfig))
+                {
+                    Habilitado = true;
+                }
+            }
+            else
+            {
+                Habilitado = true;
+            }
+
+            return Habilitado;
+
+        }
+
 
         public enum cCodigosError
         {
@@ -156,11 +192,12 @@ namespace API_Maestros_Core.BLL
             cErrorInternoAplicacion = 5002,
             cModeloNoValido = 4151,
             cPermisoDenegadoCostos = 4017,
-            cCodigoNoHalladoEnLaSolicitud = 4041
+            cCodigoNoHalladoEnLaSolicitud = 4041,
+            cProtocoloIncorrecto = 5555
 
         }
 
-        public const string ProductosGetList = "GetList";
+        public const string ProductosGetList = "Productos/GetList";
         public const string ProductosGetItem = "GetItem";
         public const string ProductosGetSearchResult = "GetSearchResult";
         public const string ProductosGetExistencias = "GetExistencias";
@@ -170,7 +207,7 @@ namespace API_Maestros_Core.BLL
         public const string CategoriasGetList = "Categorias/GetList";
         public const string CategoriasGetItem = "Categorias/GetItem";
         public const string SucursalesGetList = "GetSucursales";
-
+        public const string TipoDeAPI = "LEER_MAESTROS";
         public static string QueEstabaHaciendo = "";
         
                 
