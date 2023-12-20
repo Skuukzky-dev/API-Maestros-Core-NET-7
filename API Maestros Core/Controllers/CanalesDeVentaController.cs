@@ -73,7 +73,7 @@ namespace API_Maestros_Core.Controllers
                         if (MiSessionMgrAPI.Habilitado)
                         {
                             CanalesDeVentaMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
-                            oRespuesta = CanalesDeVentaMgr.GetListCanalesDeVenta(pageNumber, pageSize);
+                            oRespuesta = CanalesDeVentaMgr.GetListCanalesDeVenta(MiSessionMgrAPI.CanalesDeVenta,pageNumber, pageSize);
                             if (oRespuesta != null)
                             {
                                 return Ok(oRespuesta);

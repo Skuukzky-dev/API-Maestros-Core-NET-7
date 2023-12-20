@@ -194,22 +194,20 @@ namespace API_Maestros_Core.BLL
             cPermisoDenegadoCostos = 4017,
             cCodigoNoHalladoEnLaSolicitud = 4041,
             cProtocoloIncorrecto = 5555
-
         }
 
         public const string ProductosGetList = "Productos/GetList";
-        public const string ProductosGetItem = "GetItem";
-        public const string ProductosGetSearchResult = "GetSearchResult";
-        public const string ProductosGetExistencias = "GetExistencias";
-        public const string ProductoGetPrecios = "GetPrecios";
+        public const string ProductosGetItem = "Productos/GetItem";
+        public const string ProductosGetSearchResult = "Productos/GetSearchResult";
+        public const string ProductosGetExistencias = "Productos/GetExistencias";
+        public const string ProductoGetPrecios = "Productos/GetPrecios";
         public const string CanalesDeVentaGetList = "CanalesDeVenta/GetList";
         public const string Login = "Login";
         public const string CategoriasGetList = "Categorias/GetList";
         public const string CategoriasGetItem = "Categorias/GetItem";
-        public const string SucursalesGetList = "GetSucursales";
+        public const string SucursalesGetList = "Empresas/GetSucursales";
         public const string TipoDeAPI = "LEER_MAESTROS";
-        public static string QueEstabaHaciendo = "";
-        
+        public static string QueEstabaHaciendo = "";       
                 
     }
 }

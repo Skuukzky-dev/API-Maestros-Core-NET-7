@@ -1,4 +1,5 @@
 ﻿using API_Maestros_Core.Models;
+using GESI.ERP.Core.BO;
 
 namespace API_Maestros_Core.BLL
 {
@@ -21,7 +22,7 @@ namespace API_Maestros_Core.BLL
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public static RespuestaConCanalesDeVenta GetListCanalesDeVenta(int pageNumber = 1,int pageSize = 10)
+        public static RespuestaConCanalesDeVenta GetListCanalesDeVenta(int[] CanalesDeVenta,int pageNumber = 1,int pageSize = 10)
         {
             RespuestaConCanalesDeVenta oRespuesta = null;
             try
@@ -38,8 +39,23 @@ namespace API_Maestros_Core.BLL
                 oRespuesta.error = new Error();
                 oRespuesta.CanalesDeVenta = new List<CanalDeVentaHijo>();
                 oRespuesta.paginacion = new Paginacion();
-
+                List<GESI.ERP.Core.BO.cCanalDeVenta> lstCanalesDeVentaFinal = new List<cCanalDeVenta>();
                 List<GESI.ERP.Core.BO.cCanalDeVenta> lstCanalesDeVenta = ErpSessionMgr.GetCanalesDeVentaHabilitados();
+
+                for(int i = 0;i<CanalesDeVenta.Length;i++)
+                {
+                    List<cCanalDeVenta> CanalesDeVentaAuxiliar = lstCanalesDeVenta.Where(x => x.CanalDeVentaID == CanalesDeVenta[i]).ToList();
+
+                    if(CanalesDeVentaAuxiliar.Count > 0)
+                    {
+                        lstCanalesDeVentaFinal.AddRange(CanalesDeVentaAuxiliar);
+                    }
+                }
+
+                if(lstCanalesDeVentaFinal.Count > 0 )
+                {
+                    lstCanalesDeVenta = lstCanalesDeVentaFinal;
+                }
 
                 if (lstCanalesDeVenta?.Count > 0)
                 {
