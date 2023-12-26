@@ -1,5 +1,6 @@
 ﻿using API_Maestros_Core.Models;
 using GESI.ERP.Core.BO;
+using System.Runtime.CompilerServices;
 
 namespace API_Maestros_Core.BLL
 {
@@ -22,11 +23,13 @@ namespace API_Maestros_Core.BLL
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public static RespuestaConCanalesDeVenta GetListCanalesDeVenta(int[] CanalesDeVenta,int pageNumber = 1,int pageSize = 10)
+        public static RespuestaConCanalesDeVenta GetListCanalesDeVenta(int[] CanalesDeVenta,int pageNumber = 1,int pageSize = 10, string referer = "")
         {
             RespuestaConCanalesDeVenta oRespuesta = null;
             try
             {
+                
+
                 #region SessionManagers
                 oRespuesta = new RespuestaConCanalesDeVenta();
                 GESI.GESI.BLL.TablasGeneralesGESIMgr.SessionManager = _SessionMgr;
@@ -71,7 +74,7 @@ namespace API_Maestros_Core.BLL
                     oRespuesta.paginacion.paginaActual = pageNumber;
                     oRespuesta.paginacion.tamañoPagina = pageSize;
                     
-                    Logger.LoguearErrores("Respuesta GetList Canales de venta OK", "I", _SessionMgr.UsuarioID, APIHelper.CanalesDeVentaGetList);
+                    Logger.LoguearErrores("Respuesta GetList Canales de venta OK. Referer: "+referer, "I", _SessionMgr.UsuarioID, APIHelper.CanalesDeVentaGetList);
 
                     return oRespuesta;
                 }

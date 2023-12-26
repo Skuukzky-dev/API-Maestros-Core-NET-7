@@ -39,7 +39,18 @@ namespace API_Maestros_Core.Services
             };
 
             //Añadimos las credenciales
-            var Signin = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["CadenaSignin"];
+            // Guid guid = Guid.NewGuid();
+            //Guid guid2 = Guid.NewGuid();
+            //string conca = guid.ToString() + guid2.ToString();
+
+            //var Signin = conca;
+
+            //            var Signin = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["CadenaSignin"]; ORIGINAL
+            //"CadenaSignin": "4f169056-fb2f-41fd-8eb9-c46d4603c1c494ab1bf5-cb82-4325-ad24-2da97951d130",
+
+            var Signin = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AuthenticationSettings")["SigningKey"];
+
+
 
             var signingCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Signin)),

@@ -245,9 +245,6 @@ app.Use(async (context, next) =>
 
     var referrerUrl = context.Request.Headers["Referer"].ToString();
     
-
-
-
     if (referrerUrl != null)
     {
         if (referrerUrl.Length <= 0)
@@ -323,16 +320,26 @@ app.Use(async (context, next) =>
             }
             else
             {
-
-
-                if (!spliturl.Contains(referrerUrl.ToString()))
+                bool Habilitado = false;
+                foreach(string urls in spliturl)
                 {
-                    context.Response.StatusCode = 401;
+                    string urldescencriptada = APIHelper.DesEncriptarCadenaConfiguracion(urls);
+
+                    if (referrerUrl.Contains(urldescencriptada))
+                    {
+                        Habilitado = true;
+                    }
+                }
+
+                if(!Habilitado)
+                //if (!referrerUrl.Contains(spliturl.ToString()))
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.code = 4011;
-                    oresp.error.message = "No esta autorizado a acceder al recurso. URL: " + referrerUrl;
-                    Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL: " + referrerUrl, "E", "", context.Request.Path.Value);
+                    oresp.error.code = (int)APIHelper.cCodigosError.cURLNoPermitida;
+                    oresp.error.message = "No esta autorizado a acceder al recurso. URL: " + referrerUrl+"| spliturl: "+spliturl;
+                    Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL: " + referrerUrl + "| spliturl: " + spliturl, "E", "", context.Request.Path.Value);
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(oresp));
@@ -356,7 +363,7 @@ app.Use(async (context, next) =>
                     }
                     else
                     {
-                        Logger.LoguearErrores("Dominios Autorizados: " + urlConfig, "I", "", context.Request.Path.Value);
+                        //Logger.LoguearErrores("Dominios Autorizados: " + urlConfig, "I", "", context.Request.Path.Value);
                     }
                     
                 }

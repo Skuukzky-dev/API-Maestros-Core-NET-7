@@ -193,8 +193,35 @@ namespace API_Maestros_Core.BLL
             cModeloNoValido = 4151,
             cPermisoDenegadoCostos = 4017,
             cCodigoNoHalladoEnLaSolicitud = 4041,
-            cProtocoloIncorrecto = 5555
+            cProtocoloIncorrecto = 5555,
+            cURLNoPermitida = 4018
         }
+
+        /// <summary>
+        /// Desencripta la cadena de configuracion
+        /// </summary>
+        /// <param name="CadenaEncriptada"></param>
+        /// <returns></returns>
+        public static string DesEncriptarCadenaConfiguracion(string CadenaEncriptada)
+        {
+            try
+            {
+                string CadenaSinCaracteres;
+                string CadenaDesEncriptada = "";
+                if (CadenaEncriptada.Length > 3)
+                {
+                    CadenaSinCaracteres = CadenaEncriptada.Remove(3, 1);
+                    var base64EncodedBytes = System.Convert.FromBase64String(CadenaSinCaracteres);
+                    CadenaSinCaracteres = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+                    CadenaDesEncriptada = CadenaSinCaracteres;
+                }
+
+                return CadenaDesEncriptada;
+            }
+            catch { return ""; }
+        
+        }
+
 
         public const string ProductosGetList = "Productos/GetList";
         public const string ProductosGetItem = "Productos/GetItem";

@@ -65,7 +65,7 @@ namespace API_Maestros_Core.Controllers
                 else
                 {
                     string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
-
+                    string Referer = this.HttpContext.Request.Headers["Referer"].ToString();
                     if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                     {
                         APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
@@ -73,7 +73,7 @@ namespace API_Maestros_Core.Controllers
                         if (MiSessionMgrAPI.Habilitado)
                         {
                             CanalesDeVentaMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
-                            oRespuesta = CanalesDeVentaMgr.GetListCanalesDeVenta(MiSessionMgrAPI.CanalesDeVenta,pageNumber, pageSize);
+                            oRespuesta = CanalesDeVentaMgr.GetListCanalesDeVenta(MiSessionMgrAPI.CanalesDeVenta,pageNumber, pageSize,Referer);
                             if (oRespuesta != null)
                             {
                                 return Ok(oRespuesta);

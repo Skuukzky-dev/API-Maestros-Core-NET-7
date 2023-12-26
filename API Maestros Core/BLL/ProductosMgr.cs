@@ -7,6 +7,8 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Security.Cryptography;
+
 
 
 namespace API_Maestros_Core.BLL
@@ -31,10 +33,9 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
-              
-               
+                
                 #region ConnectionStrings
-                ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();                               
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
                 System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
                 SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
@@ -136,6 +137,7 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+               
                 RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
                 oRespuesta.paginacion = new Paginacion();
 
