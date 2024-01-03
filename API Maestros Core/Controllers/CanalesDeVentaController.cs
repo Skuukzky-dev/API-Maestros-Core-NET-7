@@ -46,8 +46,8 @@ namespace API_Maestros_Core.Controllers
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);            
             
             
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+         //   SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+         //   GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             #endregion
 
             RespuestaConCanalesDeVenta oRespuesta = new RespuestaConCanalesDeVenta();

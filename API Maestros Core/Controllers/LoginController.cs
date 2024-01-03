@@ -18,6 +18,8 @@ namespace API_Maestros_Core.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
+
+        private const string UsuarioSinContraseña = "Debe ingresar una contraseña";
         private readonly IAuthService authService;
         
         public LoginController(IAuthService authService)
@@ -32,39 +34,119 @@ namespace API_Maestros_Core.Controllers
         {
             try
             {
+                RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 HttpContext context = HttpContext;
                 HttpResponseMessage message = new HttpResponseMessage();
                 if (authService.ValidateLogin(credenciales.Username, credenciales.Password))
                 {
-                    var fechaActual = DateTime.UtcNow;
-                    var TiempoExpiracionToken = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TiempoExpiracion"];
-                    var validez = TimeSpan.FromHours(Convert.ToDouble(TiempoExpiracionToken));
-                    var fechaExpiracion = fechaActual.Add(validez);
+                   
+                    if (credenciales.Password.Length > 0)
+                    {
+                       // GESI.CORE.BO.Verscom2k.APILogin APIToken1 = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem("eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSRVZFTlRBIiwianRpIjoiMWIwOGY3YTItNmJkOC00MTA2LWE2NjItNzAwYTA4YzRhNWVjIiwiaWF0IjoxNzAzOTQ3NjEwLCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE3MDM5NDc2MTAsImV4cCI6MTcwMzk2MjAxMCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.xHh_gf6Pjx4ObnXFj8L93sLtCOIxUUWB6qde4FOh7gc");
 
-                    var token = authService.GenerateToken(fechaActual, credenciales.Username, validez);
+                        GESI.CORE.BO.Verscom2k.APILogin APIToken = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem("", credenciales.Username);
 
-                    RespuestaToken respuestaToken = new RespuestaToken();
-                    respuestaToken.error = new ErrorToken();
-                    respuestaToken.success = true;
-                    respuestaToken.token = token;
-                    message.StatusCode = HttpStatusCode.OK;
+                        var fechaActual1 = DateTime.UtcNow;
+                        var TiempoExpiracionToken1 = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TiempoExpiracion"];
+                        var validez1 = TimeSpan.FromHours(Convert.ToDouble(TiempoExpiracionToken1));
+                        var fechaExpiracion1 = fechaActual1.Add(validez1);
+                        
 
-                    GESI.CORE.BO.Verscom2k.APILogin ApiLogin = new GESI.CORE.BO.Verscom2k.APILogin();
+                        if (APIToken?.Token?.Length > 0)  // ENCONTRO OBJETO TOKEN
+                        {
+                            TimeSpan horasDiferencia = fechaActual1 - DateTime.Parse(APIToken.FechaYHora);
+                            int intHorasDiferencia = (int)horasDiferencia.TotalHours;
 
-                    ApiLogin.FechaYHora = DateTime.Now.ToString();
-                    
-                    ApiLogin.UsuarioID = credenciales.Username;
-                    ApiLogin.Token = token;
-                    int resultado = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.Save(ApiLogin);
-                    //var clientIpAddress = HttpContext.Request.Headers["X-Client-IP"];
-                    string clientIpAddress = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();   //context.Connection.RemoteIpAddress
-                    message.Content = new StringContent(JsonConvert.SerializeObject(respuestaToken));                  
-                    
-                    Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID+ "|"+ clientIpAddress +" Token: "+token, "I", ApiLogin.UsuarioID,APIHelper.Login);
-                    return Ok(respuestaToken);
+                            if(intHorasDiferencia > Convert.ToInt32(TiempoExpiracionToken1)) // EXPIRÓ EL TIEMPO DEL TOKEN
+                            {
+                                var fechaActual = DateTime.UtcNow;
+                                var TiempoExpiracionToken = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TiempoExpiracion"];
+                                var validez = TimeSpan.FromHours(Convert.ToDouble(TiempoExpiracionToken));
+                                var fechaExpiracion = fechaActual.Add(validez);
+
+                                var token = authService.GenerateToken(fechaActual, credenciales.Username, validez);
+
+                                RespuestaToken respuestaToken = new RespuestaToken();
+                                respuestaToken.error = new ErrorToken();
+                                respuestaToken.success = true;
+                                respuestaToken.token = token;
+                                message.StatusCode = HttpStatusCode.OK;
+
+                                GESI.CORE.BO.Verscom2k.APILogin ApiLogin = new GESI.CORE.BO.Verscom2k.APILogin();
+
+                                ApiLogin.FechaYHora = DateTime.Now.ToString();
+
+                                ApiLogin.UsuarioID = credenciales.Username;
+                                ApiLogin.Token = token;
+
+                                int resultado = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.Save(ApiLogin);
+                                //var clientIpAddress = HttpContext.Request.Headers["X-Client-IP"];
+                                string clientIpAddress = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();   //context.Connection.RemoteIpAddress
+                                message.Content = new StringContent(JsonConvert.SerializeObject(respuestaToken));
+
+                                Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID + "|" + clientIpAddress + " Token: " + token, "I", ApiLogin.UsuarioID, APIHelper.Login);
+                                return Ok(respuestaToken);
+
+                            }
+                            else
+                            {
+                                RespuestaToken respuestaToken = new RespuestaToken();
+                                respuestaToken.error = new ErrorToken();
+                                respuestaToken.success = true;
+                                respuestaToken.token = APIToken.Token;
+                                return Ok(respuestaToken);
+                            }                           
+
+                        }
+                        else
+                        {
+                            var fechaActual = DateTime.UtcNow;
+                            var TiempoExpiracionToken = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TiempoExpiracion"];
+                            var validez = TimeSpan.FromHours(Convert.ToDouble(TiempoExpiracionToken));
+                            var fechaExpiracion = fechaActual.Add(validez);
+
+                            var token = authService.GenerateToken(fechaActual, credenciales.Username, validez);
+
+                            RespuestaToken respuestaToken = new RespuestaToken();
+                            respuestaToken.error = new ErrorToken();
+                            respuestaToken.success = true;
+                            respuestaToken.token = token;
+                            message.StatusCode = HttpStatusCode.OK;
+
+                            GESI.CORE.BO.Verscom2k.APILogin ApiLogin = new GESI.CORE.BO.Verscom2k.APILogin();
+
+                            ApiLogin.FechaYHora = DateTime.Now.ToString();
+
+                            ApiLogin.UsuarioID = credenciales.Username;
+                            ApiLogin.Token = token;
+
+                            int resultado = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.Save(ApiLogin);
+                            //var clientIpAddress = HttpContext.Request.Headers["X-Client-IP"];
+                            string clientIpAddress = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();   //context.Connection.RemoteIpAddress
+                            message.Content = new StringContent(JsonConvert.SerializeObject(respuestaToken));
+
+                            Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID + "|" + clientIpAddress + " Token: " + token, "I", ApiLogin.UsuarioID, APIHelper.Login);
+                            return Ok(respuestaToken);
+                        }
+                        
+                        
+                    }
+                    else
+                    {
+                        
+                        rspContenidoRespuesta.success = false;
+                        rspContenidoRespuesta.error = new ErrorToken();
+                        rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cUsuarioIncorrecto;
+                        rspContenidoRespuesta.error.message = UsuarioSinContraseña;
+                        message.StatusCode = HttpStatusCode.Unauthorized;
+                        message.Content = new StringContent(JsonConvert.SerializeObject(rspContenidoRespuesta));
+                        Logger.LoguearErrores(UsuarioSinContraseña, "I", credenciales.Username, APIHelper.Login, (int)APIHelper.cCodigosError.cUsuarioIncorrecto);
+
+                        return Unauthorized(rspContenidoRespuesta);
+                    }
                 }
 
-                RespuestaToken rspContenidoRespuesta = new RespuestaToken();
+                rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
                 rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cUsuarioIncorrecto;

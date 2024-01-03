@@ -194,7 +194,8 @@ namespace API_Maestros_Core.BLL
             cPermisoDenegadoCostos = 4017,
             cCodigoNoHalladoEnLaSolicitud = 4041,
             cProtocoloIncorrecto = 5555,
-            cURLNoPermitida = 4018
+            cURLNoPermitida = 4018,
+            cEncabezadoNoEncontrado = 4020
         }
 
         /// <summary>

@@ -48,8 +48,8 @@ namespace API_Maestros_Core.Controllers
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
 
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+          //  SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+          //  GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConCategorias oRespuesta = new RespuestaConCategorias();
             #endregion
 
@@ -138,8 +138,8 @@ namespace API_Maestros_Core.Controllers
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
 
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+           // SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+           // GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             #endregion
 
 
@@ -238,8 +238,8 @@ namespace API_Maestros_Core.Controllers
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
            
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+           // SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+            //GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConRubros oRespuesta = new RespuestaConRubros();
             #endregion
             try
@@ -288,8 +288,8 @@ namespace API_Maestros_Core.Controllers
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+         //   SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+         //   GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConSubRubros oRespuesta = new RespuestaConSubRubros();
             #endregion
             try
@@ -337,8 +337,8 @@ namespace API_Maestros_Core.Controllers
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+          //  SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+           // GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConSubSubRubros oRespuesta = new RespuestaConSubSubRubros();
             #endregion
             try
@@ -388,8 +388,8 @@ namespace API_Maestros_Core.Controllers
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+       //     SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+       //     GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConFiltroArticulos1 oRespuesta = new RespuestaConFiltroArticulos1();
             #endregion
             try
@@ -438,8 +438,8 @@ namespace API_Maestros_Core.Controllers
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+          //  SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+          //  GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConFiltroArticulos2 oRespuesta = new RespuestaConFiltroArticulos2();
             #endregion
             try
@@ -487,8 +487,8 @@ namespace API_Maestros_Core.Controllers
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-            GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+          //  SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+           // GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
             RespuestaConFiltroArticulos3 oRespuesta = new RespuestaConFiltroArticulos3();
             #endregion
             try

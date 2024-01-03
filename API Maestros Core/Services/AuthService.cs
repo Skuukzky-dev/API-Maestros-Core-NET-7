@@ -111,8 +111,8 @@ namespace API_Maestros_Core.Services
                 System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
                                
                
-                SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-                GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+                //SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
+                //GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
 
                 //Logger.LoguearErrores("ConnectionString app.config :" + connectionString);
 
@@ -121,6 +121,9 @@ namespace API_Maestros_Core.Services
 
                 // Logger.LoguearErrores("ConnectionStringPaz: " + sqlapi.ConnectionString, "I");
                 bool Habilitado = false;
+
+                
+
                 bool login = GESI.CORE.BLL.UsuariosMgr.Login(strUsuarioID, strPassword);
                 List<GESI.CORE.BO.Verscom2k.HabilitacionesAPI> lstHabilitacionesAPI =  GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
 
