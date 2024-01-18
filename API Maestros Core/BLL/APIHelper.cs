@@ -178,7 +178,9 @@ namespace API_Maestros_Core.BLL
 
         }
 
-
+        /// <summary>
+        /// Tabla con los codigos de error
+        /// </summary>
         public enum cCodigosError
         {
             cUsuarioIncorrecto = 4011,
@@ -224,18 +226,23 @@ namespace API_Maestros_Core.BLL
         }
 
 
+
+
+
+        #region Constantes de Endpoints
         public const string ProductosGetList = "Productos/GetList";
         public const string ProductosGetItem = "Productos/GetItem";
         public const string ProductosGetSearchResult = "Productos/GetSearchResult";
         public const string ProductosGetExistencias = "Productos/GetExistencias";
         public const string ProductoGetPrecios = "Productos/GetPrecios";
         public const string CanalesDeVentaGetList = "CanalesDeVenta/GetList";
-        public const string Login = "Login";
+        public const string Login = "api/Login";
         public const string CategoriasGetList = "Categorias/GetList";
         public const string CategoriasGetItem = "Categorias/GetItem";
         public const string SucursalesGetList = "Empresas/GetSucursales";
         public const string TipoDeAPI = "LEER_MAESTROS";
-        public static string QueEstabaHaciendo = "";       
-                
+        public static string QueEstabaHaciendo = "";
+        #endregion
+
     }
 }

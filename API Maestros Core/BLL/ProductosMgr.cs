@@ -13,8 +13,16 @@ using System.Security.Cryptography;
 
 namespace API_Maestros_Core.BLL
 {
+    /// <summary>
+    /// DOCUMENTACIÓN API:
+    /// 
+    /// https://docs.google.com/document/d/1DTp_-oqErewTyGkTvkW0FwsUmlVNlsy8iopBPZYQBrs/edit?usp=sharing
+    /// 
+    /// </summary>
+    /// 
     public class ProductosMgr
     {
+
 
         public static GESI.CORE.BLL.SessionMgr? _SessionMgr;
 
@@ -446,9 +454,7 @@ namespace API_Maestros_Core.BLL
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-         //   SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-         //   GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
-          //  GESI.ERP.Core.BLL.BASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
+     
             GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
             GESI.ERP.Core.BLL.ExistenciasManager.SessionManager = _SessionMgr;
@@ -535,9 +541,7 @@ namespace API_Maestros_Core.BLL
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-        //    SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-        //    GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
-        //    GESI.ERP.Core.BLL.BASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
+        
             GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
             GESI.ERP.Core.BLL.ExistenciasManager.SessionManager = _SessionMgr;

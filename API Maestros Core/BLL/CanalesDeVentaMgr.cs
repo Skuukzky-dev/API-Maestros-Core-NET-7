@@ -29,7 +29,6 @@ namespace API_Maestros_Core.BLL
             try
             {
                 
-
                 #region SessionManagers
                 oRespuesta = new RespuestaConCanalesDeVenta();
                 GESI.GESI.BLL.TablasGeneralesGESIMgr.SessionManager = _SessionMgr;

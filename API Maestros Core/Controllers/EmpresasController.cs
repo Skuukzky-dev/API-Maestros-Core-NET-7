@@ -24,7 +24,6 @@ namespace API_Maestros_Core.Controllers
         #endregion
 
 
-
         [HttpGet("GetSucursales")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaSucursales))]

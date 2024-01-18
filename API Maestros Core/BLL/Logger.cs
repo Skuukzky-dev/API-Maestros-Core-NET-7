@@ -1,5 +1,13 @@
 ﻿namespace API_Maestros_Core.BLL
 {
+
+    /// <summary>
+    /// DOCUMENTACIÓN API:
+    /// 
+    /// https://docs.google.com/document/d/1DTp_-oqErewTyGkTvkW0FwsUmlVNlsy8iopBPZYQBrs/edit?usp=sharing
+    /// 
+    /// </summary>
+    /// 
     public class Logger
     {
         /// <summary>
