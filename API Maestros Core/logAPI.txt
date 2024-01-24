@@ -64,3 +64,9 @@ Error de inicio de sesión del usuario 'uAPI-ERP-LecturaMaestros'.
 17/1/2024 10:43:05|I|REVENTA|api/Login|200|Logueado exitosamente. Usuario: REVENTA|::1 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSRVZFTlRBIiwianRpIjoiMGNkYmUyMGUtZDcyMi00YWZkLWJjZDctYjQwMTM4OGNlYTk3IiwiaWF0IjoxNzA1NDk4OTg3LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE3MDU0OTg5ODcsImV4cCI6MTcwNTUxMzM4NywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.UekH0JNGwDCTlvUmUChKigPz8fgTlVvrL9N2DH4aL8M
 17/1/2024 10:43:14|I|REVENTA|api/Login|200|Fecha a Actualizar: 17/1/2024 10:43:17 | UsuarioID : REVENTA | Fecha en Base: 13/1/2024 10:59:00
 17/1/2024 10:43:14|I|REVENTA|api/Login|200|Logueado exitosamente. Usuario: REVENTA|::1 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSRVZFTlRBIiwianRpIjoiM2M2M2UxODEtYTFhZC00OGI3LWFmYzQtN2FiNDg1N2NhOWRhIiwiaWF0IjoxNzA1NDk4OTk3LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE3MDU0OTg5OTcsImV4cCI6MTcwNTUxMzM5NywiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.AVkdmXpZ8ZAJfwfSLnv6fR67K_3jHowjLs_Lxyn-IlM
+22/1/2024 16:40:16|I|REVENTA|api/Login|5001|Error al devolver el token. Descripcion: No se puede abrir la base de datos "cli_Urbania" solicitada por el inicio de sesión. Error de inicio de sesión.
+Error de inicio de sesión del usuario 'uAPI-ERP-LecturaMaestros'.
+22/1/2024 16:42:52|I|REVENTA|api/Login|5001|Error al devolver el token. Descripcion: No se puede abrir la base de datos "cli_Urbania" solicitada por el inicio de sesión. Error de inicio de sesión.
+Error de inicio de sesión del usuario 'uAPI-ERP-LecturaMaestros'.
+23/1/2024 13:00:38|I|REVENTA|api/Login|200|FechaObtenidaSQL: 23/1/2024 13:00:11 | FechaObtenidaAPILoginTokens: 23/1/2024 09:11:00 | Horas de diferencia: 3
+23/1/2024 13:01:07|I|REVENTA|Productos/GetItem|4041|No se encontró codigo o expresión a buscar

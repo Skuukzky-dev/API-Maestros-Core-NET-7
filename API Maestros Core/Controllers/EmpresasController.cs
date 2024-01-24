@@ -4,6 +4,7 @@ using GESI.ERP.Core.BO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,6 +22,8 @@ namespace API_Maestros_Core.Controllers
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
         public static string strProtocolo = "";
+        public static List<TipoDeError> lstTiposDeError = APIHelper.LlenarTiposDeError();
+        public TipoDeError oTipoError;
         #endregion
 
 
@@ -74,14 +77,16 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No está autorizado a acceder al servicio. No se encontró el token del usuario", "E", strUsuarioID, APIHelper.SucursalesGetList);
+                        oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.SucursalesGetList);
                         oRespuesta.success = false;
                         return Unauthorized(oRespuesta);
                     }
                 }
                 else
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                    oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
                     oRespuesta.success = false;
                     return BadRequest(oRespuesta);
                 }
@@ -89,9 +94,10 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Sucursales. Descripcion: "+ex.Message, "E", strUsuarioID, APIHelper.SucursalesGetList);
+                oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Error al devolver Sucursales. Descripcion: "+ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.SucursalesGetList);
                 oRespuesta.success = false;
-                return StatusCode(500,oRespuesta);
+                return StatusCode((int)HttpStatusCode.InternalServerError,oRespuesta);
                
             }
         }

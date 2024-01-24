@@ -1,5 +1,7 @@
 ﻿using API_Maestros_Core.Controllers;
 using API_Maestros_Core.Models;
+using GESI.GESI.BLL.wsfev1;
+
 //using GESI.CORE.BO.Verscom2k;
 //using GESI.GESI.BO;
 using Newtonsoft.Json;
@@ -25,6 +27,8 @@ namespace API_Maestros_Core.BLL
 
 
         public static GESI.CORE.BLL.SessionMgr? _SessionMgr;
+        public static List<TipoDeError> lstTipoErrores;
+        public static TipoDeError oTipo;
 
         enum LogCambios
         {
@@ -91,9 +95,7 @@ namespace API_Maestros_Core.BLL
                                 oHijo.ListaDeCategorias.Add(oCategoria.CategoriaID);
                             }
                         }
-
                         lstHijos.Add(oHijo);
-
                     }
                     oRespuesta.success = true;
                 }
@@ -104,7 +106,9 @@ namespace API_Maestros_Core.BLL
                     {
                         lstHijos.Add(new HijoProductos(oPrd));
                     }
-                    oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
+
+                    oTipo = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
+                    oRespuesta.error.message = oTipo.DescripcionError;
                     oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                     oRespuesta.success = true;
                 }
@@ -200,11 +204,11 @@ namespace API_Maestros_Core.BLL
                         else
                         {
                             APIHelper.QueEstabaHaciendo = "Obteniendo listado de productos";
-
+                            oTipo = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
                             List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                             lstProductos = lstProductosAux;
                             oRespuesta.error = new Error();
-                            oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
+                            oRespuesta.error.message = oTipo.DescripcionError;
                             oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                         }
                     }
@@ -236,10 +240,11 @@ namespace API_Maestros_Core.BLL
                     else
                     {
                         APIHelper.QueEstabaHaciendo = "Obteniendo productos";
+                        oTipo = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
                         List<GESI.ERP.Core.BO.cProducto> lstProductosAux = GESI.ERP.Core.BLL.ProductosManager.GetList(resultado, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                         lstProductos = lstProductosAux;
                         oRespuesta.error = new Error();
-                        oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
+                        oRespuesta.error.message = oTipo.DescripcionError;
                         oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                     }
                 }
@@ -314,9 +319,8 @@ namespace API_Maestros_Core.BLL
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
                 System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-          //      SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-          //      GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
-           //     GESI.ERP.Core.BLL.BASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
+       
+                
                 GESI.ERP.Core.BLL.ProductosManager.SessionManager = _SessionMgr;
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.ProductosManager.ERPsessionManager = _SessionERP;
@@ -339,10 +343,10 @@ namespace API_Maestros_Core.BLL
                 else
                 {
                     APIHelper.QueEstabaHaciendo = "Obteniendo listado de productos";
-
+                    oTipo = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
                     oProduc = GESI.ERP.Core.BLL.ProductosManager.GetList(ProductoID, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
                     oRespuesta.error = new Error();
-                    oRespuesta.error.message = "Permiso denegado en la solicitud de costos";
+                    oRespuesta.error.message = oTipo.DescripcionError;
                     oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
                 }
 

@@ -21,6 +21,7 @@ namespace API_Maestros_Core.Controllers
     {
 
         private const string UsuarioSinContraseña = "Debe ingresar una contraseña";
+        public List<TipoDeError> lstTipoError = APIHelper.LlenarTiposDeError();
         private readonly IAuthService authService;
         
         public LoginController(IAuthService authService)
@@ -40,8 +41,7 @@ namespace API_Maestros_Core.Controllers
                 HttpResponseMessage message = new HttpResponseMessage();
 
                 if (authService.ValidateLogin(credenciales.Username, credenciales.Password))
-                {
-                   
+                {                   
                     if (credenciales.Password.Length > 0)
                     {
                       
@@ -58,13 +58,13 @@ namespace API_Maestros_Core.Controllers
 
 
                         if (APIToken?.Token?.Length > 0)  // ENCONTRO OBJETO TOKEN
-                       {
+                        {
                             TimeSpan horasDiferencia = dtFechaObtenidaSQL - APIToken.FechaYHora;
                             int intHorasDiferencia = (int)horasDiferencia.TotalHours;
                    
                             Logger.LoguearErrores("FechaObtenidaSQL: " + dtFechaObtenidaSQL + " | FechaObtenidaAPILoginTokens: " + APIToken.FechaYHora + " | Horas de diferencia: " + intHorasDiferencia,"I",credenciales.Username,"api/Login");
                    
-                            if(intHorasDiferencia > Convert.ToInt32(TiempoExpiracionToken)) // EXPIRÓ EL TIEMPO DEL TOKEN . Genera un nuevo Token
+                            if(intHorasDiferencia >= Convert.ToInt32(TiempoExpiracionToken)) // EXPIRÓ EL TIEMPO DEL TOKEN . Genera un nuevo Token
                             {
                                 var token = authService.GenerateToken(dtFechaObtenidaSQL, credenciales.Username, validez);
                                 RespuestaToken respuestaToken = DevolverRespuestaTokenYActualizarEnBase(token, credenciales.Username, dtFechaObtenidaSQL, context.Request.HttpContext.Connection.RemoteIpAddress.ToString(),APIToken.FechaYHora);
@@ -103,38 +103,40 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        
+                        TipoDeError oTipo = lstTipoError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cUsuarioIncorrecto);
                         rspContenidoRespuesta.success = false;
                         rspContenidoRespuesta.error = new ErrorToken();
                         rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cUsuarioIncorrecto;
-                        rspContenidoRespuesta.error.message = UsuarioSinContraseña;
+                        rspContenidoRespuesta.error.message = oTipo.DescripcionError;
                         Logger.LoguearErrores(UsuarioSinContraseña, "I", credenciales.Username, APIHelper.Login, (int)APIHelper.cCodigosError.cUsuarioIncorrecto);
 
                         return Unauthorized(rspContenidoRespuesta);
                     }
                 }
 
+                TipoDeError oTipo1 = lstTipoError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cUsuarioIncorrecto);
                 rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
                 rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cUsuarioIncorrecto;
-                rspContenidoRespuesta.error.message = "Usuario y / o contraseña incorrectos";
+                rspContenidoRespuesta.error.message = oTipo1.DescripcionError;
                 Logger.LoguearErrores("Usuario y / o contraseña incorrectos. Usuario: " + credenciales.Username + "|" + context.Connection.RemoteIpAddress , "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cUsuarioIncorrecto);
 
                 return Unauthorized(rspContenidoRespuesta);
             }
             catch (Exception ex)
             {
+                TipoDeError oTipo2 = lstTipoError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAlDevolverToken);
                 HttpResponseMessage message = new HttpResponseMessage();
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
                 rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cErrorInternoAlDevolverToken;
-                rspContenidoRespuesta.error.message = "Error al devolver el token. Descripcion: " + ex.Message;
+                rspContenidoRespuesta.error.message = oTipo2.DescripcionError+" Descripcion: " + ex.Message;
                 
                 Logger.LoguearErrores("Error al devolver el token. Descripcion: " + ex.Message, "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cErrorInternoAlDevolverToken);
-
-                return StatusCode((int)APIHelper.cCodigosError.cErrorInternoAplicacion, rspContenidoRespuesta);
+                
+                return StatusCode((int)HttpStatusCode.InternalServerError, rspContenidoRespuesta);
             }
         }
 

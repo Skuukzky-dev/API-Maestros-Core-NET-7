@@ -2,6 +2,7 @@
 using GESI.CORE.BLL;
 using GESI.CORE.BO.Verscom2k;
 using GESI.CORE.DAL.Verscom2k;
+using System.Net;
 
 namespace API_Maestros_Core.BLL
 {
@@ -144,6 +145,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static Error DevolverErrorAPI(int code, string message,string tipo,string usuario,string endpoint)
         {
+            //List<TipoDeError> lstTiposDeErrores = APIHelper.LlenarTiposDeError();
             Logger.LoguearErrores(message, tipo,usuario,endpoint, code);
             Error error = new Error();
             error.code = code;
@@ -226,7 +228,34 @@ namespace API_Maestros_Core.BLL
         }
 
 
+        public static List<TipoDeError> LlenarTiposDeError()
+        {
+            List<TipoDeError> lstTiposDeError = new List<TipoDeError>();
 
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cUsuarioIncorrecto, "Usuario y / o contraseña incorrectos",(int)HttpStatusCode.Unauthorized,"I"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cTokenInvalido, "Token invalido. Acceso denegado", (int)HttpStatusCode.Unauthorized, "I"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cTokenNoEncontrado, "No se encontro el Token en el Request", (int)HttpStatusCode.Unauthorized, "I"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cTokenEncabezadoNoEncontrado, "No se encontro el Token en el Request", (int)HttpStatusCode.Unauthorized, "I"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cNuevoToken, "No está autorizado a acceder al servicio. No se encontró el token del usuario", (int)HttpStatusCode.Unauthorized, "I"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cPermisoDenegadoCostos, "Permiso Denegado en costos", (int)HttpStatusCode.Unauthorized, "I"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cURLNoPermitida, "URL o IP Restringida", (int)HttpStatusCode.Unauthorized, "I"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cEncabezadoNoEncontrado, "No se encontro el Encabezado en la solicitud", (int)HttpStatusCode.Unauthorized, "I"));
+
+
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cSintaxisIncorrecta, "Sintaxis incorrecta de categorias a filtrar", (int)HttpStatusCode.BadRequest, "E"));
+
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cErrorConversionDato, "Se definio un formato de fecha incorrecto", (int)HttpStatusCode.InternalServerError, "E"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cErrorInternoAlDevolverToken, "Error al devolver el token", (int)HttpStatusCode.InternalServerError, "E"));
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicación", (int)HttpStatusCode.InternalServerError, "E"));
+            
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cModeloNoValido, "Modelo no válido", (int)HttpStatusCode.UnsupportedMediaType, "E"));
+
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cCodigoNoHalladoEnLaSolicitud, "No se encontró codigo o expresión a buscar", (int)HttpStatusCode.NoContent, "I"));
+
+            lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", (int)HttpStatusCode.BadRequest, "E"));
+
+            return lstTiposDeError;
+        }
 
 
         #region Constantes de Endpoints
@@ -243,6 +272,9 @@ namespace API_Maestros_Core.BLL
         public const string TipoDeAPI = "LEER_MAESTROS";
         public static string QueEstabaHaciendo = "";
         #endregion
+
+
+        
 
     }
 }

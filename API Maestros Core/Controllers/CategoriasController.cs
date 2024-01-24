@@ -29,6 +29,8 @@ namespace API_Maestros_Core.Controllers
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
         public static string strProtocolo = "";
+        public static List<TipoDeError> lstTipoDeError = APIHelper.LlenarTiposDeError();
+        public TipoDeError oTipoError;
         #endregion
 
         // GET: api/<CategoriasController>
@@ -55,7 +57,8 @@ namespace API_Maestros_Core.Controllers
 
             if (!ModelState.IsValid)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no válido", "E", strUsuarioID,APIHelper.CategoriasGetList);
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cModeloNoValido);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID,APIHelper.CategoriasGetList);
                 oRespuesta.success = false;
                 return StatusCode((int)APIHelper.cCodigosError.cModeloNoValido, oRespuesta);
             }
@@ -67,7 +70,8 @@ namespace API_Maestros_Core.Controllers
 
                     if (!HabilitadoPorToken)
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E", strUsuarioID, APIHelper.CategoriasGetList);
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetList);
                         oRespuesta.success = false;                        
                         return Unauthorized(oRespuesta);                        
                     }
@@ -102,14 +106,16 @@ namespace API_Maestros_Core.Controllers
                             }
                             else
                             {
-                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CategoriasGetList);
+                                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cTokenInvalido);
+                                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetList);
                                 oRespuesta.success = false;
                                 return Unauthorized(oRespuesta);
                             }
                         }
                         else
                         {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetItem);
+                            oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetItem);
                             oRespuesta.success = false;
                             return BadRequest(oRespuesta);
                         }
@@ -117,9 +123,10 @@ namespace API_Maestros_Core.Controllers
                 }
                 catch (Exception ex)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetList);
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Descripcion: " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetList);
                     oRespuesta.success = false;                                       
-                    return StatusCode(500, oRespuesta);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
                 }
             }
 
@@ -145,7 +152,8 @@ namespace API_Maestros_Core.Controllers
 
             if (!ModelState.IsValid)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);                
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cModeloNoValido);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);                
                 oRespuesta.success = false;
                 return StatusCode((int)APIHelper.cCodigosError.cModeloNoValido, oRespuesta);
             
@@ -156,7 +164,8 @@ namespace API_Maestros_Core.Controllers
                 {
                     if (!HabilitadoPorToken)
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);                       
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);                       
                         oRespuesta.success = false;
                         return Unauthorized(oRespuesta);
                     }
@@ -193,7 +202,8 @@ namespace API_Maestros_Core.Controllers
                                     }
                                     else
                                     {
-                                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                                         oRespuesta.success = false;
                                         return Unauthorized(oRespuesta);
                                     }
@@ -213,7 +223,8 @@ namespace API_Maestros_Core.Controllers
                         }
                         else
                         {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetItem);
+                            oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetItem);
                             oRespuesta.success = false;
                             return BadRequest(oRespuesta);
                         }
@@ -221,9 +232,10 @@ namespace API_Maestros_Core.Controllers
                 }
                 catch (Exception ex)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);                   
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Descripcion: " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);                   
                     oRespuesta.success = false;
-                    return StatusCode(500, oRespuesta);
+                    return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
                 }
             }
         }
@@ -246,7 +258,8 @@ namespace API_Maestros_Core.Controllers
             {
                 if(!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cModeloNoValido);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -263,7 +276,8 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -271,9 +285,10 @@ namespace API_Maestros_Core.Controllers
             }
             catch(Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Rubros. "+ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError+" Error al devolver Rubros. "+ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                 oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
+                return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
             }
         }
 
@@ -296,7 +311,8 @@ namespace API_Maestros_Core.Controllers
             {
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -313,7 +329,8 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.DescripcionError, strUsuarioID, APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -321,9 +338,10 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver SubRubros. "+ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" SubRubros. "+ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                 oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
+                return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
             }
         }
 
@@ -345,7 +363,8 @@ namespace API_Maestros_Core.Controllers
             {
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cModeloNoValido);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -363,7 +382,8 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -371,9 +391,10 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver SubSubRubros. " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Error al devolver SubSubRubros. " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                 oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
+                return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
             }
         }
 
@@ -396,7 +417,8 @@ namespace API_Maestros_Core.Controllers
             {
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -413,7 +435,8 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -421,9 +444,10 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Filtro1. Descripcion: "+ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Error al devolver Filtro1. Descripcion: "+ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                 oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
+                return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
             }
         }
 
@@ -446,7 +470,8 @@ namespace API_Maestros_Core.Controllers
             {
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -463,7 +488,8 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -471,9 +497,10 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Filtro2 " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Error al devolver Filtro2 " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                 oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
+                return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
             }
         }
 
@@ -495,7 +522,8 @@ namespace API_Maestros_Core.Controllers
             {
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cModeloNoValido, "Modelo no valido", "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                    oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                     oRespuesta.success = false;
                     return Unauthorized(oRespuesta);
                 }
@@ -512,7 +540,8 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -520,9 +549,10 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error al devolver Filtro3. " + ex.Message, "E", strUsuarioID, APIHelper.CategoriasGetItem);
+                oTipoError = lstTipoDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Error al devolver Filtro3. " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CategoriasGetItem);
                 oRespuesta.success = false;
-                return StatusCode(500, oRespuesta);
+                return StatusCode((int)HttpStatusCode.InternalServerError, oRespuesta);
             }
         }
 

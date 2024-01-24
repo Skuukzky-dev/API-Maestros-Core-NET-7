@@ -26,6 +26,8 @@ namespace API_Maestros_Core.Controllers
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
         public static string strProtocolo = "";
+        public static List<TipoDeError> lstTipoErrores = APIHelper.LlenarTiposDeError();
+        public TipoDeError oTipoError;
         #endregion
 
         // GET: api/<CanalesDeVentaController>
@@ -58,7 +60,8 @@ namespace API_Maestros_Core.Controllers
                 
                 if (!HabilitadoPorToken)
                 {
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, "No esta autorizado a acceder al servicio. No se encontro el token del usuario. Token Enviado: " + TokenEnviado, "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
+                    oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
+                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CanalesDeVentaGetList);
                     oRespuesta.success = false;                   
                     return Unauthorized(oRespuesta);
                 }
@@ -85,14 +88,16 @@ namespace API_Maestros_Core.Controllers
                         }
                         else
                         {
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, "No esta autorizado a acceder al recurso", "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
+                            oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cTokenInvalido);
+                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CanalesDeVentaGetList);
                             oRespuesta.success = false;
                             return Unauthorized(oRespuesta);
                         }
                     }
                     else
                     {
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", "E", strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -100,7 +105,8 @@ namespace API_Maestros_Core.Controllers
             }
             catch(Exception ex)
             {
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, "Error interno de la aplicacion. Descripcion: " + ex.Message, "E", strUsuarioID, APIHelper.CanalesDeVentaGetList);
+                oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Descripcion: " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CanalesDeVentaGetList);
                 oRespuesta.success = false;               
                 return Unauthorized(oRespuesta);
             }
