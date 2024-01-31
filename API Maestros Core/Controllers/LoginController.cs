@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -36,6 +38,8 @@ namespace API_Maestros_Core.Controllers
         {
             try
             {
+                APIHelper.SetearConnectionString();
+
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 HttpContext context = HttpContext;
                 HttpResponseMessage message = new HttpResponseMessage();
@@ -44,7 +48,6 @@ namespace API_Maestros_Core.Controllers
                 {                   
                     if (credenciales.Password.Length > 0)
                     {
-                      
                         GESI.CORE.BO.Verscom2k.APILogin APIToken = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem("", credenciales.Username);
 
                         DateTime dtFechaObtenidaSQL = GESI.CORE.DAL.Verscom2k.TablasGeneralesGESIDB.ObtenerFechaYHoraSQL(); // FECHA ACTUAL . HAY QUE SACARLA DESDE EL SERVIDOR DE LA BASE NO DE LA HORA DE LA MAQUINA
@@ -61,9 +64,7 @@ namespace API_Maestros_Core.Controllers
                         {
                             TimeSpan horasDiferencia = dtFechaObtenidaSQL - APIToken.FechaYHora;
                             int intHorasDiferencia = (int)horasDiferencia.TotalHours;
-                   
-                            Logger.LoguearErrores("FechaObtenidaSQL: " + dtFechaObtenidaSQL + " | FechaObtenidaAPILoginTokens: " + APIToken.FechaYHora + " | Horas de diferencia: " + intHorasDiferencia,"I",credenciales.Username,"api/Login");
-                   
+                            
                             if(intHorasDiferencia >= Convert.ToInt32(TiempoExpiracionToken)) // EXPIRÓ EL TIEMPO DEL TOKEN . Genera un nuevo Token
                             {
                                 var token = authService.GenerateToken(dtFechaObtenidaSQL, credenciales.Username, validez);
@@ -98,7 +99,6 @@ namespace API_Maestros_Core.Controllers
                             RespuestaToken respuestaToken = DevolverRespuestaTokenYActualizarEnBase(token, credenciales.Username, dtFechaObtenidaSQL, context.Request.HttpContext.Connection.RemoteIpAddress.ToString(), APIToken.FechaYHora);
                             return Ok(respuestaToken);
                         }
-                        
                         
                     }
                     else

@@ -45,11 +45,9 @@ namespace API_Maestros_Core.Controllers
             #region ConnectionStrings
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
-            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);            
-            
-            
-         //   SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-         //   GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+            APIHelper.SetearConnectionString();
             #endregion
 
             RespuestaConCanalesDeVenta oRespuesta = new RespuestaConCanalesDeVenta();

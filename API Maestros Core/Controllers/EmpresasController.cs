@@ -35,6 +35,7 @@ namespace API_Maestros_Core.Controllers
             RespuestaSucursales oRespuesta = new RespuestaSucursales();
             try
             {
+                APIHelper.SetearConnectionString();
                 string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
                 if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend

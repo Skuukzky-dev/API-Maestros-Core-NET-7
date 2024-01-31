@@ -5,6 +5,7 @@ using GESI.GESI.BLL.wsfev1;
 //using GESI.CORE.BO.Verscom2k;
 //using GESI.GESI.BO;
 using Newtonsoft.Json;
+using System.ComponentModel.Design;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -41,12 +42,13 @@ namespace API_Maestros_Core.BLL
         /// </summary>
         /// <param name="strExpresionBusqueda"></param>
         /// <returns></returns>
-        public static RespuestaConProductosHijos GetList(String strExpresionBusqueda, int[] CanalesDeVenta, string costoSolicitado, string costoUsuario, int pageNumber, int pageSize, string EstadosProductos, string CategoriasIDs, string imagenes, string stock = "N", int[] Almacenes = null,string publicaEcommerce = "T")  // Usa GetSearchResults
+        public static RespuestaConProductosHijos GetList(String strExpresionBusqueda, int[] CanalesDeVenta, string costoSolicitado, string costoUsuario, int pageNumber, int pageSize, string EstadosProductos, string CategoriasIDs, string imagenes, string stock = "N", int[] Almacenes = null,string publicaEcommerce = "T",int canalDeVentaID = 0,string orden = "O")  // Usa GetSearchResults
         {
             try
             {
-                
+
                 #region ConnectionStrings
+                APIHelper.SetearConnectionString();
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();                               
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
                 System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
@@ -73,44 +75,98 @@ namespace API_Maestros_Core.BLL
                 int? publicaEcommerceint = FiltroEcommerce(publicaEcommerce);
                 strExpresionBusqueda = Uri.UnescapeDataString(strExpresionBusqueda);
                 List<string> lstCodigosProducto = GESI.ERP.Core.BLL.ProductosManager.GetSearchResults(strExpresionBusqueda, strEstado: EstadosProductos, strCategorias: CategoriasIDs,intPublicaECommerce: (ushort?)publicaEcommerceint);
-                List<string> nuevosplit = lstCodigosProducto.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-                string codigos = string.Join(",", nuevosplit);
-                
-                APIHelper.QueEstabaHaciendo = "Verificando permisos en costos";
 
-                if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
+                if (canalDeVentaID == 0)
                 {
-                    APIHelper.QueEstabaHaciendo = "Obteniendo productos";
+                    List<string> nuevosplit = lstCodigosProducto.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                    string codigos = string.Join(",", nuevosplit);
 
-                    lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
+                    APIHelper.QueEstabaHaciendo = "Verificando permisos en costos";
 
-                    foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                    if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
                     {
-                        HijoProductos oHijo = new HijoProductos(oPrd);
+                        APIHelper.QueEstabaHaciendo = "Obteniendo productos";
 
-                        if (oPrd.Categorias?.Count > 0)
+                        lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
+
+                        foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
                         {
-                            foreach (GESI.ERP.Core.BO.cCategoriaXProducto oCategoria in oPrd.Categorias)
+                            HijoProductos oHijo = new HijoProductos(oPrd);
+
+                            if (oPrd.Categorias?.Count > 0)
                             {
-                                oHijo.ListaDeCategorias.Add(oCategoria.CategoriaID);
+                                foreach (GESI.ERP.Core.BO.cCategoriaXProducto oCategoria in oPrd.Categorias)
+                                {
+                                    oHijo.ListaDeCategorias.Add(oCategoria.CategoriaID);
+                                }
                             }
+                            lstHijos.Add(oHijo);
                         }
-                        lstHijos.Add(oHijo);
+                        oRespuesta.success = true;
                     }
-                    oRespuesta.success = true;
+                    else
+                    {
+
+                        lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
+
+                        foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                        {
+                            lstHijos.Add(new HijoProductos(oPrd));
+                        }
+
+                        oTipo = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
+                        oRespuesta.error.message = oTipo.DescripcionError;
+                        oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
+                        oRespuesta.success = true;
+                    }
                 }
                 else
                 {
-                    lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
-                    foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                    #region ORDEN
+                    string codigos = string.Join(",", lstCodigosProducto);
+                    if (VerificarPermisoSobreCostos(costoUsuario, costoSolicitado)) // Verifico si tiene permisos para devolver costos
                     {
-                        lstHijos.Add(new HijoProductos(oPrd));
-                    }
+                        APIHelper.QueEstabaHaciendo = "Obteniendo productos";
 
-                    oTipo = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
-                    oRespuesta.error.message = oTipo.DescripcionError;
-                    oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
-                    oRespuesta.success = true;
+                        lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, new int[]{canalDeVentaID}, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
+                        
+                        lstProductos = lstProductos.OrderBy(x => x.Precios?.FirstOrDefault()?.PrecioFinal).ToList();
+                        lstProductos = lstProductos.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+                        foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                        {
+                            HijoProductos oHijo = new HijoProductos(oPrd);
+
+                            if (oPrd.Categorias?.Count > 0)
+                            {
+                                foreach (GESI.ERP.Core.BO.cCategoriaXProducto oCategoria in oPrd.Categorias)
+                                {
+                                    oHijo.ListaDeCategorias.Add(oCategoria.CategoriaID);
+                                }
+                            }
+                            lstHijos.Add(oHijo);
+                        }
+                        oRespuesta.success = true;
+                    }
+                    else
+                    {
+
+                        lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, new int[] { canalDeVentaID }, "N", EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
+                        
+                        lstProductos = lstProductos.OrderBy(x => x.Precios?.FirstOrDefault()?.PrecioFinal).ToList();
+                        lstProductos = lstProductos.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+                        foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
+                        {
+                            lstHijos.Add(new HijoProductos(oPrd));
+                        }
+
+                        oTipo = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cPermisoDenegadoCostos);
+                        oRespuesta.error.message = oTipo.DescripcionError;
+                        oRespuesta.error.code = (int)APIHelper.cCodigosError.cPermisoDenegadoCostos;
+                        oRespuesta.success = true;
+                    }
+                    #endregion
                 }
 
                 APIHelper.QueEstabaHaciendo = "Completando paginado";
@@ -127,6 +183,8 @@ namespace API_Maestros_Core.BLL
                 if(lstCodigosProducto?.Count > 0)
                 {
                     cantidadreg = lstCodigosProducto.Count;
+
+
                 }
 
                 Logger.LoguearErrores("GetSearchResults: Exitoso Expresion:"+ strExpresionBusqueda+" Cantidad: "+ cantidadreg, "I",_SessionMgr.UsuarioID,APIHelper.ProductosGetSearchResult);
@@ -149,7 +207,7 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
-               
+                APIHelper.SetearConnectionString();
                 RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
                 oRespuesta.paginacion = new Paginacion();
 
@@ -313,6 +371,7 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+                APIHelper.SetearConnectionString();
                 RespuestaProductosGetItem oRespuesta = new RespuestaProductosGetItem();
 
                 #region ConnectionStrings
@@ -453,6 +512,7 @@ namespace API_Maestros_Core.BLL
         /// <param name="Almacenes"></param>
         public static RespuestaProductosGetExistencias GetExistencias(string codigos, int pageNumber = 1, int pageSize = 10,int[] Almacenes = null)
         {
+            APIHelper.SetearConnectionString();
             RespuestaProductosGetExistencias oRespuesta = new RespuestaProductosGetExistencias();
             #region ConnectionStrings
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
@@ -540,6 +600,7 @@ namespace API_Maestros_Core.BLL
         /// <param name="CanalesDeVenta"></param>
         public static RespuestaProductosGetPrecios GetPrecios(string codigos, int[] CanalesDeVenta, int pageNumber = 1, int pageSize = 10, string fechamodificaciones = "", string EstadosProductos = "A")
         {
+            APIHelper.SetearConnectionString();
             RespuestaProductosGetPrecios oRespuesta = new RespuestaProductosGetPrecios();
             #region ConnectionStrings
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
@@ -618,6 +679,8 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+                APIHelper.SetearConnectionString();
+
                 RespuestaProductosGetPrecios oRespuesta = new RespuestaProductosGetPrecios();
                 List<GESI.ERP.Core.BO.cProducto> lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta,DevolverCostos,EstadoProductos,categoriasIDs,DevuelveImagenes);
                 List<GESI.ERP.Core.BO.cPrecioProducto> lstPrecios = new List<GESI.ERP.Core.BO.cPrecioProducto>();

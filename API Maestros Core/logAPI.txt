@@ -70,3 +70,30 @@ Error de inicio de sesión del usuario 'uAPI-ERP-LecturaMaestros'.
 Error de inicio de sesión del usuario 'uAPI-ERP-LecturaMaestros'.
 23/1/2024 13:00:38|I|REVENTA|api/Login|200|FechaObtenidaSQL: 23/1/2024 13:00:11 | FechaObtenidaAPILoginTokens: 23/1/2024 09:11:00 | Horas de diferencia: 3
 23/1/2024 13:01:07|I|REVENTA|Productos/GetItem|4041|No se encontró codigo o expresión a buscar
+26/1/2024 09:49:12|I|REVENTA|api/Login|200|FechaObtenidaSQL: 26/1/2024 09:49:10 | FechaObtenidaAPILoginTokens: 26/1/2024 08:53:00 | Horas de diferencia: 0
+26/1/2024 09:49:28|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:ceramico Cantidad: 345
+26/1/2024 09:53:06|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:ceramico Cantidad: 345
+26/1/2024 09:56:20|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:blanco Cantidad: 609
+26/1/2024 09:57:06|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:blanco Cantidad: 609
+26/1/2024 09:57:30|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:blanco Cantidad: 609
+26/1/2024 09:57:45|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:blanco Cantidad: 609
+26/1/2024 09:58:39|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:blanco Cantidad: 609
+26/1/2024 09:59:09|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:bacha deca Cantidad: 140
+30/1/2024 16:18:13|I|REVENTA|api/Login|200|FechaObtenidaSQL: 30/1/2024 16:18:12 | FechaObtenidaAPILoginTokens: 30/1/2024 16:00:00 | Horas de diferencia: 0
+30/1/2024 16:19:13|I|REVENTA|Productos/GetItem|200|GetItem: Exitoso ProductoID: 010773
+30/1/2024 16:21:27|I|REVENTA|Productos/GetItem|200|GetItem: Exitoso ProductoID: 010773
+30/1/2024 16:22:22|I|REVENTA|Productos/GetItem|200|GetItem: Exitoso ProductoID: 010773
+30/1/2024 16:23:03|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:ceramico Cantidad: 345
+30/1/2024 16:23:06|I|REVENTA|Productos/GetItem|200|GetItem: Exitoso ProductoID: 010773
+30/1/2024 16:23:08|I|REVENTA|Productos/GetItem|200|GetItem: Exitoso ProductoID: 010773
+30/1/2024 16:23:15|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:ceramico Cantidad: 345
+30/1/2024 16:23:16|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:ceramico Cantidad: 345
+30/1/2024 16:23:18|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:ceramico Cantidad: 345
+30/1/2024 16:23:26|I|REVENTA|Productos/GetSearchResult|200|GetSearchResults: Exitoso Expresion:ceramico Cantidad: 345
+30/1/2024 16:23:29|I|REVENTA|Productos/GetItem|200|GetItem: Exitoso ProductoID: 010773
+31/1/2024 11:13:59|I|REVENTA|api/Login|5001|Error al devolver el token. Descripcion: No se puede abrir la base de datos "cli_Urbania" solicitada por el inicio de sesión. Error de inicio de sesión.
+Error de inicio de sesión del usuario 'uAPI-ERP-LecturaMaestros'.
+31/1/2024 11:15:36|I|REVENTA|api/Login|5001|Error al devolver el token. Descripcion: Keyword not supported: 'r2pyzyincbnz1bgq+dm5xd2xtbnn2emtddnprmzm6mtxmd2h1bgpriuzqc2jvegy+znvoyfh7ywjxcma8whxkcynsqz54sk9kme5rutbvzgr3fnfiugpkdhd7bnq+wwb0dskabnnnrlpnzexrynlurhrwbmjzah1gxj5wdg13cm9taepidwx/zfnofhrtd1xkdxzgu3n4bjo'.
+31/1/2024 11:16:11|I|REVENTA|api/Login|5001|Error al devolver el token. Descripcion: Keyword not supported: 'r2pyzyincbnz1bgq+dm5xd2xtbnn2emtddnprmzm6mtxmd2h1bgpriuzqc2jvegy+znvoyfh7ywjxcma8whxkcynsqz54sk9kme5rutbvzgr3fnfiugpkdhd7bnq+wwb0dskabnnnrlpnzexrynlurhrwbmjzah1gxj5wdg13cm9taepidwx/zfnofhrtd1xkdxzgu3n4bjo'.
+31/1/2024 11:42:10|I|REVENTA|api/Login|200|FechaObtenidaSQL: 31/1/2024 11:42:08 | FechaObtenidaAPILoginTokens: 31/1/2024 09:10:00 | Horas de diferencia: 2
+31/1/2024 11:42:24|I|REVENTA|Productos/GetList|200|GetList: Existoso

@@ -2,6 +2,8 @@
 using GESI.CORE.BLL;
 using GESI.CORE.BO.Verscom2k;
 using GESI.CORE.DAL.Verscom2k;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Net;
 
 namespace API_Maestros_Core.BLL
@@ -255,6 +257,27 @@ namespace API_Maestros_Core.BLL
             lstTiposDeError.Add(new TipoDeError((int)cCodigosError.cProtocoloIncorrecto, "Protocolo Incorrecto en la solicitud", (int)HttpStatusCode.BadRequest, "E"));
 
             return lstTiposDeError;
+        }
+
+
+        /// <summary>
+        /// Setea el connectionString en caso de cambiar la base de datos desde config
+        /// </summary>
+        public static void SetearConnectionString()
+        {
+            try
+            {
+                ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
+                System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+                
+                string connectionenstring = GESI.CORE.SEC.Seguridad.DesencriptarTexto(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k|enc"].ConnectionString);
+                
+                SqlConnection sqlapi = new SqlConnection(connectionenstring);
+                GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+                GESI.ERP.Core.BLL.BASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
+            }
+            catch(Exception ex) { Logger.LoguearErrores("Error al setear connectionString: " + ex.Message, "E", "Usuario", "--"); }
         }
 
 

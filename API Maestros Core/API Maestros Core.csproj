@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="CORE.SEC">
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\CORE.SEC.dll</HintPath>
+    </Reference>
     <Reference Include="GESI.CORE.BLL">
       <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.BLL.dll</HintPath>
     </Reference>

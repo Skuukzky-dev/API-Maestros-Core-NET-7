@@ -112,7 +112,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         },
         OnTokenValidated = async(context) =>
         {
-          //  GESI.CORE.BO.Verscom2k.APILogin MiObjetoLogin = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.GetItem(context.SecurityToken["RowData"]);
+          
             var accessToken = context.SecurityToken as JwtSecurityToken;
             if (accessToken != null)
             {
@@ -120,13 +120,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 if (identity != null)
                 {
                     identity.AddClaim(new Claim("access_token", accessToken.RawData));
-                    ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
-                    fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
-                    System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-
-                    //SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-                    //GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+                    APIHelper.SetearConnectionString();
 
                     GESI.CORE.BO.Verscom2k.APILogin MiObjetoLogin = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem(accessToken.RawData);
                    
@@ -138,8 +133,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                             ProductosController.TokenEnviado = accessToken.RawData;
                             ProductosController.strProtocolo = context.Request.Scheme;
                             var referrerUrl = context.Request.Headers[":authority"].ToString();
-                            // context.HttpContext.Response
-
+            
 
                             CanalesDeVentaController.strUsuarioID = MiObjetoLogin.UsuarioID;
                             CanalesDeVentaController.HabilitadoPorToken = true;

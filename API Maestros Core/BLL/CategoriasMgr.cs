@@ -23,6 +23,8 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+                APIHelper.SetearConnectionString();
+
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.CategoriasManager.ERPsessionManager = _SessionERP;
                 GESI.ERP.Core.BLL.CategoriasManager.SessionManager = _SessionMgr;
@@ -58,6 +60,7 @@ namespace API_Maestros_Core.BLL
         {
             try
             {
+                APIHelper.SetearConnectionString();
 
                 GESI.ERP.Core.SessionManager _SessionERP = new GESI.ERP.Core.SessionManager();
                 GESI.ERP.Core.BLL.CategoriasManager.ERPsessionManager = _SessionERP;
@@ -116,6 +119,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static RespuestaConRubros RubrosGetList(int pageNumber = 1, int pageSize = 10)
         {
+            APIHelper.SetearConnectionString();
 
             GESI.ERP.Core.BLL.V2KRubrosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.BLL.V2KRubrosManager.ERPsessionManager = new GESI.ERP.Core.SessionManager();
@@ -162,6 +166,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static RespuestaConSubRubros SubRubrosGetList(int pageNumber = 1, int pageSize = 10)
         {
+            APIHelper.SetearConnectionString();
 
             GESI.ERP.Core.BLL.V2KRubrosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.BLL.V2KRubrosManager.ERPsessionManager = new GESI.ERP.Core.SessionManager();
@@ -209,6 +214,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static RespuestaConSubSubRubros SubSubRubrosGetList(int pageNumber = 1, int pageSize = 10)
         {
+            APIHelper.SetearConnectionString();
 
             GESI.ERP.Core.BLL.V2KRubrosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.BLL.V2KRubrosManager.ERPsessionManager = new GESI.ERP.Core.SessionManager();
@@ -254,6 +260,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static RespuestaConFiltroArticulos1 FiltroArticulos1GetList(int pageNumber = 1, int pageSize = 10)
         {
+            APIHelper.SetearConnectionString();
 
             GESI.ERP.Core.BLL.V2KRubrosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.BLL.V2KRubrosManager.ERPsessionManager = new GESI.ERP.Core.SessionManager();
@@ -299,6 +306,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static RespuestaConFiltroArticulos2 FiltroArticulos2GetList(int pageNumber = 1, int pageSize = 10)
         {
+            APIHelper.SetearConnectionString();
 
             GESI.ERP.Core.BLL.V2KRubrosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.BLL.V2KRubrosManager.ERPsessionManager = new GESI.ERP.Core.SessionManager();
@@ -343,6 +351,7 @@ namespace API_Maestros_Core.BLL
         /// <returns></returns>
         public static RespuestaConFiltroArticulos3 FiltroArticulos3GetList(int pageNumber = 1, int pageSize = 10)
         {
+            APIHelper.SetearConnectionString();
 
             GESI.ERP.Core.BLL.V2KRubrosManager.SessionManager = _SessionMgr;
             GESI.ERP.Core.BLL.V2KRubrosManager.ERPsessionManager = new GESI.ERP.Core.SessionManager();

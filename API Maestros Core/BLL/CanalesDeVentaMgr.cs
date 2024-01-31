@@ -28,7 +28,8 @@ namespace API_Maestros_Core.BLL
             RespuestaConCanalesDeVenta oRespuesta = null;
             try
             {
-                
+                APIHelper.SetearConnectionString();
+
                 #region SessionManagers
                 oRespuesta = new RespuestaConCanalesDeVenta();
                 GESI.GESI.BLL.TablasGeneralesGESIMgr.SessionManager = _SessionMgr;
