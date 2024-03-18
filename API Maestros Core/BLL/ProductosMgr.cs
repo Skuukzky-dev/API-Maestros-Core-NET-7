@@ -88,7 +88,7 @@ namespace API_Maestros_Core.BLL
                         APIHelper.QueEstabaHaciendo = "Obteniendo productos";
 
                         lstProductos = GESI.ERP.Core.BLL.ProductosManager.GetList(codigos, CanalesDeVenta, costoSolicitado, EstadosProductos, CategoriasIDs, imagenes, stock, Almacenes);
-
+                        
                         foreach (GESI.ERP.Core.BO.cProducto oPrd in lstProductos)
                         {
                             HijoProductos oHijo = new HijoProductos(oPrd);
@@ -215,8 +215,8 @@ namespace API_Maestros_Core.BLL
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
                 fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
                 System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-             //   SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-             //   GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
+             //   GESI.ERP.Core.BLL.ProductosManager.ConnectionStringEstoEstaMal = ConnectionString;
+                // GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
              //   GESI.ERP.Core.BLL.BASEManager.ConnectionStringEstoEstaMal = sqlapi.ConnectionString;
                 #endregion
 

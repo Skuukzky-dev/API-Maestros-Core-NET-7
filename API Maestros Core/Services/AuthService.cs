@@ -78,31 +78,7 @@ namespace API_Maestros_Core.Services
 
             try
             {
-                /*
-                byte[] base64EncodedBytes = null;
-                String passSinCaracteres = "";
-                String strUsuarioSinCaracteres = "";
-                passSinCaracteres = strPassword;
-                if (strPassword.Length > 0)
-                {
-                    if (strPassword.Length > 2)
-                        passSinCaracteres = strPassword.Remove(3, 1);
-                    base64EncodedBytes = System.Convert.FromBase64String(passSinCaracteres);
-                    passSinCaracteres = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-                }
-                else
-                {
-                    passSinCaracteres = strPassword;
-                }
-
-                strUsuarioSinCaracteres = strUsuarioID;
-                if (strUsuarioSinCaracteres.Length > 2) ;
-                strUsuarioSinCaracteres = strUsuarioID.Remove(3, 1);
-                base64EncodedBytes = System.Convert.FromBase64String(strUsuarioSinCaracteres);
-                strUsuarioSinCaracteres = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-                */
-
-                //  GESI.CORE.DAL.DBHelper.
+               
                 SqlConnection sql = GESI.CORE.DAL.DBHelper.DevolverConnectionStringCORE();
                 
 
@@ -111,20 +87,9 @@ namespace API_Maestros_Core.Services
                 System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
                                
                
-                //SqlConnection sqlapi = new SqlConnection(config.ConnectionStrings.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-                //GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
-
-                //Logger.LoguearErrores("ConnectionString app.config :" + connectionString);
-
-
-                // SqlConnection sqlapi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-
-                // Logger.LoguearErrores("ConnectionStringPaz: " + sqlapi.ConnectionString, "I");
                 bool Habilitado = false;
-
                 
-
-                bool login = GESI.CORE.BLL.UsuariosMgr.Login(strUsuarioID, strPassword);
+                bool login =  GESI.CORE.BLL.UsuariosMgr.Login(strUsuarioID, strPassword);
                 List<GESI.CORE.BO.Verscom2k.HabilitacionesAPI> lstHabilitacionesAPI =  GESI.CORE.BLL.Verscom2k.HabilitacionesAPIMgr.GetList(strUsuarioID);
 
                 if(lstHabilitacionesAPI?.Count > 0)
@@ -133,9 +98,7 @@ namespace API_Maestros_Core.Services
                     {
                         Habilitado = true;
                     }
-                }
-
-              
+                }              
                 return Habilitado;
 
             }

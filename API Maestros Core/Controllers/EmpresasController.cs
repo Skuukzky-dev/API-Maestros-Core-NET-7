@@ -1,5 +1,6 @@
 ﻿using API_Maestros_Core.BLL;
 using API_Maestros_Core.Models;
+using GESI.CORE.BLL;
 using GESI.ERP.Core.BO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,15 @@ namespace API_Maestros_Core.Controllers
 
                     if (MiSessionMgrAPI.Habilitado)
                     {
+                        BLL.EmpresasMgr._MiApiSessionMgr = MiSessionMgrAPI;
+                        oRespuesta = BLL.EmpresasMgr.DevolverSucursales();
+
+                        if (oRespuesta.Sucursales.Count > 0)
+                            return Ok(oRespuesta);
+                        else
+                            return NoContent();
+
+                        /*
                         List<SucursalHija> lstSucursalesFinales = new List<SucursalHija>();
                         GESI.CORE.BLL.SucursalesMgr.SessionManager = MiSessionMgrAPI.SessionMgr;
 
@@ -74,7 +84,7 @@ namespace API_Maestros_Core.Controllers
                         else
                         {
                             return NoContent();
-                        }
+                        }*/
                     }
                     else
                     {
@@ -102,6 +112,57 @@ namespace API_Maestros_Core.Controllers
                
             }
         }
+
+        [HttpGet("GetEmpresas")]
+        [EnableCors("MyCorsPolicy")]
+        public IActionResult GetEmpresasPorUsuario(int pageNumber = 1, int pageSize = 10)
+        {
+            try
+            {
+                RespuestaEmpresas oRespuesta = new RespuestaEmpresas();
+                APIHelper.SetearConnectionString();
+                string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
+
+
+                if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                {
+                    APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+
+                    if (MiSessionMgrAPI.Habilitado)
+                    {
+                      if(MiSessionMgrAPI.SessionMgr.UsuarioID.Length > 0)
+                      {
+                            BLL.EmpresasMgr._MiApiSessionMgr = MiSessionMgrAPI;
+                            oRespuesta = BLL.EmpresasMgr.DevolverEmpresas(pageNumber, pageSize);
+                            if (oRespuesta.Empresas.Count > 0)
+                                return Ok(oRespuesta); //TODO: Buscar las empresas por usuario
+                            else
+                                return NoContent();
+                      }
+                      else
+                      {
+                            return Unauthorized();
+                      }
+
+                    }
+                    else
+                    {
+                        return Unauthorized();
+                    }
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                return Unauthorized();
+            }
+        }
+
     }
 
 

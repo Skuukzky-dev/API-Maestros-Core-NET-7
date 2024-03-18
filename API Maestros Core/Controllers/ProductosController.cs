@@ -56,9 +56,11 @@ namespace API_Maestros_Core.Controllers
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaConProductosHijos))]
 
-        public IActionResult Get( int pageNumber = 1, int pageSize = 10, string costos = "N",string imagenes = "N",string fechamodificaciones = "",string stock = "N",string publicaecommerce = "T")
+        public IActionResult Get(int pageNumber = 1, int pageSize = 10, string costos = "N",string imagenes = "N",string fechamodificaciones = "",string stock = "N",string publicaecommerce = "T")
         {
             #region ConnectionsStrings
+            APIHelper.SetearConnectionString();
+
             RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -168,10 +170,16 @@ namespace API_Maestros_Core.Controllers
         [SwaggerResponse(200, "OK", typeof(RespuestaConProductosHijos))]
         public IActionResult Get(string productoID = "",int canalDeVentaID = 0,string costos = "N",string imagenes = "N",string stock = "N")
         {
+
+            APIHelper.SetearConnectionString();
+
             RespuestaProductosGetItem oRespuesta = new RespuestaProductosGetItem();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+
+
+
             ProductosMgr.lstTipoErrores = lstTiposDeError;
             if (!ModelState.IsValid)
             {
@@ -207,9 +215,6 @@ namespace API_Maestros_Core.Controllers
                         else
                         {
 
-                      //      SqlConnection sqlapi = new SqlConnection(config.
-                      //      s.ConnectionStrings["ConexionVersCom2k"].ConnectionString);
-                       //     GESI.CORE.DAL.Configuracion._ConnectionString = sqlapi.ConnectionString;
                             try
                             {
                                 if (!HabilitadoPorToken)
@@ -309,6 +314,8 @@ namespace API_Maestros_Core.Controllers
         public IActionResult Get(string expresion = "",int pageNumber = 1 , int pageSize = 10,string costos = "N",string categoriasafiltrar = "",string imagenes = "N",string stock = "N",string publicaecommerce = "T",int canaldeventaID = 0,string orden  = "O")
         {
             #region ConnectionStrings
+            APIHelper.SetearConnectionString();
+
             RespuestaConProductosHijos oRespuesta = new RespuestaConProductosHijos();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -452,6 +459,8 @@ namespace API_Maestros_Core.Controllers
         {
 
             #region ConnectionStrings
+
+            APIHelper.SetearConnectionString();
             RespuestaProductosGetExistencias oRespuesta = new RespuestaProductosGetExistencias();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
@@ -551,6 +560,8 @@ namespace API_Maestros_Core.Controllers
         public IActionResult GetPrecios(string codigos = "", int pageNumber = 1, int pageSize = 10,string fechamodificaciones = "")
         {
             #region ConnectionStrings
+
+            APIHelper.SetearConnectionString();
             RespuestaProductosGetPrecios oRespuesta = new RespuestaProductosGetPrecios();
             ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";

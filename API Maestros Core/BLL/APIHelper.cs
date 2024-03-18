@@ -82,7 +82,7 @@ namespace API_Maestros_Core.BLL
                     #region CanalesDeVenta
 
                     // Devolver Canales de Venta habilitados por usuario
-
+                    
                     List<GESI.ERP.Core.BO.cCanalDeVenta> lstCanalesXUsuario = MiSessionMgrAPI.ERPSessionMgr.GetCanalesDeVentaHabilitados();
 
                     if (strCanalesDeVenta?.Length > 0)

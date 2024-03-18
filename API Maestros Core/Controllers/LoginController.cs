@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -48,7 +49,11 @@ namespace API_Maestros_Core.Controllers
                 {                   
                     if (credenciales.Password.Length > 0)
                     {
-                        GESI.CORE.BO.Verscom2k.APILogin APIToken = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem("", credenciales.Username);
+                        List<GESI.CORE.BO.Verscom2k.APILogin> lstAPIToken = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem("", credenciales.Username);
+                        GESI.CORE.BO.Verscom2k.APILogin APIToken = new APILogin();
+
+                        if (lstAPIToken?.Count > 0)
+                            APIToken = lstAPIToken[0];
 
                         DateTime dtFechaObtenidaSQL = GESI.CORE.DAL.Verscom2k.TablasGeneralesGESIDB.ObtenerFechaYHoraSQL(); // FECHA ACTUAL . HAY QUE SACARLA DESDE EL SERVIDOR DE LA BASE NO DE LA HORA DE LA MAQUINA
                         var TiempoExpiracionToken = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["TiempoExpiracion"];
@@ -96,10 +101,13 @@ namespace API_Maestros_Core.Controllers
                         else   // GENERA UN NUEVO TOKEN 
                         {                         
                             var token = authService.GenerateToken(dtFechaObtenidaSQL, credenciales.Username, validez);
-                            RespuestaToken respuestaToken = DevolverRespuestaTokenYActualizarEnBase(token, credenciales.Username, dtFechaObtenidaSQL, context.Request.HttpContext.Connection.RemoteIpAddress.ToString(), APIToken.FechaYHora);
+                            RespuestaToken respuestaToken = new RespuestaToken();
+                            if (APIToken == null)
+                                respuestaToken = DevolverRespuestaTokenYActualizarEnBase(token, credenciales.Username, dtFechaObtenidaSQL, context.Request.HttpContext.Connection.RemoteIpAddress.ToString(), dtFechaObtenidaSQL);
+                            else
+                            respuestaToken = DevolverRespuestaTokenYActualizarEnBase(token, credenciales.Username, dtFechaObtenidaSQL, context.Request.HttpContext.Connection.RemoteIpAddress.ToString(), APIToken.FechaYHora);
                             return Ok(respuestaToken);
                         }
-                        
                     }
                     else
                     {

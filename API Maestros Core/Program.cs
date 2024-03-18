@@ -123,31 +123,31 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
                     APIHelper.SetearConnectionString();
 
-                    GESI.CORE.BO.Verscom2k.APILogin MiObjetoLogin = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem(accessToken.RawData);
+                    List<GESI.CORE.BO.Verscom2k.APILogin>  MiObjetoLogin = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem(accessToken.RawData);
                    
                     if(MiObjetoLogin != null) // ESTA OK. ENCONTRO EL TOKEN EN LA TABLA DE TOKENS X USUARIO
                     {
                        
-                            ProductosController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            ProductosController.strUsuarioID = MiObjetoLogin[0].UsuarioID;
                             ProductosController.HabilitadoPorToken = true;
                             ProductosController.TokenEnviado = accessToken.RawData;
                             ProductosController.strProtocolo = context.Request.Scheme;
                             var referrerUrl = context.Request.Headers[":authority"].ToString();
             
 
-                            CanalesDeVentaController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            CanalesDeVentaController.strUsuarioID = MiObjetoLogin[0].UsuarioID;
                             CanalesDeVentaController.HabilitadoPorToken = true;
                             CanalesDeVentaController.TokenEnviado = accessToken.RawData;
                             CanalesDeVentaController.strProtocolo = context.Request.Scheme;
         
 
-                            CategoriasController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            CategoriasController.strUsuarioID = MiObjetoLogin[0].UsuarioID;
                             CategoriasController.HabilitadoPorToken = true;
                             CategoriasController.TokenEnviado = accessToken.RawData;
                             CategoriasController.strProtocolo = context.Request.Scheme;
                             
 
-                            EmpresasController.strUsuarioID = MiObjetoLogin.UsuarioID;
+                            EmpresasController.strUsuarioID = MiObjetoLogin[0].UsuarioID;
                             EmpresasController.HabilitadoPorToken = true;
                             EmpresasController.TokenEnviado = accessToken.RawData;
                             EmpresasController.strProtocolo = context.Request.Scheme;

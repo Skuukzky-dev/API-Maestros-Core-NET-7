@@ -184,4 +184,14 @@ namespace API_Maestros_Core.Models
         public Paginacion? paginacion { get; set; }
         public List<SucursalHija> Sucursales { get => _sucursales; set => _sucursales = value; }
     }
+
+    public class RespuestaEmpresas : Respuesta
+    {
+        private List<GESI.CORE.BO.Empresa>? _empresas;
+        public Paginacion? paginacion { get; set; }
+        public List<GESI.CORE.BO.Empresa>? Empresas { get => _empresas; set => _empresas = value; }
+    }
+
+
+
 }
