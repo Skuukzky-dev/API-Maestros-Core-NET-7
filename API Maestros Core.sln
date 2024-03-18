@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API Maestros Core", "API Maestros Core\API Maestros Core.csproj", "{2687A6D4-5537-4D6E-9F99-0E3F98EC8C55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BO", "BO\BO.csproj", "{43BCE27C-CF46-404B-9254-C04DD77EFAB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{F079624A-69DC-4548-BC85-1F20C8E68394}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{2687A6D4-5537-4D6E-9F99-0E3F98EC8C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2687A6D4-5537-4D6E-9F99-0E3F98EC8C55}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{2687A6D4-5537-4D6E-9F99-0E3F98EC8C55}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{43BCE27C-CF46-404B-9254-C04DD77EFAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43BCE27C-CF46-404B-9254-C04DD77EFAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43BCE27C-CF46-404B-9254-C04DD77EFAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43BCE27C-CF46-404B-9254-C04DD77EFAB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F079624A-69DC-4548-BC85-1F20C8E68394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F079624A-69DC-4548-BC85-1F20C8E68394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F079624A-69DC-4548-BC85-1F20C8E68394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F079624A-69DC-4548-BC85-1F20C8E68394}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

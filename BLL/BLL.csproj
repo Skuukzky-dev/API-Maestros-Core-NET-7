@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BO\BO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CORE.SEC">
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\CORE.SEC.dll</HintPath>
+    </Reference>
+    <Reference Include="GESI.CORE.BLL">
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="GESI.CORE.BO">
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.BO.dll</HintPath>
+    </Reference>
+    <Reference Include="GESI.CORE.DAL">
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.DAL.dll</HintPath>
+    </Reference>
+    <Reference Include="GESI.ERP.Core">
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.ERP.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GESI.GESI.BLL">
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI\GESI\BLL\bin\Debug\GESI.GESI.BLL.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
