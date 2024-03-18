@@ -11,6 +11,6 @@ namespace GESI.CORE.API.BO
     {
         private List<GESI.ERP.Core.BO.cPrecioProducto>? _precios;
         public Paginacion? paginacion { get; set; }
-        public List<cPrecioProducto>? Precios { get => _precios; set => _precios = value; }
+        public List<cPrecioProducto>? precios { get => _precios; set => _precios = value; }
     }
 }

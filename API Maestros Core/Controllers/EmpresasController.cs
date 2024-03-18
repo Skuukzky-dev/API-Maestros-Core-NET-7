@@ -1,7 +1,5 @@
 ﻿using API_Maestros_Core.BLL;
-using API_Maestros_Core.Models;
 using GESI.CORE.BLL;
-using GESI.ERP.Core.BO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -23,30 +21,30 @@ namespace API_Maestros_Core.Controllers
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
         public static string strProtocolo = "";
-        public static List<TipoDeError> lstTiposDeError = APIHelper.LlenarTiposDeError();
-        public TipoDeError oTipoError;
+        public static List<GESI.CORE.API.BO.TipoDeError> lstTiposDeError = GESI.CORE.API.BLL.APIHelper.LlenarTiposDeError();
+        public GESI.CORE.API.BO.TipoDeError oTipoError;
         #endregion
 
 
         [HttpGet("GetSucursales")]
         [EnableCors("MyCorsPolicy")]
-        [SwaggerResponse(200, "OK", typeof(RespuestaSucursales))]
+        [SwaggerResponse(200, "OK", typeof(GESI.CORE.API.BO.ResponseSucursales))]
         public IActionResult GetSucursales(int pageNumber = 1, int pageSize = 10)
         {
-            RespuestaSucursales oRespuesta = new RespuestaSucursales();
+            GESI.CORE.API.BO.ResponseSucursales oRespuesta = new GESI.CORE.API.BO.ResponseSucursales();
             try
             {
-                APIHelper.SetearConnectionString();
+                GESI.CORE.API.BLL.APIHelper.SetearConnectionString();
                 string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
-                if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                if (GESI.CORE.API.BLL.APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                 {
-                    APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                    GESI.CORE.API.BO.APISessionManager MiSessionMgrAPI = GESI.CORE.API.BLL.APIHelper.SetearMgrAPI(strUsuarioID);
 
                     if (MiSessionMgrAPI.Habilitado)
                     {
-                        BLL.EmpresasMgr._MiApiSessionMgr = MiSessionMgrAPI;
-                        oRespuesta = BLL.EmpresasMgr.DevolverSucursales();
+                        GESI.CORE.API.BLL.EmpresasMgr._MiApiSessionMgr = MiSessionMgrAPI;
+                        oRespuesta = GESI.CORE.API.BLL.EmpresasMgr.DevolverSucursales();
 
                         if (oRespuesta.Sucursales.Count > 0)
                             return Ok(oRespuesta);
@@ -88,16 +86,16 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.SucursalesGetList);
+                        oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cNuevoToken);
+                        oRespuesta.error = GESI.CORE.API.BLL.APIHelper.DevolverErrorAPI((int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, GESI.CORE.API.BLL.APIHelper.SucursalesGetList);
                         oRespuesta.success = false;
                         return Unauthorized(oRespuesta);
                     }
                 }
                 else
                 {
-                    oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
+                    oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cProtocoloIncorrecto);
+                    oRespuesta.error = GESI.CORE.API.BLL.APIHelper.DevolverErrorAPI((int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, GESI.CORE.API.BLL.APIHelper.ProductosGetList);
                     oRespuesta.success = false;
                     return BadRequest(oRespuesta);
                 }
@@ -105,8 +103,8 @@ namespace API_Maestros_Core.Controllers
             }
             catch (Exception ex)
             {
-                oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Error al devolver Sucursales. Descripcion: "+ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.SucursalesGetList);
+                oTipoError = lstTiposDeError.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = GESI.CORE.API.BLL.APIHelper.DevolverErrorAPI((int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Error al devolver Sucursales. Descripcion: "+ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, GESI.CORE.API.BLL.APIHelper.SucursalesGetList);
                 oRespuesta.success = false;
                 return StatusCode((int)HttpStatusCode.InternalServerError,oRespuesta);
                
@@ -119,21 +117,21 @@ namespace API_Maestros_Core.Controllers
         {
             try
             {
-                RespuestaEmpresas oRespuesta = new RespuestaEmpresas();
-                APIHelper.SetearConnectionString();
+                GESI.CORE.API.BO.ResponseEmpresas oRespuesta = new GESI.CORE.API.BO.ResponseEmpresas();
+                GESI.CORE.API.BLL.APIHelper.SetearConnectionString();
                 string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
 
 
-                if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                if (GESI.CORE.API.BLL.APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                 {
-                    APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                    GESI.CORE.API.BO.APISessionManager MiSessionMgrAPI = GESI.CORE.API.BLL.APIHelper.SetearMgrAPI(strUsuarioID);
 
                     if (MiSessionMgrAPI.Habilitado)
                     {
                       if(MiSessionMgrAPI.SessionMgr.UsuarioID.Length > 0)
                       {
-                            BLL.EmpresasMgr._MiApiSessionMgr = MiSessionMgrAPI;
-                            oRespuesta = BLL.EmpresasMgr.DevolverEmpresas(pageNumber, pageSize);
+                            GESI.CORE.API.BLL.EmpresasMgr._MiApiSessionMgr = MiSessionMgrAPI;
+                            oRespuesta = GESI.CORE.API.BLL.EmpresasMgr.DevolverEmpresas(pageNumber, pageSize);
                             if (oRespuesta.Empresas.Count > 0)
                                 return Ok(oRespuesta); //TODO: Buscar las empresas por usuario
                             else

@@ -1,10 +1,15 @@
 ﻿using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using AspNetCoreRateLimit;
 
 namespace API_Maestros_Core.BLL
 {
-    internal static class RateLimitingMiddleware
+    public static class RateLimitingMiddleware
     {
-        internal static IServiceCollection AddRateLimiting(this IServiceCollection services, IConfiguration configuration)
+       
+        public static IServiceCollection AddRateLimiting(this IServiceCollection services, IConfiguration configuration)
         {
             // Used to store rate limit counters and ip rules
             services.AddMemoryCache();
@@ -20,7 +25,7 @@ namespace API_Maestros_Core.BLL
             return services;
         }
 
-        internal static IApplicationBuilder UseRateLimiting(this IApplicationBuilder app)
+        public static IApplicationBuilder UseRateLimiting(this IApplicationBuilder app)
         {
             app.UseIpRateLimiting();
             return app;

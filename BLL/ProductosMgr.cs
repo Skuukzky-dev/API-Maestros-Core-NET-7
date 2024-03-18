@@ -632,7 +632,7 @@ namespace GESI.CORE.API.BLL
                         oPaginacion.tamañoPagina = 1;
                         oPaginacion.totalElementos = 0;
                         oRespuesta.success = true;
-                        oRespuesta.Precios = null;
+                        oRespuesta.precios = null;
                     }
                 }
 
@@ -689,7 +689,7 @@ namespace GESI.CORE.API.BLL
                         oPaginacion.paginaActual = pageNumber;
                         oPaginacion.tamañoPagina = pageSize;
                         oRespuesta.paginacion = oPaginacion;
-                        oRespuesta.Precios = lstPrecios;
+                        oRespuesta.precios = lstPrecios;
                         oRespuesta.success = true;
 
                     }
@@ -700,7 +700,7 @@ namespace GESI.CORE.API.BLL
                         oPaginacion.paginaActual = 1;
                         oPaginacion.tamañoPagina = 1;
                         oPaginacion.totalElementos = lstPrecios.Count;
-                        oRespuesta.Precios = lstPrecios;
+                        oRespuesta.precios = lstPrecios;
                         oRespuesta.success = true;
                         oRespuesta.paginacion = oPaginacion;
                     }
@@ -713,7 +713,7 @@ namespace GESI.CORE.API.BLL
                     oPaginacion.tamañoPagina = 1;
                     oPaginacion.totalElementos = 0;
                     oRespuesta.success = true;
-                    oRespuesta.Precios = null;
+                    oRespuesta.precios = null;
                 }
                 return oRespuesta;
             }

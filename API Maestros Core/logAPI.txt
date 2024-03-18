@@ -1,0 +1,8 @@
+18/03/2024 16:40:36|I|gesi|api/Login|5001|Error al devolver el token. Descripcion: No se puede abrir la base de datos "cli_M5" solicitada por el inicio de sesión. Error de inicio de sesión.
+Error de inicio de sesión del usuario 'uAPI-ERP-LecturaMaestros'.
+18/03/2024 16:41:29|I|gesi|api/Login|4011|Usuario y / o contraseña incorrectos. Usuario: gesi|::1
+18/03/2024 16:41:39|I|REVENTA|api/Login|200|Fecha a Actualizar: 18/03/2024 16:41:38 | UsuarioID : REVENTA | Fecha en Base: 14/03/2024 13:16:00
+18/03/2024 16:41:39|I|REVENTA|api/Login|200|Logueado exitosamente. Usuario: REVENTA|::1 Token: eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSRVZFTlRBIiwianRpIjoiZGJiMTUyZTAtOTgyMi00YTI4LTlhMjktZWU2NTlmYzBlZWUxIiwiaWF0IjoxNzEwNzkwODk4LCJyb2xlcyI6WyJDbGllbnRlIiwiQWRtaW5pc3RyYWRvciJdLCJuYmYiOjE3MTA3OTA4OTgsImV4cCI6MTcxMDgwNTI5OCwiaXNzIjoiUGV0aWNpb25hcmlvIiwiYXVkIjoiUHVibGljIn0.kVIR335jnpYjuljuWUDrbZSm6Mj39nfsMcXrnbZ7fso
+18/03/2024 16:41:54|I|REVENTA|Productos/GetList|200|GetList: Existoso
+18/03/2024 16:42:07|I|REVENTA|Productos/GetList|200|GetList: Existoso
+18/03/2024 16:42:12|I|REVENTA|Productos/GetList|200|GetList: Existoso

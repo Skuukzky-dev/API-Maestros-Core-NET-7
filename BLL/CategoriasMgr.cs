@@ -86,10 +86,7 @@ namespace GESI.CORE.API.BLL
             }
         }
 
-
-       
-
-
+               
         /// <summary>
         /// Devuelve la lista de Rubros en Endpoint RubrosGetList
         /// </summary>

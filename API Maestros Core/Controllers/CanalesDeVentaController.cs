@@ -1,5 +1,5 @@
 ﻿using API_Maestros_Core.BLL;
-using API_Maestros_Core.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +26,8 @@ namespace API_Maestros_Core.Controllers
         public static bool HabilitadoPorToken = false;
         public static string TokenEnviado = "";
         public static string strProtocolo = "";
-        public static List<TipoDeError> lstTipoErrores = APIHelper.LlenarTiposDeError();
-        public TipoDeError oTipoError;
+        public static List<GESI.CORE.API.BO.TipoDeError> lstTipoErrores = GESI.CORE.API.BLL.APIHelper.LlenarTiposDeError();
+        public GESI.CORE.API.BO.TipoDeError oTipoError;
         #endregion
 
         // GET: api/<CanalesDeVentaController>
@@ -39,7 +39,7 @@ namespace API_Maestros_Core.Controllers
         [Authorize]
         [EnableCors("MyCorsPolicy")]
         [SwaggerOperation(Tags = new[] {"Canales de Venta"})]
-        [SwaggerResponse(200, "OK", typeof(RespuestaConCanalesDeVenta))]
+        [SwaggerResponse(200, "OK", typeof(GESI.CORE.API.BO.ResponseCanalesDeVenta))]
         public IActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             #region ConnectionStrings
@@ -47,10 +47,10 @@ namespace API_Maestros_Core.Controllers
             fileMap.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\app.config";
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            APIHelper.SetearConnectionString();
+            GESI.CORE.API.BLL.APIHelper.SetearConnectionString();
             #endregion
 
-            RespuestaConCanalesDeVenta oRespuesta = new RespuestaConCanalesDeVenta();
+            GESI.CORE.API.BO.ResponseCanalesDeVenta oRespuesta = new GESI.CORE.API.BO.ResponseCanalesDeVenta();
             try
             {
                
@@ -58,8 +58,8 @@ namespace API_Maestros_Core.Controllers
                 
                 if (!HabilitadoPorToken)
                 {
-                    oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cNuevoToken);
-                    oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CanalesDeVentaGetList);
+                    oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cNuevoToken);
+                    oRespuesta.error = GESI.CORE.API.BLL.APIHelper.DevolverErrorAPI((int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cNuevoToken, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, GESI.CORE.API.BLL.APIHelper.CanalesDeVentaGetList);
                     oRespuesta.success = false;                   
                     return Unauthorized(oRespuesta);
                 }
@@ -67,14 +67,14 @@ namespace API_Maestros_Core.Controllers
                 {
                     string ProtocoloConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Protocolo"];
                     string Referer = this.HttpContext.Request.Headers["Referer"].ToString();
-                    if (APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
+                    if (GESI.CORE.API.BLL.APIHelper.EvaluarProtocolo(ProtocoloConfig, this.HttpContext.Request.Scheme)) // Se evalua el protocolo que contiene el backend
                     {
-                        APISessionManager MiSessionMgrAPI = APIHelper.SetearMgrAPI(strUsuarioID);
+                        GESI.CORE.API.BO.APISessionManager MiSessionMgrAPI = GESI.CORE.API.BLL.APIHelper.SetearMgrAPI(strUsuarioID);
 
                         if (MiSessionMgrAPI.Habilitado)
                         {
-                            CanalesDeVentaMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
-                            oRespuesta = CanalesDeVentaMgr.GetListCanalesDeVenta(MiSessionMgrAPI.CanalesDeVenta,pageNumber, pageSize,Referer);
+                            GESI.CORE.API.BLL.CanalesDeVentaMgr._SessionMgr = MiSessionMgrAPI.SessionMgr;
+                            oRespuesta = GESI.CORE.API.BLL.CanalesDeVentaMgr.GetListCanalesDeVenta(MiSessionMgrAPI.CanalesDeVenta,pageNumber, pageSize,Referer);
                             if (oRespuesta != null)
                             {
                                 return Ok(oRespuesta);
@@ -86,16 +86,16 @@ namespace API_Maestros_Core.Controllers
                         }
                         else
                         {
-                            oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cTokenInvalido);
-                            oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cTokenInvalido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CanalesDeVentaGetList);
+                            oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cTokenInvalido);
+                            oRespuesta.error = GESI.CORE.API.BLL.APIHelper.DevolverErrorAPI((int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cTokenInvalido, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, GESI.CORE.API.BLL.APIHelper.CanalesDeVentaGetList);
                             oRespuesta.success = false;
                             return Unauthorized(oRespuesta);
                         }
                     }
                     else
                     {
-                        oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cProtocoloIncorrecto);
-                        oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.ProductosGetList);
+                        oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cProtocoloIncorrecto);
+                        oRespuesta.error = GESI.CORE.API.BLL.APIHelper.DevolverErrorAPI((int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cProtocoloIncorrecto, oTipoError.DescripcionError, oTipoError.TipoErrorAdvertencia, strUsuarioID, GESI.CORE.API.BLL.APIHelper.ProductosGetList);
                         oRespuesta.success = false;
                         return BadRequest(oRespuesta);
                     }
@@ -103,8 +103,8 @@ namespace API_Maestros_Core.Controllers
             }
             catch(Exception ex)
             {
-                oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAplicacion);
-                oRespuesta.error = APIHelper.DevolverErrorAPI((int)APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Descripcion: " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, APIHelper.CanalesDeVentaGetList);
+                oTipoError = lstTipoErrores.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cErrorInternoAplicacion);
+                oRespuesta.error = GESI.CORE.API.BLL.APIHelper.DevolverErrorAPI((int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cErrorInternoAplicacion, oTipoError.DescripcionError+" Descripcion: " + ex.Message, oTipoError.TipoErrorAdvertencia, strUsuarioID, GESI.CORE.API.BLL.APIHelper.CanalesDeVentaGetList);
                 oRespuesta.success = false;               
                 return Unauthorized(oRespuesta);
             }

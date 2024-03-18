@@ -1,6 +1,5 @@
 using API_Maestros_Core.BLL;
 using API_Maestros_Core.Controllers;
-using API_Maestros_Core.Models;
 using API_Maestros_Core.Services;
 using AspNetCoreRateLimit;
 using GESI.CORE.BLL;
@@ -81,28 +80,28 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             if (context.AuthenticateFailure != null)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized; 
-                RespuestaConToken tok = new RespuestaConToken();
+                GESI.CORE.API.BO.Response tok = new GESI.CORE.API.BO.Response();
                 tok.success = false;
-                tok.error = new Error();
-                tok.error.code = (int)APIHelper.cCodigosError.cTokenInvalido;
+                tok.error = new GESI.CORE.API.BO.Error();
+                tok.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cTokenInvalido;
                 context.Response.ContentType = "application/json";
                 tok.error.message = "Token invalido. Acceso denegado";
                 
-                Logger.LoguearErrores("Token invalido. Acceso denegado", "I","", context.Request.Path.Value);
+                GESI.CORE.API.BLL.Logger.LoguearErrores("Token invalido. Acceso denegado", "I","", context.Request.Path.Value);
               
                 await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(tok));
             }
             else
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                RespuestaConToken tok = new RespuestaConToken();
+                GESI.CORE.API.BO.Response tok = new GESI.CORE.API.BO.Response();
                 tok.success = false;
-                tok.error = new Error();
-                tok.error.code = (int)APIHelper.cCodigosError.cTokenNoEncontrado;
+                tok.error = new GESI.CORE.API.BO.Error();
+                tok.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cTokenNoEncontrado;
                 context.Response.ContentType = "application/json";
                 tok.error.message = "No se encontro el Token en el Request";
-                
-                Logger.LoguearErrores("No se encontro el Token en el Request", "I","", context.Request.Path.Value);
+
+                GESI.CORE.API.BLL.Logger.LoguearErrores("No se encontro el Token en el Request", "I","", context.Request.Path.Value);
                 
                 // we can write our own custom response content here
                 await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(tok));
@@ -121,7 +120,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 {
                     identity.AddClaim(new Claim("access_token", accessToken.RawData));
 
-                    APIHelper.SetearConnectionString();
+                    GESI.CORE.API.BLL.APIHelper.SetearConnectionString();
 
                     List<GESI.CORE.BO.Verscom2k.APILogin>  MiObjetoLogin = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem(accessToken.RawData);
                    
@@ -251,10 +250,10 @@ app.Use(async (context, next) =>
                 {
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.code = (int)APIHelper.cCodigosError.cEncabezadoNoEncontrado;
+                    oresp.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cEncabezadoNoEncontrado;
                     oresp.error.message = "No se encontro encabezado para la petición.";
 
-                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress, "I", "", context.Request.Path.Value);
+                    GESI.CORE.API.BLL.Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress, "I", "", context.Request.Path.Value);
 
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
@@ -269,10 +268,10 @@ app.Use(async (context, next) =>
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.code = (int)APIHelper.cCodigosError.cURLNoPermitida;
+                    oresp.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cURLNoPermitida;
                     oresp.error.message = "No esta autorizado a acceder al recurso IP restringida";
 
-                    Logger.LoguearErrores("No esta autorizado a acceder al recurso IP Restringida: " + ipAddress.ToString()+" | Referer: "+referrerUrl,"I", "", context.Request.Path.Value);
+                    GESI.CORE.API.BLL.Logger.LoguearErrores("No esta autorizado a acceder al recurso IP Restringida: " + ipAddress.ToString()+" | Referer: "+referrerUrl,"I", "", context.Request.Path.Value);
 
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
@@ -285,10 +284,10 @@ app.Use(async (context, next) =>
                     {
                         RespuestaToken oresp = new RespuestaToken();
                         oresp.error = new ErrorToken();
-                        oresp.error.code = (int)APIHelper.cCodigosError.cEncabezadoNoEncontrado;
+                        oresp.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cEncabezadoNoEncontrado;
                         oresp.error.message = "No se encontro encabezado para la petición";
                         
-                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value+" IP: "+ context.Connection.RemoteIpAddress+" Referer: " + referrerUrl, "I", "", context.Request.Path.Value);
+                        GESI.CORE.API.BLL.Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: "+context.Request.Path.Value+" IP: "+ context.Connection.RemoteIpAddress+" Referer: " + referrerUrl, "I", "", context.Request.Path.Value);
                         
                         context.Response.ContentType = "application/json";
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -311,10 +310,10 @@ app.Use(async (context, next) =>
                 {
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.code = (int)APIHelper.cCodigosError.cEncabezadoNoEncontrado;
+                    oresp.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cEncabezadoNoEncontrado;
                     oresp.error.message = "No se encontro encabezado para la petición";
 
-                    Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress + " Referer: " + referrerUrl, "I", "", context.Request.Path.Value);
+                    GESI.CORE.API.BLL.Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress + " Referer: " + referrerUrl, "I", "", context.Request.Path.Value);
                     
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
@@ -327,7 +326,7 @@ app.Use(async (context, next) =>
                 bool Habilitado = false;
                 foreach(string urls in spliturl)
                 {
-                    string urldescencriptada = APIHelper.DesEncriptarCadenaConfiguracion(urls);
+                    string urldescencriptada = GESI.CORE.API.BLL.APIHelper.DesEncriptarCadenaConfiguracion(urls);
 
                     if (referrerUrl.Contains(urldescencriptada))
                     {
@@ -340,10 +339,10 @@ app.Use(async (context, next) =>
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     RespuestaToken oresp = new RespuestaToken();
                     oresp.error = new ErrorToken();
-                    oresp.error.code = (int)APIHelper.cCodigosError.cURLNoPermitida;
+                    oresp.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cURLNoPermitida;
                     oresp.error.message = "No esta autorizado a acceder al recurso. URL restringida";
 
-                    Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL restringida: " + referrerUrl + "| spliturl: " + spliturl, "E", "", context.Request.Path.Value);
+                    GESI.CORE.API.BLL.Logger.LoguearErrores("No esta autorizado a acceder al recurso. URL restringida: " + referrerUrl + "| spliturl: " + spliturl, "E", "", context.Request.Path.Value);
 
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Response.ContentType = "application/json";
@@ -357,10 +356,10 @@ app.Use(async (context, next) =>
                     {
                         RespuestaToken oresp = new RespuestaToken();
                         oresp.error = new ErrorToken();
-                        oresp.error.code = (int)APIHelper.cCodigosError.cEncabezadoNoEncontrado;
+                        oresp.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cEncabezadoNoEncontrado;
                         oresp.error.message = "No se encontro encabezado para la petición";
 
-                        Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress, "E", "", context.Request.Path.Value);
+                        GESI.CORE.API.BLL.Logger.LoguearErrores("No se encontro encabezado para la petición Endpoint: " + context.Request.Path.Value + " IP: " + context.Connection.RemoteIpAddress, "E", "", context.Request.Path.Value);
 
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         context.Response.ContentType = "application/json";

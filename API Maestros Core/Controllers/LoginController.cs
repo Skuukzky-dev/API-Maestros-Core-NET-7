@@ -1,8 +1,4 @@
-﻿using API_Maestros_Core.BLL;
-using API_Maestros_Core.Models;
-using API_Maestros_Core.Services;
-using GESI.CORE.BLL;
-using GESI.CORE.BO.Verscom2k;
+﻿using API_Maestros_Core.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,7 +20,7 @@ namespace API_Maestros_Core.Controllers
     {
 
         private const string UsuarioSinContraseña = "Debe ingresar una contraseña";
-        public List<TipoDeError> lstTipoError = APIHelper.LlenarTiposDeError();
+        public List<GESI.CORE.API.BO.TipoDeError> lstTipoError = GESI.CORE.API.BLL.APIHelper.LlenarTiposDeError();
         private readonly IAuthService authService;
         
         public LoginController(IAuthService authService)
@@ -35,11 +31,11 @@ namespace API_Maestros_Core.Controllers
         [HttpPost]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(RespuestaToken))]
-        public IActionResult Token(UserLogin credenciales)
+        public IActionResult Token(GESI.CORE.API.BO.UserLogin credenciales)
         {
             try
             {
-                APIHelper.SetearConnectionString();
+                GESI.CORE.API.BLL.APIHelper.SetearConnectionString();
 
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 HttpContext context = HttpContext;
@@ -49,8 +45,9 @@ namespace API_Maestros_Core.Controllers
                 {                   
                     if (credenciales.Password.Length > 0)
                     {
+                        
                         List<GESI.CORE.BO.Verscom2k.APILogin> lstAPIToken = GESI.CORE.DAL.Verscom2k.ApiLoginDB.GetItem("", credenciales.Username);
-                        GESI.CORE.BO.Verscom2k.APILogin APIToken = new APILogin();
+                        GESI.CORE.BO.Verscom2k.APILogin APIToken = new GESI.CORE.BO.Verscom2k.APILogin();
 
                         if (lstAPIToken?.Count > 0)
                             APIToken = lstAPIToken[0];
@@ -111,38 +108,38 @@ namespace API_Maestros_Core.Controllers
                     }
                     else
                     {
-                        TipoDeError oTipo = lstTipoError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cUsuarioIncorrecto);
+                        GESI.CORE.API.BO.TipoDeError oTipo = lstTipoError.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cUsuarioIncorrecto);
                         rspContenidoRespuesta.success = false;
                         rspContenidoRespuesta.error = new ErrorToken();
-                        rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cUsuarioIncorrecto;
+                        rspContenidoRespuesta.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cUsuarioIncorrecto;
                         rspContenidoRespuesta.error.message = oTipo.DescripcionError;
-                        Logger.LoguearErrores(UsuarioSinContraseña, "I", credenciales.Username, APIHelper.Login, (int)APIHelper.cCodigosError.cUsuarioIncorrecto);
+                        GESI.CORE.API.BLL.Logger.LoguearErrores(UsuarioSinContraseña, "I", credenciales.Username, GESI.CORE.API.BLL.APIHelper.Login, (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cUsuarioIncorrecto);
 
                         return Unauthorized(rspContenidoRespuesta);
                     }
                 }
 
-                TipoDeError oTipo1 = lstTipoError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cUsuarioIncorrecto);
+                GESI.CORE.API.BO.TipoDeError oTipo1 = lstTipoError.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cUsuarioIncorrecto);
                 rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
-                rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cUsuarioIncorrecto;
+                rspContenidoRespuesta.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cUsuarioIncorrecto;
                 rspContenidoRespuesta.error.message = oTipo1.DescripcionError;
-                Logger.LoguearErrores("Usuario y / o contraseña incorrectos. Usuario: " + credenciales.Username + "|" + context.Connection.RemoteIpAddress , "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cUsuarioIncorrecto);
+                GESI.CORE.API.BLL.Logger.LoguearErrores("Usuario y / o contraseña incorrectos. Usuario: " + credenciales.Username + "|" + context.Connection.RemoteIpAddress , "I", credenciales.Username, GESI.CORE.API.BLL.APIHelper.Login,(int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cUsuarioIncorrecto);
 
                 return Unauthorized(rspContenidoRespuesta);
             }
             catch (Exception ex)
             {
-                TipoDeError oTipo2 = lstTipoError.Find(x => x.CodigoError == (int)APIHelper.cCodigosError.cErrorInternoAlDevolverToken);
+                GESI.CORE.API.BO.TipoDeError oTipo2 = lstTipoError.Find(x => x.CodigoError == (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cErrorInternoAlDevolverToken);
                 HttpResponseMessage message = new HttpResponseMessage();
                 RespuestaToken rspContenidoRespuesta = new RespuestaToken();
                 rspContenidoRespuesta.success = false;
                 rspContenidoRespuesta.error = new ErrorToken();
-                rspContenidoRespuesta.error.code = (int)APIHelper.cCodigosError.cErrorInternoAlDevolverToken;
+                rspContenidoRespuesta.error.code = (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cErrorInternoAlDevolverToken;
                 rspContenidoRespuesta.error.message = oTipo2.DescripcionError+" Descripcion: " + ex.Message;
                 
-                Logger.LoguearErrores("Error al devolver el token. Descripcion: " + ex.Message, "I", credenciales.Username, APIHelper.Login,(int)APIHelper.cCodigosError.cErrorInternoAlDevolverToken);
+                GESI.CORE.API.BLL.Logger.LoguearErrores("Error al devolver el token. Descripcion: " + ex.Message, "I", credenciales.Username, GESI.CORE.API.BLL.APIHelper.Login, (int)GESI.CORE.API.BLL.APIHelper.cCodigosError.cErrorInternoAlDevolverToken);
                 
                 return StatusCode((int)HttpStatusCode.InternalServerError, rspContenidoRespuesta);
             }
@@ -175,11 +172,11 @@ namespace API_Maestros_Core.Controllers
                 respuestaToken.token = Token;
                 #endregion
 
-                Logger.LoguearErrores("Fecha a Actualizar: " + FechaAActualizar + " | UsuarioID : " + usuario+" | Fecha en Base: "+dtFechaEnBase,"I",usuario,"api/Login");
+                GESI.CORE.API.BLL.Logger.LoguearErrores("Fecha a Actualizar: " + FechaAActualizar + " | UsuarioID : " + usuario+" | Fecha en Base: "+dtFechaEnBase,"I",usuario,"api/Login");
 
                 int resultado = GESI.CORE.BLL.Verscom2k.ApiLoginMgr.Save(ApiLogin);
-               
-                Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID + "|" + clientIpAddress + " Token: " + Token, "I", ApiLogin.UsuarioID, APIHelper.Login);
+
+                GESI.CORE.API.BLL.Logger.LoguearErrores("Logueado exitosamente. Usuario: " + ApiLogin.UsuarioID + "|" + clientIpAddress + " Token: " + Token, "I", ApiLogin.UsuarioID, GESI.CORE.API.BLL.APIHelper.Login);
 
                 return respuestaToken;
 

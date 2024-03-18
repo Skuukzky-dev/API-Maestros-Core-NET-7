@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>API_Maestros_Core</RootNamespace>
@@ -21,20 +21,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CORE.SEC">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\CORE.SEC.dll</HintPath>
-    </Reference>
     <Reference Include="GESI.CORE.BLL">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.BLL.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\GESI\GESI\BLL\bin\Debug\GESI.CORE.BLL.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.BO">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.BO.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\DAL\bin\Debug\net8.0\GESI.CORE.BO.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.DAL">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.CORE.DAL.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\DAL\bin\Debug\net8.0\GESI.CORE.DAL.dll</HintPath>
     </Reference>
     <Reference Include="GESI.ERP.Core">
-      <HintPath>I:\Desarrollo\VersCom.Net\GESI.ERP.Core\bin\Debug\GESI.ERP.Core.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\DAL\bin\Debug\net8.0\GESI.ERP.Core.dll</HintPath>
     </Reference>
     <Reference Include="GESI.GESI.BLL">
       <HintPath>I:\Desarrollo\VersCom.Net\GESI\GESI\BLL\bin\Debug\GESI.GESI.BLL.dll</HintPath>
@@ -42,6 +39,15 @@
     <Reference Include="GESI.GESI.BO">
       <HintPath>I:\Desarrollo\VersCom.Net\GESI\GESI\BLL\bin\Debug\GESI.GESI.BO.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj" />
+    <ProjectReference Include="..\BO\BO.csproj" />
   </ItemGroup>
 
 </Project>

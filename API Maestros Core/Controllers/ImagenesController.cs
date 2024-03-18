@@ -1,5 +1,4 @@
 ﻿using API_Maestros_Core.BLL;
-using API_Maestros_Core.Models;
 using GESI.CORE.BO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
