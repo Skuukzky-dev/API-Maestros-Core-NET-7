@@ -10,7 +10,7 @@ namespace GESI.CORE.API.BO
     {
         private List<CanalDeVenta>? _CanalesDeVenta;
 
-        public List<CanalDeVenta>? CanalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
+        public List<CanalDeVenta>? canalesDeVenta { get => _CanalesDeVenta; set => _CanalesDeVenta = value; }
 
         public Paginacion? paginacion { get; set; }
     }

@@ -10,8 +10,6 @@ namespace GESI.CORE.API.BLL
 {
     public class ProductosMgr
     {
-
-
         public static CORE.BLL.SessionMgr? _SessionMgr;
         public static List<TipoDeError> lstTipoErrores;
         public static TipoDeError oTipo;

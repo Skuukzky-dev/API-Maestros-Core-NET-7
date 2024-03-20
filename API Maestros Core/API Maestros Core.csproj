@@ -17,7 +17,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +25,7 @@
       <HintPath>I:\Desarrollo\VersCom.Net\GESI\GESI\BLL\bin\Debug\GESI.CORE.BLL.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.BO">
-      <HintPath>I:\Desarrollo\VersCom.Net\DAL\bin\Debug\net8.0\GESI.CORE.BO.dll</HintPath>
+      <HintPath>I:\Desarrollo\VersCom.Net\BO\bin\Debug\net8.0\GESI.CORE.BO.dll</HintPath>
     </Reference>
     <Reference Include="GESI.CORE.DAL">
       <HintPath>I:\Desarrollo\VersCom.Net\DAL\bin\Debug\net8.0\GESI.CORE.DAL.dll</HintPath>

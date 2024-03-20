@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +35,10 @@
     <Reference Include="GESI.GESI.BLL">
       <HintPath>I:\Desarrollo\VersCom.Net\GESI\GESI\BLL\bin\Debug\GESI.GESI.BLL.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BLL Ventas\" />
   </ItemGroup>
 
 </Project>

@@ -35,7 +35,7 @@ namespace GESI.CORE.API.BLL
 
                 oRespuesta.success = true;
                 oRespuesta.error = new Error();
-                oRespuesta.CanalesDeVenta = new List<CanalDeVenta>();
+                oRespuesta.canalesDeVenta = new List<CanalDeVenta>();
                 oRespuesta.paginacion = new Paginacion();
                 List<ERP.Core.BO.cCanalDeVenta> lstCanalesDeVentaFinal = new List<cCanalDeVenta>();
                 List<ERP.Core.BO.cCanalDeVenta> lstCanalesDeVenta = ErpSessionMgr.GetCanalesDeVentaHabilitados();
@@ -63,7 +63,7 @@ namespace GESI.CORE.API.BLL
                         lstCanalDeVentaAuxiliar.Add(new CanalDeVenta(oCanal));
                     }
 
-                    oRespuesta.CanalesDeVenta = lstCanalDeVentaAuxiliar.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                    oRespuesta.canalesDeVenta = lstCanalDeVentaAuxiliar.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                     oRespuesta.paginacion.totalElementos = lstCanalesDeVenta.Count;
                     oRespuesta.paginacion.totalPaginas = (int)Math.Ceiling((double)oRespuesta.paginacion.totalElementos / pageSize);
                     oRespuesta.paginacion.paginaActual = pageNumber;

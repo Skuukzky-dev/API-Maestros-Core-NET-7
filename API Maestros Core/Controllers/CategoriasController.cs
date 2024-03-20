@@ -131,7 +131,7 @@ namespace API_Maestros_Core.Controllers
         }
 
         // GET api/<CategoriasController>/5
-        [HttpGet("GetItem/{categoriaID}")]
+        [HttpGet("GetItem")]
         [EnableCors("MyCorsPolicy")]
         [SwaggerResponse(200, "OK", typeof(ResponseCategoria))]
         public IActionResult Get(string categoriaID)
